@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinar Admin Panel - GRP Career Pvt Ltd.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+    <div id="root"></div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef } = React;
+
+        const WebinarAdminPanel = () => {
+            const [formData, setFormData] = useState({
+                id: null,
+                title: '',
+                slug: '',
+                category: '',
+                subcategory: '',
+                date: '',
+                registration_start: '',
+                registration_end: '',
+                description: '',
+                image: null,
+                imageDescription: '',
+                imageCaption: '',
+                imageCaptionLink: '',
+                youtubeLink: '',
+                speaker: '',
+                duration: ''
+            });
+            const [preview, setPreview] = useState(false);
+            const [error, setError] = useState('');
+            const [success, setSuccess] = useState('');
+            const [webinars, setWebinars] = useState([]);
+            const [selectedWebinarId, setSelectedWebinarId] = useState(null);
+            const [participants, setParticipants] = useState([]);
+            const quillRef = useRef(null);
+            const fileInputRef = useRef(null);
+
+            // Subcategory options
+            const subcategories = {
+                Tech: ['Tech Interview Questions', 'Coding Tutorials', 'Tech Trends'],
+                Career: ['Resume Tips', 'Interview Prep', 'Career Growth'],
+                Business: ['Entrepreneurship', 'Marketing', 'Finance']
+            };
+
+            // Initialize Quill Editor
+            useEffect(() => {
+                const quill = new Quill(quillRef.current, {
+                    theme: 'snow',
+                    modules: {
+                        toolbar: [
+                            [{ 'header': [1, 2, 3, false] }],
+                            ['bold', 'italic', 'underline', 'strike'],
+                            [{ 'script': 'sub' }, { 'script': 'super' }],
+                            [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                            ['link', 'image', 'video'],
+                            ['table'],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                quill.on('text-change', () => {
+                    setFormData(prev => ({
+                        ...prev,
+                        description: quill.root.innerHTML
+                    }));
+                });
+
+                return () => quill.off('text-change');
+            }, []);
+
+            // Fetch existing webinars
+            useEffect(() => {
+                axios.get('/api/webinars', { params: { limit: 100 } }).then(response => {
+                    setWebinars(response.data.webinars);
+                }).catch(err => {
+                    console.error('Error fetching webinars:', err);
+                    setError('Failed to load webinars.');
+                });
+            }, []);
+
+            // Fetch participants for selected webinar
+            useEffect(() => {
+                if (selectedWebinarId) {
+                    axios.get(`/api/webinars/${selectedWebinarId}/participants`).then(response => {
+                        setParticipants(response.data);
+                    }).catch(err => {
+                        console.error('Error fetching participants:', err);
+                        setError('Failed to load participants.');
+                    });
+                } else {
+                    setParticipants([]);
+                }
+            }, [selectedWebinarId]);
+
+            // Handle input changes
+            const handleChange = (e) => {
+                const { name, value } = e.target;
+                setFormData(prev => ({
+                    ...prev,
+                    [name]: value,
+                    ...(name === 'title' ? { slug: value.toLowerCase().replace(/[^a-z0-9]+/g, '-') } : {}),
+                    ...(name === 'category' ? { subcategory: '' } : {})
+                }));
+            };
+
+            // Handle file input
+            const handleFileChange = (e) => {
+                setFormData({ ...formData, image: e.target.files[0] });
+            };
+
+            // Validate YouTube URL
+            const isValidYouTubeUrl = (url) => {
+                return url.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/);
+            };
+
+            // Handle form submission (create or update)
+            const handleSubmit = async (e) => {
+                e.preventDefault();
+                setError('');
+                setSuccess('');
+
+                if (!formData.title || !formData.category || !formData.date || !formData.registration_start || !formData.registration_end || !formData.description) {
+                    setError('Please fill in all required fields (Title, Category, Date, Registration Start/End, Description).');
+                    return;
+                }
+                if (formData.youtubeLink && !isValidYouTubeUrl(formData.youtubeLink)) {
+                    setError('Please enter a valid YouTube URL.');
+                    return;
+                }
+                if (formData.imageCaptionLink && !formData.imageCaption) {
+                    setError('Please provide a caption for the caption link.');
+                    return;
+                }
+
+                try {
+                    const data = new FormData();
+                    Object.keys(formData).forEach(key => {
+                        if (key === 'image' && formData[key]) {
+                            data.append('image', formData[key]);
+                        } else if (formData[key] !== null && formData[key] !== undefined) {
+                            data.append(key, formData[key]);
+                        }
+                    });
+
+                    const config = {
+                        headers: {
+                            'Content-Type': 'multipart/form-data'
+                        }
+                    };
+
+                    if (formData.id) {
+                        // Update existing webinar
+                        const response = await axios.put(`/api/webinars/${formData.id}`, data, config);
+                        setSuccess('Webinar updated successfully!');
+                        setWebinars(webinars.map(w => w.id === formData.id ? { ...w, ...response.data } : w));
+                    } else {
+                        // Create new webinar
+                        const response = await axios.post('/api/webinars', data, config);
+                        setSuccess('Webinar created successfully!');
+                        setWebinars([...webinars, { ...formData, id: response.data.webinarId, slug: response.data.slug }]);
+                    }
+                    handleReset();
+                } catch (err) {
+                    console.error('Error saving webinar:', err);
+                    setError(err.response?.data?.error || 'Failed to save webinar. Please try again.');
+                }
+            };
+
+            // Handle reset
+            const handleReset = () => {
+                setFormData({
+                    id: null,
+                    title: '',
+                    slug: '',
+                    category: '',
+                    subcategory: '',
+                    date: '',
+                    registration_start: '',
+                    registration_end: '',
+                    description: '',
+                    image: null,
+                    imageDescription: '',
+                    imageCaption: '',
+                    imageCaptionLink: '',
+                    youtubeLink: '',
+                    speaker: '',
+                    duration: ''
+                });
+                if (fileInputRef.current) fileInputRef.current.value = '';
+                if (quillRef.current) {
+                    const quill = Quill.find(quillRef.current);
+                    quill.setContents([]);
+                }
+                setError('');
+                setSuccess('');
+                setPreview(false);
+                setSelectedWebinarId(null);
+            };
+
+            // Handle edit
+            const handleEdit = (webinar) => {
+                setFormData({
+                    id: webinar.id,
+                    title: webinar.title,
+                    slug: webinar.slug,
+                    category: webinar.category,
+                    subcategory: webinar.subcategory || '',
+                    date: webinar.date.slice(0, 16),
+                    registration_start: webinar.registration_start.slice(0, 16),
+                    registration_end: webinar.registration_end.slice(0, 16),
+                    description: webinar.description,
+                    image: null,
+                    imageDescription: webinar.imageDescription || '',
+                    imageCaption: webinar.imageCaption || '',
+                    imageCaptionLink: webinar.imageCaptionLink || '',
+                    youtubeLink: webinar.youtubeLink || '',
+                    speaker: webinar.speaker || '',
+                    duration: webinar.duration || ''
+                });
+                if (quillRef.current) {
+                    const quill = Quill.find(quillRef.current);
+                    quill.root.innerHTML = webinar.description;
+                }
+                setPreview(false);
+                setSelectedWebinarId(null);
+            };
+
+            // Handle delete
+            const handleDelete = async (id) => {
+                if (window.confirm('Are you sure you want to delete this webinar? This will also delete all participant data.')) {
+                    try {
+                        await axios.delete(`/api/webinars/${id}`);
+                        setSuccess('Webinar deleted successfully!');
+                        setWebinars(webinars.filter(w => w.id !== id));
+                        if (selectedWebinarId === id) setSelectedWebinarId(null);
+                    } catch (err) {
+                        setError('Failed to delete webinar.');
+                        console.error(err);
+                    }
+                }
+            };
+
+            // Handle view participants
+            const handleViewParticipants = (id) => {
+                setSelectedWebinarId(id);
+            };
+
+            return (
+                <div className="container mx-auto p-6 max-w-4xl">
+                    <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Webinar Admin Panel</h1>
+                    <div className="bg-white shadow-md rounded-lg p-6">
+                        <form onSubmit={handleSubmit} encType="multipart/form-data">
+                            {/* Title */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="title">
+                                    <i className="fas fa-heading mr-2"></i>Title *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                    value={formData.title}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter webinar title"
+                                    required
+                                />
+                            </div>
+
+                            {/* Slug */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="slug">
+                                    <i className="fas fa-link mr-2"></i>Slug *
+                                </label>
+                                <input
+                                    type="text"
+                                    id="slug"
+                                    name="slug"
+                                    value={formData.slug}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Auto-generated from title"
+                                    required
+                                />
+                            </div>
+
+                            {/* Category */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="category">
+                                    <i className="fas fa-list-alt mr-2"></i>Category *
+                                </label>
+                                <select
+                                    id="category"
+                                    name="category"
+                                    value={formData.category}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                >
+                                    <option value="">Select Category</option>
+                                    <option value="Tech">Tech</option>
+                                    <option value="Career">Career</option>
+                                    <option value="Business">Business</option>
+                                </select>
+                            </div>
+
+                            {/* Subcategory */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="subcategory">
+                                    <i className="fas fa-list-ul mr-2"></i>Subcategory
+                                </label>
+                                <select
+                                    id="subcategory"
+                                    name="subcategory"
+                                    value={formData.subcategory}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                >
+                                    <option value="">Select Subcategory</option>
+                                    {formData.category && subcategories[formData.category]?.map(sub => (
+                                        <option key={sub} value={sub}>{sub}</option>
+                                    ))}
+                                </select>
+                            </div>
+
+                            {/* Date and Time */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="date">
+                                    <i className="fas fa-calendar-alt mr-2"></i>Date and Time *
+                                </label>
+                                <input
+                                    type="datetime-local"
+                                    id="date"
+                                    name="date"
+                                    value={formData.date}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+
+                            {/* Registration Start */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="registration_start">
+                                    <i className="fas fa-user-plus mr-2"></i>Registration Start *
+                                </label>
+                                <input
+                                    type="datetime-local"
+                                    id="registration_start"
+                                    name="registration_start"
+                                    value={formData.registration_start}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+
+                            {/* Registration End */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="registration_end">
+                                    <i className="fas fa-user-times mr-2"></i>Registration End *
+                                </label>
+                                <input
+                                    type="datetime-local"
+                                    id="registration_end"
+                                    name="registration_end"
+                                    value={formData.registration_end}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    required
+                                />
+                            </div>
+
+                            {/* Speaker */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="speaker">
+                                    <i className="fas fa-user mr-2"></i>Speaker
+                                </label>
+                                <input
+                                    type="text"
+                                    id="speaker"
+                                    name="speaker"
+                                    value={formData.speaker}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter speaker name"
+                                />
+                            </div>
+
+                            {/* Duration */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="duration">
+                                    <i className="fas fa-clock mr-2"></i>Duration
+                                </label>
+                                <input
+                                    type="text"
+                                    id="duration"
+                                    name="duration"
+                                    value={formData.duration}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="e.g., 1 hour"
+                                />
+                            </div>
+
+                            {/* Rich Text Editor */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2">
+                                    <i className="fas fa-edit mr-2"></i>Description *
+                                </label>
+                                <div ref={quillRef} className="bg-white border rounded"></div>
+                            </div>
+
+                            {/* Image Upload */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="image">
+                                    <i className="fas fa-image mr-2"></i>Upload Image
+                                </label>
+                                <input
+                                    type="file"
+                                    id="image"
+                                    name="image"
+                                    accept="image/*"
+                                    onChange={handleFileChange}
+                                    ref={fileInputRef}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                />
+                            </div>
+
+                            {/* Image Description */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageDescription">
+                                    <i className="fas fa-info-circle mr-2"></i>Image Description
+                                </label>
+                                <textarea
+                                    id="imageDescription"
+                                    name="imageDescription"
+                                    value={formData.imageDescription}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Describe the image for accessibility"
+                                    rows="3"
+                                ></textarea>
+                            </div>
+
+                            {/* Image Caption */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageCaption">
+                                    <i className="fas fa-comment mr-2"></i>Image Caption
+                                </label>
+                                <input
+                                    type="text"
+                                    id="imageCaption"
+                                    name="imageCaption"
+                                    value={formData.imageCaption}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter image caption"
+                                />
+                            </div>
+
+                            {/* Image Caption Link */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageCaptionLink">
+                                    <i className="fas fa-link mr-2"></i>Image Caption Link
+                                </label>
+                                <input
+                                    type="url"
+                                    id="imageCaptionLink"
+                                    name="imageCaptionLink"
+                                    value={formData.imageCaptionLink}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter link for caption (optional)"
+                                />
+                            </div>
+
+                            {/* YouTube Video Link */}
+                            <div className="mb-4">
+                                <label className="block text-gray-700 font-semibold mb-2" htmlFor="youtubeLink">
+                                    <i className="fab fa-youtube mr-2"></i>YouTube Video Link
+                                </label>
+                                <input
+                                    type="url"
+                                    id="youtubeLink"
+                                    name="youtubeLink"
+                                    value={formData.youtubeLink}
+                                    onChange={handleChange}
+                                    className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                    placeholder="Enter YouTube video URL"
+                                />
+                            </div>
+
+                            {/* Error and Success Messages */}
+                            {error && (
+                                <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                                    <i className="fas fa-exclamation-circle mr-2"></i>{error}
+                                </div>
+                            )}
+                            {success && (
+                                <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                                    <i className="fas fa-check-circle mr-2"></i>{success}
+                                </div>
+                            )}
+
+                            {/* Buttons */}
+                            <div className="flex justify-between items-center">
+                                <div>
+                                    <button
+                                        type="submit"
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                                    >
+                                        <i className="fas fa-save mr-2"></i>{formData.id ? 'Update Webinar' : 'Save Webinar'}
+                                    </button>
+                                    <button
+                                        type="button"
+                                        onClick={handleReset}
+                                        className="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+                                    >
+                                        <i className="fas fa-undo mr-2"></i>Reset
+                                    </button>
+                                </div>
+                                <button
+                                    type="button"
+                                    onClick={() => setPreview(!preview)}
+                                    className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                                >
+                                    <i className="fas fa-eye mr-2"></i>{preview ? 'Edit' : 'Preview'}
+                                </button>
+                            </div>
+                        </form>
+
+                        {/* Preview Mode */}
+                        {preview && (
+                            <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-md">
+                                <h2 className="text-2xl font-bold text-gray-800 mb-4">{formData.title}</h2>
+                                <p className="text-gray-600 mb-2">
+                                    <i className="fas fa-list-alt mr-2"></i>{formData.category}{formData.subcategory ? ` | ${formData.subcategory}` : ''} |{' '}
+                                    <i className="fas fa-calendar-alt mr-2"></i>
+                                    {formData.date && new Date(formData.date).toLocaleString('en-GB', {
+                                        day: '2-digit',
+                                        month: 'short',
+                                        year: 'numeric',
+                                        hour: '2-digit',
+                                        minute: '2-digit'
+                                    })}
+                                </p>
+                                <p className="text-gray-600 mb-2">
+                                    <i className="fas fa-user-plus mr-2"></i>Registration: {formData.registration_start && new Date(formData.registration_start).toLocaleString('en-GB')} - {formData.registration_end && new Date(formData.registration_end).toLocaleString('en-GB')}
+                                </p>
+                                {formData.speaker && <p className="text-gray-600 mb-2"><i className="fas fa-user mr-2"></i>Speaker: {formData.speaker}</p>}
+                                {formData.duration && <p className="text-gray-600 mb-2"><i className="fas fa-clock mr-2"></i>Duration: {formData.duration}</p>}
+                                {formData.image && (
+                                    <div className="mb-4">
+                                        <img
+                                            src={URL.createObjectURL(formData.image)}
+                                            alt={formData.imageDescription}
+                                            className="w-full h-64 object-cover rounded"
+                                        />
+                                        {formData.imageCaption && (
+                                            <p className="text-gray-600 mt-2">
+                                                {formData.imageCaptionLink ? (
+                                                    <a href={formData.imageCaptionLink} className="text-blue-500 hover:underline">
+                                                        {formData.imageCaption}
+                                                    </a>
+                                                ) : (
+                                                    formData.imageCaption
+                                                )}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                                <div
+                                    className="prose max-w-none"
+                                    dangerouslySetInnerHTML={{ __html: formData.description }}
+                                ></div>
+                                {formData.youtubeLink && isValidYouTubeUrl(formData.youtubeLink) && (
+                                    <div className="mt-4">
+                                        <iframe
+                                            width="100%"
+                                            height="315"
+                                            src={formData.youtubeLink.replace('watch?v=', 'embed/')}
+                                            title="YouTube video"
+                                            frameBorder="0"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                )}
+                            </div>
+                        )}
+
+                        {/* Existing Webinars */}
+                        <div className="mt-6">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">Existing Webinars</h2>
+                            {webinars.length > 0 ? (
+                                <div className="overflow-x-auto">
+                                    <table className="min-w-full bg-white border rounded">
+                                        <thead>
+                                            <tr>
+                                                <th className="px-4 py-2 border-b">Title</th>
+                                                <th className="px-4 py-2 border-b">Category</th>
+                                                <th className="px-4 py-2 border-b">Subcategory</th>
+                                                <th className="px-4 py-2 border-b">Date</th>
+                                                <th className="px-4 py-2 border-b">Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {webinars.map(webinar => (
+                                                <tr key={webinar.id}>
+                                                    <td className="px-4 py-2 border-b">{webinar.title}</td>
+                                                    <td className="px-4 py-2 border-b">{webinar.category}</td>
+                                                    <td className="px-4 py-2 border-b">{webinar.subcategory || '-'}</td>
+                                                    <td className="px-4 py-2 border-b">
+                                                        {new Date(webinar.date).toLocaleString('en-GB')}
+                                                    </td>
+                                                    <td className="px-4 py-2 border-b">
+                                                        <button
+                                                            onClick={() => handleEdit(webinar)}
+                                                            className="text-blue-500 hover:text-blue-700 mr-2"
+                                                            title="Edit"
+                                                        >
+                                                            <i className="fas fa-edit"></i>
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleDelete(webinar.id)}
+                                                            className="text-red-500 hover:text-red-700 mr-2"
+                                                            title="Delete"
+                                                        >
+                                                            <i className="fas fa-trash"></i>
+                                                        </button>
+                                                        <button
+                                                            onClick={() => handleViewParticipants(webinar.id)}
+                                                            className="text-green-500 hover:text-green-700"
+                                                            title="View Participants"
+                                                        >
+                                                            <i className="fas fa-users"></i>
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            ) : (
+                                <p>No webinars available.</p>
+                            )}
+                        </div>
+
+                        {/* Participants List */}
+                        {selectedWebinarId && (
+                            <div className="mt-6">
+                                <h2 className="text-2xl font-bold text-gray-800 mb-4">Registered Participants</h2>
+                                {participants.length > 0 ? (
+                                    <div className="overflow-x-auto">
+                                        <table className="min-w-full bg-white border rounded">
+                                            <thead>
+                                                <tr>
+                                                    <th className="px-4 py-2 border-b">Name</th>
+                                                    <th className="px-4 py-2 border-b">Email</th>
+                                                    <th className="px-4 py-2 border-b">Phone</th>
+                                                    <th className="px-4 py-2 border-b">Registered At</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {participants.map(participant => (
+                                                    <tr key={participant.id}>
+                                                        <td className="px-4 py-2 border-b">{participant.name}</td>
+                                                        <td className="px-4 py-2 border-b">{participant.email}</td>
+                                                        <td className="px-4 py-2 border-b">{participant.phone || '-'}</td>
+                                                        <td className="px-4 py-2 border-b">
+                                                            {new Date(participant.registered_at).toLocaleString('en-GB')}
+                                                        </td>
+                                                    </tr>
+                                                ))}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                ) : (
+                                    <p>No participants registered for this webinar.</p>
+                                )}
+                            </div>
+                        )}
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<WebinarAdminPanel />, document.getElementById('root'));
+    </script>
+</body>
+</html>

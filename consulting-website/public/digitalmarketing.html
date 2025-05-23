@@ -1,0 +1,1265 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career | Digital Marketing Certification Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* New Color Scheme */
+        :root {
+            --primary: #7c3aed; /* Vivid Purple */
+            --secondary: #14b8a6; /* Teal */
+            --accent: #f472b6; /* Hot Pink */
+            --light: #f9fafb; /* Soft Gray */
+            --dark: #111827; /* Rich Gray */
+            --success: #4b5563; /* Neutral Gray */
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            line-height: 1.8;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            position: relative;
+            min-height: 100vh;
+            background: linear-gradient(135deg, var(--primary) 20%, var(--dark));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('digital-pattern.jpg') center/cover;
+            opacity: 0.1;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+            padding: 2rem;
+        }
+
+        /* Navbar Styles (Fixed for Full-Width) */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(17, 24, 39, 0.95);
+            padding: 1.2rem 2rem;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            display: none; /* Hidden by default on mobile */
+            flex-direction: column;
+            position: absolute;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background: var(--dark);
+            padding: 1.5rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links.active {
+            display: flex; /* Show when active */
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 1.1rem;
+            padding: 0.8rem 0;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .hamburger {
+            display: block;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: white;
+            background: none;
+            border: none;
+            padding: 0.5rem;
+        }
+
+        /* Desktop Navbar (Full-Width Background, Centered Content) */
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                flex-direction: row;
+                position: static;
+                background: none;
+                padding: 0;
+                gap: 2rem;
+            }
+
+            .hamburger {
+                display: none;
+            }
+        }
+
+        .hero {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--dark);
+            padding: 1rem 3rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent);
+            animation: fadeInUp 1.4s ease-out;
+        }
+
+        .cta-button:hover {
+            background: transparent;
+            color: var(--accent);
+            transform: scale(1.05);
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes scaleIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        /* Main Content Styles */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 6px;
+            background: linear-gradient(to right, var(--secondary), var(--accent));
+            margin: 1rem auto 0;
+        }
+
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--success);
+            margin-top: 1rem;
+        }
+
+        /* Why Choose Us Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid transparent;
+            animation: scaleIn 0.5s ease-out;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12);
+            border: 1px solid var(--secondary);
+        }
+
+        .feature-icon {
+            font-size: 3.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.6rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 1.1rem;
+            color: var(--success);
+        }
+
+        /* Course Offerings Section */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 1rem 2.5rem;
+            background: var(--light);
+            border: 2px solid var(--primary);
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        .tab-button:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 3rem;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            animation: slideIn 0.5s ease-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .course-highlights {
+            margin-bottom: 2.5rem;
+        }
+
+        .course-highlights h3 {
+            font-size: 2rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-list {
+            list-style-type: none;
+        }
+
+        .highlight-list li {
+            padding: 0.8rem 0;
+            position: relative;
+            padding-left: 2.5rem;
+            font-size: 1.2rem;
+            color: var(--dark);
+        }
+
+        .highlight-list li::before {
+            content: '✔';
+            color: var(--accent);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+            font-size: 1.3rem;
+        }
+
+        .pricing {
+            background: var(--light);
+            padding: 2.5rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price small {
+            font-size: 1.3rem;
+            font-weight: normal;
+            color: var(--success);
+        }
+
+        /* Syllabus Section */
+        .syllabus-accordion {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .accordion-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1.8rem 2.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background: linear-gradient(135deg, var(--dark), var(--secondary));
+        }
+
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+
+        .accordion-content {
+            background: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out;
+        }
+
+        .accordion-content-inner {
+            padding: 2.5rem;
+        }
+
+        .module-list {
+            list-style-type: none;
+        }
+
+        .module-list li {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.2rem;
+        }
+
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+
+        .module-duration {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .faq-question {
+            background: var(--light);
+            color: var(--dark);
+            padding: 1.8rem 2.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background: #e5e7eb;
+        }
+
+        .faq-answer {
+            background: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease-out, padding 0.4s ease;
+        }
+
+        .faq-answer.active {
+            padding: 2.5rem;
+            max-height: 800px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary);
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style-type: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: #9ca3af;
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255, 255, 255, 0.2);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+            transform: scale(1.1);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #9ca3af;
+            font-size: 1rem;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--secondary);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+
+            .feature-card, .tab-content, .pricing {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-content">
+            <nav aria-label="Main navigation">
+                <div class="nav-container">
+                    <div class="logo">Digital<span>Pulse</span></div>
+                    <button class="hamburger" onclick="toggleMenu()" aria-label="Toggle navigation menu" aria-expanded="false">☰</button>
+                    <div class="nav-links">
+                        <a href="#about">About</a>
+                        <a href="#courses">Courses</a>
+                        <a href="#syllabus">Syllabus</a>
+                        <a href="#faq">FAQ</a>
+                        <a href="#contact">Contact</a>
+                    </div>
+                </div>
+            </nav>
+            
+            <div class="hero">
+                <h1>Amplify Your Career with Digital Marketing</h1>
+                <p>Our cutting-edge certification program equips you with advanced digital marketing strategies, tools, and real-world campaigns to drive business growth.</p>
+                <a href="#courses" class="cta-button">Explore Programs</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Why Choose Us Section -->
+    <section id="about" aria-labelledby="about-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="about-title">Why Choose Our Digital Marketing Program</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Advanced Marketing Strategies</h3>
+                    <p>Master SEO, SEM, social media, and content marketing to create high-impact digital campaigns.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3>Industry Experts</h3>
+                    <p>Learn from top digital marketers who share insights from leading brands and agencies.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🚀</div>
+                    <h3>Real-World Campaigns</h3>
+                    <p>Build a portfolio with live projects like ad campaigns and social media strategies to showcase your expertise.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Comprehensive Curriculum</h3>
+                    <p>Cover all digital marketing channels, from analytics to email marketing, for versatile career paths.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Career Support</h3>
+                    <p>Access resume reviews, mock interviews, and our network of 5,000+ hiring partners in digital marketing.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Recognized Certification</h3>
+                    <p>Earn a Digital Marketing Certification accredited by the Global Marketing Institute, valued globally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Offerings Section -->
+    <section id="courses" aria-labelledby="courses-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="courses-title">Our Digital Marketing Programs</h2>
+            </div>
+            
+            <div class="course-tabs" role="tablist">
+                <button class="tab-button active" onclick="openTab(event, 'beginner')" role="tab" aria-selected="true">Digital Marketing Beginner</button>
+                <button class="tab-button" onclick="openTab(event, 'advanced')" role="tab" aria-selected="false">Advanced Digital Marketing</button>
+                <button class="tab-button" onclick="openTab(event, 'social')" role="tab" aria-selected="false">Social Media Specialist</button>
+                <button class="tab-button" onclick="openTab(event, 'seo')" role="tab" aria-selected="false">SEO Specialist</button>
+            </div>
+            
+            <div id="beginner" class="tab-content active" role="tabpanel">
+                <h3>Digital Marketing Beginner Certification</h3>
+                <p>15-day intensive program for beginners to master the fundamentals of digital marketing and campaign execution.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Introduction to digital marketing</li>
+                        <li>Social media marketing basics</li>
+                        <li>SEO fundamentals</li>
+                        <li>Content marketing essentials</li>
+                        <li>Email marketing basics</li>
+                        <li>Analytics and reporting</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="advanced" class="tab-content" role="tabpanel">
+                <h3>Advanced Digital Marketing Masterclass</h3>
+                <p>15-day intensive program to become a proficient digital marketer with advanced strategies.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Advanced SEO techniques</li>
+                        <li>PPC advertising</li>
+                        <li>Social media advertising</li>
+                        <li>Marketing automation</li>
+                        <li>Conversion rate optimization</li>
+                        <li>Data-driven marketing</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="social" class="tab-content" role="tabpanel">
+                <h3>Social Media Specialist Program</h3>
+                <p>15-day program focused on mastering social media marketing strategies.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Social media strategy development</li>
+                        <li>Content creation for platforms</li>
+                        <li>Paid social campaigns</li>
+                        <li>Influencer marketing</li>
+                        <li>Social media analytics</li>
+                        <li>Community management</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="seo" class="tab-content" role="tabpanel">
+                <h3>SEO Specialist Program</h3>
+                <p>15-day program for mastering search engine optimization techniques.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Keyword research and analysis</li>
+                        <li>On-page SEO techniques</li>
+                        <li>Off-page SEO strategies</li>
+                        <li>Technical SEO</li>
+                        <li>SEO analytics and tools</li>
+                        <li>Local SEO</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Syllabus Section -->
+    <section id="syllabus" aria-labelledby="syllabus-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="syllabus-title">Detailed Program Syllabus</h2>
+                <p>Below is the complete curriculum for our flagship Digital Marketing Beginner Certification</p>
+            </div>
+            
+            <div class="syllabus-accordion" role="region" aria-label="Syllabus details">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="module1">
+                        <h3>Module 1: Digital Marketing Fundamentals</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="module1" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to digital marketing <span class="module-duration">2 hours</span></li>
+                                <li>Digital marketing channels <span class="module-duration">2 hours</span></li>
+                                <li>Marketing funnel basics <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Digital campaign for a startup <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Define campaign objectives <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="module2">
+                        <h3>Module 2: Social Media Marketing</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="module2" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Social media platforms overview <span class="module-duration">2 hours</span></li>
+                                <li>Creating engaging content <span class="module-duration">2 hours</span></li>
+                                <li>Basic social media ads <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Social campaign for a retailer <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Design a social media post <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="module3">
+                        <h3>Module 3: SEO Fundamentals</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="module3" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to SEO <span class="module-duration">2 hours</span></li>
+                                <li>Keyword research basics <span class="module-duration">2 hours</span></li>
+                                <li>On-page SEO essentials <span class="module-duration">2 hours</span></li>
+                                <li>Case study: SEO for a blog <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Conduct keyword research <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="module4">
+                        <h3>Module 4: Content Marketing</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="module4" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Content marketing strategies <span class="module-duration">2 hours</span></li>
+                                <li>Blog writing basics <span class="module-duration">2 hours</span></li>
+                                <li>Content distribution <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Content plan for a brand <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Write a blog post <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="module5">
+                        <h3>Module 5: Email Marketing</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="module5" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Email marketing basics <span class="module-duration">2 hours</span></li>
+                                <li>Building email campaigns <span class="module-duration">2 hours</span></li>
+                                <li>Email analytics <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Email campaign for an e-commerce <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Design an email campaign <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)" role="button" aria-expanded="false" aria-controls="capstone">
+                        <h3>Capstone Project</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div id="capstone" class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Project planning and scoping <span class="module-duration">2 hours</span></li>
+                                <li>Developing a digital marketing campaign <span class="module-duration">4 hours</span></li>
+                                <li>Campaign analysis and optimization <span class="module-duration">3 hours</span></li>
+                                <li>Presentation preparation <span class="module-duration">2 hours</span></li>
+                                <li>Final presentation and feedback <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" aria-labelledby="faq-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="faq-title">Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-container" role="region" aria-label="Frequently asked questions">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq1">
+                        <h3>Who is this program designed for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq1" class="faq-answer">
+                        <p>Our Digital Marketing Beginner program is designed for:</p>
+                        <ul>
+                            <li>Complete beginners with no marketing experience</li>
+                            <li>Career changers entering digital marketing</li>
+                            <li>Business owners seeking to grow online</li>
+                            <li>Professionals adding digital skills</li>
+                            <li>Students preparing for marketing careers</li>
+                        </ul>
+                        <p>No prior marketing knowledge is required.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq2">
+                        <h3>What is the time commitment required?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq2" class="faq-answer">
+                        <p>The 15-day Beginner program requires approximately 4-5 hours per day:</p>
+                        <ul>
+                            <li>2 hours of live sessions (recordings available)</li>
+                            <li>1-2 hours of video tutorials and readings</li>
+                            <li>1-2 hours for projects and assignments</li>
+                        </ul>
+                        <p>Designed for intensive learning over a short period.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq3">
+                        <h3>What kind of certification will I receive?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq3" class="faq-answer">
+                        <p>Upon successful completion (80%+ overall score), you'll receive:</p>
+                        <ul>
+                            <li>Digital Marketing Beginner Certification from GRP Career</li>
+                            <li>Verified digital badge for LinkedIn and portfolios</li>
+                            <li>PDF certificate with unique verification code</li>
+                            <li>Transcript of completed modules</li>
+                        </ul>
+                        <p>Recognized by employers worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq4">
+                        <h3>What are the technical requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq4" class="faq-answer">
+                        <p>You'll need:</p>
+                        <ul>
+                            <li>Reliable internet (5Mbps+ recommended)</li>
+                            <li>Computer with 8GB RAM minimum</li>
+                            <li>Modern browser (Chrome, Firefox)</li>
+                            <li>Basic office software (e.g., MS Office, Google Suite)</li>
+                            <li>Zoom for live sessions</li>
+                        </ul>
+                        <p>All software used is free or widely available.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq5">
+                        <h3>Is financial aid or payment plans available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq5" class="faq-answer">
+                        <p>We offer:</p>
+                        <ul>
+                            <li>Payment plans (3-6 monthly installments)</li>
+                            <li>Need-based scholarships (apply separately)</li>
+                            <li>Group discounts (10% off for 3+ enrollments)</li>
+                            <li>Alumni discounts for returning learners</li>
+                        </ul>
+                        <p>Contact admissions for details.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)" role="button" aria-expanded="false" aria-controls="faq6">
+                        <h3>What is your refund policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div id="faq6" class="faq-answer">
+                        <p>Our refund policy:</p>
+                        <ul>
+                            <li>100% refund before program start</li>
+                            <li>75% refund within 3 days of start</li>
+                            <li>50% refund within 5 days of start</li>
+                            <li>No refunds after 5 days</li>
+                        </ul>
+                        <p>Submit requests in writing; special cases considered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" aria-labelledby="contact-title">
+        <div class="container">
+            <div class="section-title">
+                <h2 id="contact-title">Ready to Start Your Digital Marketing Journey?</h2>
+                <p>Have questions or need help choosing a program? Our team is here to guide you.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 3rem;">
+                <a href="/cdn-cgi/l/email-protection#4d24232b220d2a3f3d2e2c3f28283f632e2220" class="cta-button">Email Us</a>
+                <a href="tel:+919643058418" class="cta-button" style="background: var(--primary); border-color: var(--primary); margin-left: 2rem;">Call Us</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer aria-label="Footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GRP Career</h3>
+                    <p>Empowering professionals with cutting-edge digital marketing skills through hands-on training and real-world campaigns.</p>
+                    <div class="social-links">
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Programs</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Digital Marketing Beginner</a></li>
+                        <li><a href="#">Advanced Digital Marketing</a></li>
+                        <li><a href="#">Social Media Specialist</a></li>
+                        <li><a href="#">SEO Specialist</a></li>
+                        <li><a href="#">Corporate Training</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Marketing Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Career Guides</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Instructors</a></li>
+                        <li><a href="#">Alumni Stories</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>© 2025 GRP Career. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scroll to Top Button -->
+    <div class="scroll-top" onclick="scrollToTop()" aria-label="Scroll to top">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            const tabButtons = document.getElementsByClassName("tab-button");
+            
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+                tabContents[i].setAttribute("aria-hidden", "true");
+            }
+            
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+                tabButtons[i].setAttribute("aria-selected", "false");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            document.getElementById(tabName).setAttribute("aria-hidden", "false");
+            evt.currentTarget.classList.add("active");
+            evt.currentTarget.setAttribute("aria-selected", "true");
+        }
+        
+        // Accordion functionality for syllabus
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            const isExpanded = header.getAttribute("aria-expanded") === "true";
+            
+            // Close all other accordions
+            const allHeaders = document.querySelectorAll('.accordion-header');
+            allHeaders.forEach(h => {
+                const c = h.nextElementSibling;
+                const i = h.querySelector('.accordion-icon');
+                if (h !== header) {
+                    c.style.maxHeight = null;
+                    i.textContent = '+';
+                    h.setAttribute("aria-expanded", "false");
+                }
+            });
+            
+            if (!isExpanded) {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.textContent = '−';
+                header.setAttribute("aria-expanded", "true");
+            } else {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+                header.setAttribute("aria-expanded", "false");
+            }
+        }
+        
+        // FAQ toggle functionality
+        function toggleFaq(question) {
+            const item = question.parentElement;
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector('.faq-toggle');
+            const isExpanded = question.getAttribute("aria-expanded") === "true";
+            
+            // Close all other FAQs
+            const allQuestions = document.querySelectorAll('.faq-question');
+            allQuestions.forEach(q => {
+                const a = q.nextElementSibling;
+                const t = q.querySelector('.faq-toggle');
+                if (q !== question) {
+                    a.classList.remove('active');
+                    t.textContent = '+';
+                    q.setAttribute("aria-expanded", "false");
+                }
+            });
+            
+            if (!isExpanded) {
+                answer.classList.add('active');
+                toggle.textContent = '−';
+                question.setAttribute("aria-expanded", "true");
+            } else {
+                answer.classList.remove('active');
+                toggle.textContent = '+';
+                question.setAttribute("aria-expanded", "false");
+            }
+        }
+        
+        // Hamburger menu toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            const hamburger = document.querySelector('.hamburger');
+            const isExpanded = hamburger.getAttribute('aria-expanded') === 'true';
+            
+            navLinks.classList.toggle('active');
+            hamburger.setAttribute('aria-expanded', !isExpanded);
+            hamburger.textContent = isExpanded ? '☰' : '✕';
+        }
+        
+        // Scroll to top functionality
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Show/hide scroll-to-top button
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.querySelector('.scroll-top');
+            if (window.scrollY > 300) {
+                scrollTop.classList.add('active');
+            } else {
+                scrollTop.classList.remove('active');
+            }
+        });
+        
+        // Add scrolled class to nav on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+            } else {
+                nav.classList.remove('scrolled');
+            }
+        });
+    </script>
+</body>
+</html>

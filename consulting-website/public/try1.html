@@ -1,0 +1,41 @@
+<button id="chatbot-toggle" style="position: fixed; bottom: 30px; right: 30px; padding: 15px; background: linear-gradient(135deg, #5e72e4, #825ee4); border: none; border-radius: 50%; cursor: pointer; z-index: 999; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+  </svg>
+</button>
+
+<div id="chatbot-container" class="chatbot-popup">
+  <div id="chatbot-header">
+    <div class="header-content">
+      <div class="avatar">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <path d="M12 16v-4"></path>
+          <path d="M12 8h.01"></path>
+        </svg>
+      </div>
+      <div class="header-text">
+        <h4>GRP Career Assistant</h4>
+        <span class="status">Online</span>
+      </div>
+    </div>
+    <button id="chatbot-close">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18"></line>
+        <line x1="6" y1="6" x2="18" y2="18"></line>
+      </svg>
+    </button>
+  </div>
+  <div id="chatbot-messages"></div>
+  <div id="chatbot-input">
+    <input type="text" id="user-input" placeholder="Type your message...">
+    <button id="send-message">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="22" y1="2" x2="11" y2="13"></line>
+        <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+      </svg>
+    </button>
+  </div>
+</div>
+<link href="/css/chatbot.css" rel="stylesheet">
+<script src="/js/chatbot.js"></script>

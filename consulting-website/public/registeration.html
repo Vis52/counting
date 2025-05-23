@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - Register Now</title>
+    <meta content="registration, join grp career, student, professional, company" name="keywords">
+    <meta content="Register with GRP Career as a Student, Working Professional, or Company. Submit your details to connect with our team for opportunities and support!" name="description">
+
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://unpkg.com/aos@2.3.1/dist/aos.css" as="style">
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1D4ED8',
+                        secondary: '#1E40AF',
+                        accent: '#F59E0B',
+                        dark: '#111827',
+                        light: '#F9FAFB',
+                        success: '#10B981',
+                        vibrant: '#EC4899',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'float-logo': 'floatLogo 4s ease-in-out infinite',
+                        'scale-up': 'scaleUp 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'fade-slide': 'fadeSlide 0.5s ease-out',
+                        'glow': 'glow 1.5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        floatLogo: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.05)' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        fadeSlide: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glow: {
+                            '0%, 100%': { boxShadow: '0 0 5px rgba(236, 72, 153, 0.5)' },
+                            '50%': { boxShadow: '0 0 20px rgba(236, 72, 153, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base styles */
+        .hero-gradient { background: linear-gradient(135deg, rgba(29, 78, 216, 0.95) 0%, rgba(30, 64, 175, 0.95) 100%); }
+        .gradient-text { background: linear-gradient(90deg, #1D4ED8 0%, #F59E0B 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        /* Performance optimizations */
+        .card, [data-aos] {
+            will-change: transform, opacity;
+            backface-visibility: hidden;
+            perspective: 1000px;
+            transform: translateZ(0);
+        }
+        
+        /* Card hover effects */
+        .card {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+        }
+        .card:hover { 
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        /* Form styles */
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #1D4ED8;
+            box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.2);
+        }
+        .help-block.text-danger {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+        .control-group {
+            margin-bottom: 1.5rem;
+        }
+        #sendMessageButton {
+            background-color: #1D4ED8;
+            color: #fff;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        #sendMessageButton:hover {
+            background-color: #1E40AF;
+            transform: translateY(-2px);
+        }
+        #sendMessageButton:active {
+            transform: translateY(1px);
+        }
+        #sendMessageButton:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+        .form-success-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        .form-success-popup.active {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+        }
+        .popup-content {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            gap: 10px;
+        }
+        .popup-content p {
+            margin: 0;
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+        .green-tick {
+            stroke-dasharray: 50;
+            stroke-dashoffset: 50;
+            animation: draw-tick 0.5s ease forwards;
+        }
+        @keyframes draw-tick {
+            to { stroke-dashoffset: 0; }
+        }
+
+        /* Mobile optimizations */
+        @media (max-width: 768px) {
+            .form-success-popup { width: 90%; }
+            .control-group { margin-bottom: 1rem; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                        <i class="ri-user-add-line text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-dark">GRP <span class="gradient-text">Career</span></span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#home" class="nav-link text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#register" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover flex items-center">
+                        <i class="ri-mail-send-line mr-2"></i> Register Now
+                    </a>
+                </div>
+                <button aria-label="Toggle mobile menu" class="lg:hidden text-dark focus:outline-none" id="mobile-menu-button">
+                    <i class="ri-menu-line text-2xl"></i>
+                </button>
+            </div>
+            <div class="lg:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#register" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Register Now</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="pt-32 pb-20 bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center" data-aos="fade-up" data-aos-offset="300" data-aos-duration="1000">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">JOIN US TODAY</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-serif">Register with GRP Career</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">Connect with GRP Career as a Student, Working Professional, or Company. Submit your details to explore opportunities, receive support, or partner with us!</p>
+                <a href="#register" class="bg-primary text-white px-8 py-3.5 rounded-lg font-medium hover:bg-secondary transition btn-hover inline-flex items-center">
+                    <i class="ph-rocket-launch mr-2"></i> Get Started
+                </a>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image: url('https://images.undraw.co/uploads/illustrations/premium/undraw_sign_up_n6im.svg'); background-size: cover; background-position: center;"></div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section id="register" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-gradient-to-r from-primary/5 to-secondary/5 p-8 rounded-xl shadow-sm">
+                <div class="text-center mb-8" data-aos="fade-up">
+                    <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">CONTACT US</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Register Now</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Fill out the form below to register with GRP Career. Whether you're a student, professional, or company, our team will connect with you within 24 hours.</p>
+                </div>
+                <div id="form-success-popup" class="form-success-popup">
+                    <div class="popup-content">
+                        <svg class="green-tick" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="3">
+                            <path d="M20 6L9 17l-5-5"></path>
+                        </svg>
+                        <p>Your data is stored</p>
+                    </div>
+                </div>
+                <form id="contactForm" action="/submit-contact" method="POST" enctype="multipart/form-data" class="space-y-4" data-aos="fade-up">
+                    <!-- User Type Selection -->
+                    <div class="control-group">
+                        <label for="user-type" class="block text-sm font-medium text-gray-700 mb-1">I am a:</label>
+                        <select class="form-control" id="user-type" name="user_type" required aria-describedby="user-type-error" aria-required="true">
+                            <option value="">Select User Type</option>
+                            <option value="student">Student/Fresher</option>
+                            <option value="professional">Working Professional</option>
+                            <option value="company">Company</option>
+                        </select>
+                        <p id="user-type-error" class="help-block text-danger"></p>
+                    </div>
+                    <!-- Common Fields -->
+                    <div class="control-group">
+                        <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Full Name*</label>
+                        <input type="text" class="form-control" name="name" id="name" placeholder="Your Name" required
+                               data-validation-required-message="Please enter your name" aria-describedby="name-error" aria-required="true" />
+                        <p id="name-error" class="help-block text-danger"></p>
+                    </div>
+                    <div class="control-group">
+                        <label for="email" class="block text-sm font-medium text-gray-700 mb-1">Email Address*</label>
+                        <input type="email" class="form-control" name="email" id="email" placeholder="Your Email" required
+                               data-validation-required-message="Please enter your email" aria-describedby="email-error" aria-required="true" />
+                        <p id="email-error" class="help-block text-danger"></p>
+                    </div>
+                    <!-- Student/Fresher Form -->
+                    <div class="user-specific" id="student-form" style="display: none;">
+                        <div class="control-group">
+                            <label for="requirements_student" class="block text-sm font-medium text-gray-700 mb-1">Job Requirements (Optional)</label>
+                            <input type="text" class="form-control" name="student_requirements" id="requirements_student"
+                                   placeholder="Job Requirements (e.g., role, industry)" aria-describedby="requirements-student-error" />
+                            <p id="requirements-student-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="expected_ctc" class="block text-sm font-medium text-gray-700 mb-1">Expected CTC (in LPA, Optional)</label>
+                            <input type="number" class="form-control" name="expected_ctc" id="expected_ctc"
+                                   placeholder="Expected CTC (in LPA)" aria-describedby="expected-ctc-error" />
+                            <p id="expected-ctc-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="linkedin_student" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn Profile URL*</label>
+                            <input type="url" class="form-control" name="linkedin_student" id="linkedin_student"
+                                   placeholder="LinkedIn Profile URL" required data-required="true" aria-describedby="linkedin-student-error" aria-required="true" />
+                            <p id="linkedin-student-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="phone_student" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                            <input type="tel" class="form-control" name="phone_student" id="phone_student"
+                                   placeholder="Phone Number" required data-required="true" aria-describedby="phone-student-error" aria-required="true" />
+                            <p id="phone-student-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="resume_student" class="block text-sm font-medium text-gray-700 mb-1">Resume (PDF, DOC, DOCX)*</label>
+                            <input type="file" class="form-control" name="resume_student" id="resume_student"
+                                   accept=".pdf,.doc,.docx" required data-required="true" aria-describedby="resume-student-error" aria-required="true" />
+                            <p id="resume-student-error" class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <!-- Working Professional Form -->
+                    <div class="user-specific" id="professional-form" style="display: none;">
+                        <div class="control-group">
+                            <label for="current_salary" class="block text-sm font-medium text-gray-700 mb-1">Current Salary (in LPA)*</label>
+                            <input type="number" class="form-control" name="current_salary" id="current_salary"
+                                   placeholder="Current Salary (in LPA)" required data-required="true" aria-describedby="current-salary-error" aria-required="true" />
+                            <p id="current-salary-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="notice_period" class="block text-sm font-medium text-gray-700 mb-1">Notice Period (e.g., 30 days)*</label>
+                            <input type="text" class="form-control" name="notice_period" id="notice_period"
+                                   placeholder="Notice Period (e.g., 30 days)" required data-required="true" aria-describedby="notice-period-error" aria-required="true" />
+                            <p id="notice-period-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="requirements_professional" class="block text-sm font-medium text-gray-700 mb-1">Job Requirements (Optional)</label>
+                            <input type="text" class="form-control" name="professional_requirements" id="requirements_professional"
+                                   placeholder="Job Requirements (e.g., role, industry)" aria-describedby="requirements-professional-error" />
+                            <p id="requirements-professional-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="linkedin_professional" class="block text-sm font-medium text-gray-700 mb-1">LinkedIn Profile URL*</label>
+                            <input type="url" class="form-control" name="linkedin_professional" id="linkedin_professional"
+                                   placeholder="LinkedIn Profile URL" required data-required="true" aria-describedby="linkedin-professional-error" aria-required="true" />
+                            <p id="linkedin-professional-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="phone_professional" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                            <input type="tel" class="form-control" name="phone_professional" id="phone_professional"
+                                   placeholder="Phone Number" required data-required="true" aria-describedby="phone-professional-error" aria-required="true" />
+                            <p id="phone-professional-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="resume_professional" class="block text-sm font-medium text-gray-700 mb-1">Resume (PDF, DOC, DOCX)*</label>
+                            <input type="file" class="form-control" name="resume_professional" id="resume_professional"
+                                   accept=".pdf,.doc,.docx" required data-required="true" aria-describedby="resume-professional-error" aria-required="true" />
+                            <p id="resume-professional-error" class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <!-- Company Form -->
+                    <div class="user-specific" id="company-form" style="display: none;">
+                        <div class="control-group">
+                            <label for="company_name" class="block text-sm font-medium text-gray-700 mb-1">Company Name*</label>
+                            <input type="text" class="form-control" name="company_name" id="company_name"
+                                   placeholder="Company Name" required data-required="true" aria-describedby="company-name-error" aria-required="true" />
+                            <p id="company-name-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="contact_person" class="block text-sm font-medium text-gray-700 mb-1">Contact Person*</label>
+                            <input type="text" class="form-control" name="contact_person" id="contact_person"
+                                   placeholder="Contact Person" required data-required="true" aria-describedby="contact-person-error" aria-required="true" />
+                            <p id="contact-person-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="phone_company" class="block text-sm font-medium text-gray-700 mb-1">Phone Number*</label>
+                            <input type="tel" class="form-control" name="phone" id="phone_company"
+                                   placeholder="Phone Number" required data-required="true" aria-describedby="phone-company-error" aria-required="true" />
+                            <p id="phone-company-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="job_roles" class="block text-sm font-medium text-gray-700 mb-1">Job Role(s)*</label>
+                            <input type="text" class="form-control" name="job_roles" id="job_roles"
+                                   placeholder="Job Role(s)" required data-required="true" aria-describedby="job-roles-error" aria-required="true" />
+                            <p id="job-roles-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="vacancies" class="block text-sm font-medium text-gray-700 mb-1">Number of Vacancies*</label>
+                            <input type="number" class="form-control" name="vacancies" id="vacancies"
+                                   placeholder="Number of Vacancies" required data-required="true" aria-describedby="vacancies-error" aria-required="true" />
+                            <p id="vacancies-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="job_description" class="block text-sm font-medium text-gray-700 mb-1">Job Description*</label>
+                            <textarea class="form-control" name="job_description" id="job_description"
+                                      placeholder="Job Description" required data-required="true" aria-describedby="job-description-error" aria-required="true"></textarea>
+                            <p id="job-description-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="qualifications" class="block text-sm font-medium text-gray-700 mb-1">Required Qualifications*</label>
+                            <input type="text" class="form-control" name="qualifications" id="qualifications"
+                                   placeholder="Required Qualifications" required data-required="true" aria-describedby="qualifications-error" aria-required="true" />
+                            <p id="qualifications-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="experience" class="block text-sm font-medium text-gray-700 mb-1">Experience Needed (e.g., 2-5 years)*</label>
+                            <input type="text" class="form-control" name="experience" id="experience"
+                                   placeholder="Experience Needed (e.g., 2-5 years)" required data-required="true" aria-describedby="experience-error" aria-required="true" />
+                            <p id="experience-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="location" class="block text-sm font-medium text-gray-700 mb-1">Location*</label>
+                            <input type="text" class="form-control" name="location" id="location"
+                                   placeholder="Location" required data-required="true" aria-describedby="location-error" aria-required="true" />
+                            <p id="location-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="additional_notes" class="block text-sm font-medium text-gray-700 mb-1">Additional Notes (Optional)</label>
+                            <textarea class="form-control" name="additional_notes" id="additional_notes"
+                                      placeholder="Additional Notes (if any)" aria-describedby="additional-notes-error"></textarea>
+                            <p id="additional-notes-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="website" class="block text-sm font-medium text-gray-700 mb-1">Company Website*</label>
+                            <input type="url" class="form-control" name="website" id="website"
+                                   placeholder="Company Website" required data-required="true" aria-describedby="website-error" aria-required="true" />
+                            <p id="website-error" class="help-block text-danger"></p>
+                        </div>
+                        <div class="control-group">
+                            <label for="job_doc" class="block text-sm font-medium text-gray-700 mb-1">Job Document (PDF, DOC, DOCX)*</label>
+                            <input type="file" class="form-control" name="job_doc" id="job_doc"
+                                   accept=".pdf,.doc,.docx" required data-required="true" aria-describedby="job-doc-error" aria-required="true" />
+                            <p id="job-doc-error" class="help-block text-danger"></p>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="btn" type="submit" id="sendMessageButton" aria-label="Submit form">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">GRP Career</h3>
+                    <p class="text-gray-400 mb-4">GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784) connects students, professionals, and companies for opportunities and growth.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/share/16egu8TAQ3/" class="text-gray-400 hover:text-white transition"><i class="ri-facebook-fill"></i></a>
+                        <a href="https://www.twitter.com" class="text-gray-400 hover:text-white transition"><i class="ri-twitter-fill"></i></a>
+                        <a href="https://www.linkedin.com/in/grp-career-548736359/" class="text-gray-400 hover:text-white transition"><i class="ri-linkedin-fill"></i></a>
+                        <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA==" class="text-gray-400 hover:text-white transition"><i class="ri-instagram-fill"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="ph-map-pin text-accent mr-3 mt-1"></i>
+                            <a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank" class="text-gray-400 hover:text-white transition">2nd Floor, A-55, Sec-02, Noida G.B Nagar (U.P) - 201301</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ph-phone text-accent mr-3"></i>
+                            <span class="text-gray-400">+91 9643058418, 01204097776</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ph-envelope text-accent mr-3"></i>
+                            <a href="mailto:info@grpcareer.in" class="text-gray-400 hover:text-white transition">info@grpcareer.in</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">© 2025 GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784). All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Privacy Policy</a>
+                    <span class="text-gray-400">|</span>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js" defer></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize AOS
+            AOS.init({
+                duration: 800,
+                once: true,
+                offset: 120,
+                delay: 50,
+                easing: 'ease-out-quad',
+                disable: window.innerWidth < 768
+            });
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Smooth Scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                });
+            });
+
+            // Form Handling
+            const userTypeSelect = document.getElementById('user-type');
+            const contactForm = document.getElementById('contactForm');
+            const successPopup = document.getElementById('form-success-popup');
+
+            // Form type switching
+            userTypeSelect.addEventListener('change', function() {
+                const userType = this.value;
+                // Hide all form sections and clear errors
+                document.querySelectorAll('.user-specific').forEach(form => {
+                    form.style.display = 'none';
+                    form.querySelectorAll('[required]').forEach(input => {
+                        input.required = false;
+                    });
+                });
+                document.querySelectorAll('.help-block.text-danger').forEach(block => {
+                    block.textContent = '';
+                });
+
+                // Show selected form and enable required fields
+                if (userType) {
+                    const selectedForm = document.getElementById(`${userType}-form`);
+                    selectedForm.style.display = 'block';
+                    selectedForm.querySelectorAll('[data-required="true"]').forEach(input => {
+                        input.required = true;
+                    });
+                }
+            });
+
+            // Store original required state
+            document.querySelectorAll('input[required], textarea[required], select[required]').forEach(input => {
+                input.setAttribute('data-required', 'true');
+            });
+
+            // Validation functions
+            function validateLinkedInUrl(url) {
+                return /^https?:\/\/(www\.)?linkedin\.com\/in\/[a-zA-Z0-9-]+\/?$/.test(url);
+            }
+
+            function validateFileSize(fileInput) {
+                const maxSize = 5 * 1024 * 1024; // 5MB
+                if (fileInput.files.length && fileInput.files[0].size > maxSize) {
+                    fileInput.nextElementSibling.textContent = 'File size must be less than 5MB';
+                    return false;
+                }
+                return true;
+            }
+
+            function validatePhone(phone) {
+                return /^[\d\s\-()+]{10,}$/.test(phone);
+            }
+
+            function validateUrl(url) {
+                return /^https?:\/\/[^\s/$.?#].[^\s]*$/.test(url);
+            }
+
+            // Form validation
+            function validateForm() {
+                let isValid = true;
+                const userType = userTypeSelect.value;
+
+                // Clear previous errors
+                document.querySelectorAll('.help-block.text-danger').forEach(block => {
+                    block.textContent = '';
+                });
+
+                // Common validations
+                const name = document.getElementById('name');
+                if (!name.value.trim()) {
+                    name.nextElementSibling.textContent = 'Please enter your name';
+                    isValid = false;
+                }
+
+                const email = document.getElementById('email');
+                if (!email.value.trim()) {
+                    email.nextElementSibling.textContent = 'Please enter your email';
+                    isValid = false;
+                } else if (!/^\S+@\S+\.\S+$/.test(email.value)) {
+                    email.nextElementSibling.textContent = 'Please enter a valid email address';
+                    isValid = false;
+                }
+
+                // User-type-specific validations
+                if (userType === 'student') {
+                    const linkedin = document.getElementById('linkedin_student');
+                    if (!linkedin.value.trim()) {
+                        linkedin.nextElementSibling.textContent = 'Please enter your LinkedIn URL';
+                        isValid = false;
+                    } else if (!validateLinkedInUrl(linkedin.value)) {
+                        linkedin.nextElementSibling.textContent = 'Please enter a valid LinkedIn URL';
+                        isValid = false;
+                    }
+
+                    const phone = document.getElementById('phone_student');
+                    if (!phone.value.trim()) {
+                        phone.nextElementSibling.textContent = 'Please enter your phone number';
+                        isValid = false;
+                    } else if (!validatePhone(phone.value)) {
+                        phone.nextElementSibling.textContent = 'Please enter a valid phone number';
+                        isValid = false;
+                    }
+
+                    const resume = document.getElementById('resume_student');
+                    if (!resume.files.length) {
+                        resume.nextElementSibling.textContent = 'Please upload your resume';
+                        isValid = false;
+                    } else if (!validateFileSize(resume)) {
+                        isValid = false;
+                    }
+
+                    const expectedCtc = document.getElementById('expected_ctc');
+                    if (expectedCtc.value && expectedCtc.value < 0) {
+                        expectedCtc.nextElementSibling.textContent = 'Expected CTC cannot be negative';
+                        isValid = false;
+                    }
+                } else if (userType === 'professional') {
+                    const fields = {
+                        'current_salary': 'Please enter your current salary',
+                        'notice_period': 'Please enter your notice period',
+                        'linkedin_professional': 'Please enter your LinkedIn URL',
+                        'phone_professional': 'Please enter your phone number',
+                        'resume_professional': 'Please upload your resume'
+                    };
+
+                    for (const [field, message] of Object.entries(fields)) {
+                        const element = document.getElementById(field);
+                        if ((element.type === 'file' && !element.files.length) || (element.type !== 'file' && !element.value.trim())) {
+                            element.nextElementSibling.textContent = message;
+                            isValid = false;
+                        }
+                    }
+
+                    const linkedin = document.getElementById('linkedin_professional');
+                    if (linkedin.value && !validateLinkedInUrl(linkedin.value)) {
+                        linkedin.nextElementSibling.textContent = 'Please enter a valid LinkedIn URL';
+                        isValid = false;
+                    }
+
+                    const phone = document.getElementById('phone_professional');
+                    if (phone.value && !validatePhone(phone.value)) {
+                        phone.nextElementSibling.textContent = 'Please enter a valid phone number';
+                        isValid = false;
+                    }
+
+                    const resume = document.getElementById('resume_professional');
+                    if (resume.files.length && !validateFileSize(resume)) {
+                        isValid = false;
+                    }
+
+                    const currentSalary = document.getElementById('current_salary');
+                    if (currentSalary.value && currentSalary.value < 0) {
+                        currentSalary.nextElementSibling.textContent = 'Current salary cannot be negative';
+                        isValid = false;
+                    }
+                } else if (userType === 'company') {
+                    const fields = {
+                        'company_name': 'Please enter the company name',
+                        'contact_person': 'Please enter the contact person',
+                        'phone_company': 'Please enter the phone number',
+                        'job_roles': 'Please enter the job role(s)',
+                        'vacancies': 'Please enter the number of vacancies',
+                        'job_description': 'Please enter the job description',
+                        'qualifications': 'Please enter the required qualifications',
+                        'experience': 'Please enter the experience needed',
+                        'location': 'Please enter the location',
+                        'website': 'Please enter the company website',
+                        'job_doc': 'Please upload the job document'
+                    };
+
+                    for (const [field, message] of Object.entries(fields)) {
+                        const element = document.getElementById(field);
+                        if ((element.type === 'file' && !element.files.length) || (element.type !== 'file' && !element.value.trim())) {
+                            element.nextElementSibling.textContent = message;
+                            isValid = false;
+                        }
+                    }
+
+                    const phone = document.getElementById('phone_company');
+                    if (phone.value && !validatePhone(phone.value)) {
+                        phone.nextElementSibling.textContent = 'Please enter a valid phone number';
+                        isValid = false;
+                    }
+
+                    const website = document.getElementById('website');
+                    if (website.value && !validateUrl(website.value)) {
+                        website.nextElementSibling.textContent = 'Please enter a valid URL';
+                        isValid = false;
+                    }
+
+                    const jobDoc = document.getElementById('job_doc');
+                    if (jobDoc.files.length && !validateFileSize(jobDoc)) {
+                        isValid = false;
+                    }
+
+                    const vacancies = document.getElementById('vacancies');
+                    if (vacancies.value && vacancies.value <= 0) {
+                        vacancies.nextElementSibling.textContent = 'Number of vacancies must be greater than 0';
+                        isValid = false;
+                    }
+                } else {
+                    userTypeSelect.nextElementSibling.textContent = 'Please select a user type';
+                    isValid = false;
+                }
+
+                return isValid;
+            }
+
+            // Form submission
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                if (!validateForm()) {
+                    return;
+                }
+
+                const submitButton = document.getElementById('sendMessageButton');
+                submitButton.disabled = true;
+                submitButton.textContent = 'Submitting...';
+
+                // Simulate form submission (since /submit-contact isn't available)
+                setTimeout(() => {
+                    successPopup.classList.add('active');
+                    setTimeout(() => {
+                        successPopup.classList.remove('active');
+                    }, 3000);
+                    contactForm.reset();
+                    document.querySelectorAll('.user-specific').forEach(form => {
+                        form.style.display = 'none';
+                    });
+                    document.querySelectorAll('.help-block.text-danger').forEach(block => {
+                        block.textContent = '';
+                    });
+                    submitButton.disabled = false;
+                    submitButton.textContent = 'Send Message';
+                }, 1000);
+            });
+
+            // Optimize animations on resize
+            let resizeTimer;
+            window.addEventListener('resize', function() {
+                clearTimeout(resizeTimer);
+                resizeTimer = setTimeout(function() {
+                    AOS.refresh();
+                }, 250);
+            });
+        });
+    </script>
+</body>
+</html>

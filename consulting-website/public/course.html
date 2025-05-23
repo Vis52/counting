@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Registration</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+        h1, h2, h3 {
+            font-family: 'Playfair Display', serif;
+        }
+        .section-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 8px;
+            vertical-align: middle;
+        }
+        .btn-primary {
+            background-color: #1E3A8A;
+            color: white;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-primary:hover {
+            background-color: #1E40AF;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background-color: #FBBF24;
+            color: #1E3A8A;
+            transition: transform 0.2s, background-color 0.2s;
+        }
+        .btn-secondary:hover {
+            background-color: #F59E0B;
+            transform: translateY(-2px);
+        }
+        .course-card {
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+        }
+        .course-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
+        }
+        .course-card.selected {
+            border-color: #1E3A8A;
+            background-color: #EFF6FF;
+        }
+        .stepper-circle {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #D1D5DB;
+            color: #6B7280;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .stepper-circle.active {
+            background-color: #1E3A8A;
+            color: white;
+        }
+        .input-error {
+            border-color: #DC2626;
+        }
+        .error-text {
+            color: #DC2626;
+            font-size: 0.875rem;
+        }
+        @media print {
+            body {
+                font-size: 12pt;
+                color: #000;
+            }
+            .no-print {
+                display: none;
+            }
+            .receipt-container {
+                border: 1px solid #000;
+                padding: 20px;
+            }
+            .receipt-logo {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="container mx-auto p-6 max-w-6xl">
+        <!-- Progress Stepper -->
+        <div class="flex justify-between items-center mb-8 no-print">
+            <div class="flex flex-col items-center">
+                <div class="stepper-circle active" id="step-profile">1</div>
+                <span class="text-sm mt-2">Profile</span>
+            </div>
+            <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+            <div class="flex flex-col items-center">
+                <div class="stepper-circle" id="step-courses">2</div>
+                <span class="text-sm mt-2">Courses</span>
+            </div>
+            <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+            <div class="flex flex-col items-center">
+                <div class="stepper-circle" id="step-terms">3</div>
+                <span class="text-sm mt-2">Terms</span>
+            </div>
+            <div class="flex-1 h-1 bg-gray-300 mx-2"></div>
+            <div class="flex flex-col items-center">
+                <div class="stepper-circle" id="step-receipt">4</div>
+                <span class="text-sm mt-2">Receipt</span>
+            </div>
+        </div>
+
+        <!-- Profile Form -->
+        <div id="profile-section" class="bg-white p-8 rounded-xl shadow-md mb-8">
+            <h2 class="text-3xl mb-6 text-gray-800 flex items-center">
+                <img src="https://www.svgrepo.com/show/452092/profile.svg" alt="Profile Icon" class="section-icon">
+                Create Your Profile
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                    <label for="first-name" class="block text-sm font-medium text-gray-700">First Name</label>
+                    <div class="relative">
+                        <input id="first-name" type="text" placeholder="First Name" class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500" required>
+                        <img src="https://www.svgrepo.com/show/447828/user.svg" alt="User Icon" class="absolute right-3 top-3 w-5 h-5">
+                    </div>
+                    <p id="first-name-error" class="error-text hidden">First name is required.</p>
+                </div>
+                <div>
+                    <label for="last-name" class="block text-sm font-medium text-gray-700">Last Name</label>
+                    <div class="relative">
+                        <input id="last-name" type="text" placeholder="Last Name" class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500" required>
+                        <img src="https://www.svgrepo.com/show/447828/user.svg" alt="User Icon" class="absolute right-3 top-3 w-5 h-5">
+                    </div>
+                    <p id="last-name-error" class="error-text hidden">Last name is required.</p>
+                </div>
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
+                    <div class="relative">
+                        <input id="email" type="email" placeholder="Email" class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500" required>
+                        <img src="https://www.svgrepo.com/show/13653/email.svg" alt="Email Icon" class="absolute right-3 top-3 w-5 h-5">
+                    </div>
+                    <p id="email-error" class="error-text hidden">Valid email is required.</p>
+                </div>
+                <div>
+                    <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                    <div class="relative">
+                        <input id="phone" type="tel" placeholder="Phone Number" class="border p-3 rounded-lg w-full focus:ring-2 focus:ring-blue-500" required>
+                        <img src="https://www.svgrepo.com/show/13654/phone.svg" alt="Phone Icon" class="absolute right-3 top-3 w-5 h-5">
+                    </div>
+                    <p id="phone-error" class="error-text hidden">Phone number is required.</p>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end">
+                <button onclick="saveProfile()" class="btn-primary px-6 py-3 rounded-lg">Save Profile</button>
+            </div>
+        </div>
+
+        <!-- Course Selection -->
+        <div id="course-section" class="bg-white p-8 rounded-xl shadow-md mb-8 hidden">
+            <h2 class="text-3xl mb-6 text-gray-800 flex items-center">
+                <img src="https://www.svgrepo.com/show/512317/graduation-cap-3.svg" alt="Course Icon" class="section-icon">
+                Select Courses
+            </h2>
+            <p class="mb-6 text-gray-600">Each course costs ₹4999 and lasts 15 days. Select the courses that best suit your career goals.</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="course-list">
+                <div class="course-card border p-4 rounded-lg" data-course="Business Strategy">
+                    <h3 class="font-semibold">Business Strategy</h3>
+                    <p class="text-sm text-gray-600">Learn to develop effective business strategies for growth and sustainability.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Project Management">
+                    <h3 class="font-semibold">Project Management</h3>
+                    <p class="text-sm text-gray-600">Master the art of planning, executing, and completing projects successfully.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Market Research">
+                    <h3 class="font-semibold">Market Research</h3>
+                    <p class="text-sm text-gray-600">Understand market trends and consumer behavior to drive business decisions.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Human Resource">
+                    <h3 class="font-semibold">Human Resource</h3>
+                    <p class="text-sm text-gray-600">Explore HR practices for recruitment, training, and employee engagement.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Online Business">
+                    <h3 class="font-semibold">Online Business</h3>
+                    <p class="text-sm text-gray-600">Build and scale your online business with proven strategies.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Captain Management">
+                    <h3 class="font-semibold">Captain Management</h3>
+                    <p class="text-sm text-gray-600">Develop leadership skills to manage teams effectively.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Business Insurance">
+                    <h3 class="font-semibold">Business Insurance</h3>
+                    <p class="text-sm text-gray-600">Learn about insurance options to protect your business assets.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Online Marketing">
+                    <h3 class="font-semibold">Online Marketing</h3>
+                    <p class="text-sm text-gray-600">Master digital marketing techniques to boost online presence.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Personality Development">
+                    <h3 class="font-semibold">Personality Development</h3>
+                    <p class="text-sm text-gray-600">Enhance your personal and professional skills for success.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="MS Office Suite">
+                    <h3 class="font-semibold">MS Office Suite</h3>
+                    <p class="text-sm text-gray-600">Become proficient in Microsoft Office tools for productivity.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Communication Skills">
+                    <h3 class="font-semibold">Communication Skills</h3>
+                    <p class="text-sm text-gray-600">Improve your verbal and written communication for professional growth.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Payment Streaming">
+                    <h3 class="font-semibold">Payment Streaming</h3>
+                    <p class="text-sm text-gray-600">Learn about payment processing and financial transactions.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Web Development">
+                    <h3 class="font-semibold">Web Development</h3>
+                    <p class="text-sm text-gray-600">Build modern websites with HTML, CSS, and JavaScript.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="AI and ChatGPT">
+                    <h3 class="font-semibold">AI and ChatGPT</h3>
+                    <p class="text-sm text-gray-600">Explore AI technologies and their applications in business.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Digital Marketing">
+                    <h3 class="font-semibold">Digital Marketing</h3>
+                    <p class="text-sm text-gray-600">Learn SEO, social media, and content marketing strategies.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="E-Commerce">
+                    <h3 class="font-semibold">E-Commerce</h3>
+                    <p class="text-sm text-gray-600">Set up and manage an online store effectively.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="SEO and Search Ads">
+                    <h3 class="font-semibold">SEO and Search Ads</h3>
+                    <p class="text-sm text-gray-600">Optimize websites and run effective ad campaigns.</p>
+                </div>
+                <div class="course-card border p-4 rounded-lg" data-course="Data Analytics">
+                    <h3 class="font-semibold">Data Analytics</h3>
+                    <p class="text-sm text-gray-600">Analyze data to make informed business decisions.</p>
+                </div>
+            </div>
+            <p id="course-error" class="error-text hidden mt-4">Please select at least one course.</p>
+            <h3 class="text-2xl mt-8 mb-4 text-gray-800">Course Structure</h3>
+            <ul class="list-disc pl-6 mb-6 text-gray-600">
+                <li><strong>Days 1-3: Foundation Building</strong>
+                    <ul class="list-circle pl-6 mt-1">
+                        <li>Self-assessment to identify strengths</li>
+                        <li>Resume optimization for job applications</li>
+                        <li>LinkedIn profile review for networking</li>
+                    </ul>
+                </li>
+                <li><strong>Days 4-7: Core Preparation</strong>
+                    <ul class="list-circle pl-6 mt-1">
+                        <li>Common interview questions practice</li>
+                        <li>Behavioral techniques for interviews</li>
+                        <li>Industry-specific preparation</li>
+                    </ul>
+                </li>
+                <li><strong>Days 8-11: Mock Interviews</strong>
+                    <ul class="list-circle pl-6 mt-1">
+                        <li>4 simulated interviews with experts</li>
+                        <li>Detailed feedback on performance</li>
+                        <li>Video recordings for self-review</li>
+                    </ul>
+                </li>
+                <li><strong>Days 12-15: Final Preparation</strong>
+                    <ul class="list-circle pl-6 mt-1">
+                        <li>Salary negotiation strategies</li>
+                        <li>Follow-up strategies post-interview</li>
+                        <li>Confidence boost for interviews</li>
+                    </ul>
+                </li>
+            </ul>
+            <div class="mt-6 flex justify-between">
+                <button onclick="backToProfile()" class="btn-secondary px-6 py-3 rounded-lg no-print">Back</button>
+                <button onclick="proceedToTerms()" class="btn-primary px-6 py-3 rounded-lg">Proceed to Terms</button>
+            </div>
+        </div>
+
+        <!-- Terms and Conditions -->
+        <div id="terms-section" class="bg-white p-8 rounded-xl shadow-md mb-8 hidden">
+            <h2 class="text-3xl mb-6 text-gray-800 flex items-center">
+                <img src="https://www.svgrepo.com/show/143993/contract.svg" alt="Terms Icon" class="section-icon">
+                Terms and Conditions
+            </h2>
+            <div class="max-h-96 overflow-y-auto border p-6 mb-6 rounded-lg bg-gray-50">
+                <h3 class="text-xl font-semibold text-gray-800">1. Enrollment and Payment</h3>
+                <p class="text-gray-600">Payment is due at the time of registration. All prices are in USD and include applicable taxes. We are not responsible for technical issues on the user's end that may affect course access.</p>
+                <h3 class="text-xl font-semibold mt-4 text-gray-800">2. Refund Policy</h3>
+                <p class="text-gray-600">Refunds are available within 
+                    7 days of course enrollment, provided less than 20% of the course content has been accessed. To request a refund, contact support at <a href="mailto:support@grpcareer.com" class="text-blue-600">support@grpcareer.com</a>. Refunds will be processed within 5-7 business days.</p>
+                <h3 class="text-xl font-semibold mt-4 text-gray-800">3. Course Materials</h3>
+                <p class="text-gray-600">All course materials are for personal use only and may not be shared or reproduced. We reserve the right to modify course content or schedules as needed.</p>
+                <h3 class="text-xl font-semibold mt-4 text-gray-800">4. Code of Conduct</h3>
+                <p class="text-gray-600">By enrolling, you agree to abide by our code of conduct and privacy policy, ensuring respectful and professional behavior during the course.</p>
+            </div>
+            <label class="flex items-center mb-6">
+                <input id="terms-agree" type="checkbox" class="mr-2 accent-blue-600">
+                <span class="text-gray-600">I agree to the Terms and Conditions</span>
+            </label>
+            <p id="terms-error" class="error-text hidden mb-4">You must agree to the Terms and Conditions.</p>
+            <div class="flex justify-between">
+                <button onclick="backToCourses()" class="btn-secondary px-6 py-3 rounded-lg no-print">Back</button>
+                <button onclick="completeRegistration()" class="btn-primary px-6 py-3 rounded-lg disabled:bg-gray-400" disabled id="terms-button">Complete Registration</button>
+            </div>
+        </div>
+
+        <!-- Receipt Section -->
+        <div id="receipt-section" class="bg-white p-8 rounded-xl shadow-md mb-8 hidden">
+            <h2 class="text-3xl mb-6 text-gray-800 flex items-center">
+                <img src="https://www.svgrepo.com/show/117745/receipt.svg" alt="Receipt Icon" class="section-icon">
+                Registration Receipt
+            </h2>
+            <div id="receipt-content" class="receipt-container text-gray-600"></div>
+            <div class="mt-6">
+                <h3 class="text-xl font-semibold text-gray-800">Next Steps</h3>
+                <ul class="list-disc pl-6 text-gray-600">
+                    `
+
+                    <li>Check your email for a confirmation and course access details.</li>
+                    <li>Prepare for your course by reviewing the provided pre-course materials.</li>
+                    <li>Contact <a href="mailto:support@grpcareer.com" class="text-blue-600">support@grpcareer.com</a> for any questions.</li>
+                </ul>
+            </div>
+            <div class="mt-6 flex justify-between">
+                <button onclick="backToTerms()" class="btn-secondary px-6 py-3 rounded-lg no-print">Back</button>
+                <button onclick="printReceipt()" class="btn-primary px-6 py-3 rounded-lg">Print Receipt</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let profileData = {};
+        let selectedCourses = [];
+        let currentStep = 'profile';
+
+        // Load saved data from localStorage
+        function loadSavedData() {
+            const savedProfile = localStorage.getItem('profileData');
+            const savedCourses = localStorage.getItem('selectedCourses');
+            const savedTerms = localStorage.getItem('termsAgreed');
+            if (savedProfile) {
+                profileData = JSON.parse(savedProfile);
+                document.getElementById('first-name').value = profileData.firstName || '';
+                document.getElementById('last-name').value = profileData.lastName || '';
+                document.getElementById('email').value = profileData.email || '';
+                document.getElementById('phone').value = profileData.phone || '';
+            }
+            if (savedCourses) {
+                selectedCourses = JSON.parse(savedCourses);
+                updateCourseSelectionUI();
+            }
+            if (savedTerms === 'true') {
+                document.getElementById('terms-agree').checked = true;
+                document.getElementById('terms-button').disabled = false;
+            }
+        }
+
+        // Update stepper UI
+        function updateStepper(step) {
+            document.querySelectorAll('.stepper-circle').forEach(circle => circle.classList.remove('active'));
+            document.getElementById(`step-${step}`).classList.add('active');
+            currentStep = step;
+        }
+
+        // Validate email format
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
+
+        // Save profile
+        function saveProfile() {
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            let hasError = false;
+            document.getElementById('first-name-error').classList.add('hidden');
+            document.getElementById('last-name-error').classList.add('hidden');
+            document.getElementById('email-error').classList.add('hidden');
+            document.getElementById('phone-error').classList.add('hidden');
+
+            if (!firstName) {
+                document.getElementById('first-name-error').classList.remove('hidden');
+                document.getElementById('first-name').classList.add('input-error');
+                hasError = true;
+            } else {
+                document.getElementById('first-name').classList.remove('input-error');
+            }
+            if (!lastName) {
+                document.getElementById('last-name-error').classList.remove('hidden');
+                document.getElementById('last-name').classList.add('input-error');
+                hasError = true;
+            } else {
+                document.getElementById('last-name').classList.remove('input-error');
+            }
+            if (!email || !isValidEmail(email)) {
+                document.getElementById('email-error').classList.remove('hidden');
+                document.getElementById('email').classList.add('input-error');
+                hasError = true;
+            } else {
+                document.getElementById('email').classList.remove('input-error');
+            }
+            if (!phone) {
+                document.getElementById('phone-error').classList.remove('hidden');
+                document.getElementById('phone').classList.add('input-error');
+                hasError = true;
+            } else {
+                document.getElementById('phone').classList.remove('input-error');
+            }
+
+            if (hasError) return;
+
+            profileData = { firstName, lastName, email, phone };
+            localStorage.setItem('profileData', JSON.stringify(profileData));
+
+            document.getElementById('profile-section').classList.add('hidden');
+            document.getElementById('course-section').classList.remove('hidden');
+            updateStepper('courses');
+        }
+
+        // Course selection
+        function updateCourseSelectionUI() {
+            document.querySelectorAll('.course-card').forEach(card => {
+                const course = card.dataset.course;
+                if (selectedCourses.includes(course)) {
+                    card.classList.add('selected');
+                } else {
+                    card.classList.remove('selected');
+                }
+            });
+        }
+
+        document.querySelectorAll('.course-card').forEach(card => {
+            card.addEventListener('click', () => {
+                const course = card.dataset.course;
+                if (selectedCourses.includes(course)) {
+                    selectedCourses = selectedCourses.filter(c => c !== course);
+                } else {
+                    selectedCourses.push(course);
+                }
+                localStorage.setItem('selectedCourses', JSON.stringify(selectedCourses));
+                updateCourseSelectionUI();
+            });
+        });
+
+        // Proceed to terms
+        function proceedToTerms() {
+            if (selectedCourses.length === 0) {
+                document.getElementById('course-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('course-error').classList.add('hidden');
+
+            document.getElementById('course-section').classList.add('hidden');
+            document.getElementById('terms-section').classList.remove('hidden');
+            updateStepper('terms');
+        }
+
+        // Terms agreement
+        document.getElementById('terms-agree').addEventListener('change', function() {
+            document.getElementById('terms-button').disabled = !this.checked;
+            localStorage.setItem('termsAgreed', this.checked);
+        });
+
+        // Generate random ID for bill and registration
+        function generateId(prefix) {
+            const randomNum = Math.floor(1000 + Math.random() * 9000);
+            return `${prefix}-2025-${randomNum}`;
+        }
+
+        // Complete registration
+        function completeRegistration() {
+            if (!document.getElementById('terms-agree').checked) {
+                document.getElementById('terms-error').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('terms-error').classList.add('hidden');
+
+            const totalCost = selectedCourses.length * 4999;
+            const billNumber = generateId('BILL');
+            const registrationNumber = generateId('REG');
+            const registrationData = {
+                profile: profileData,
+                courses: selectedCourses,
+                totalCost,
+                billNumber,
+                registrationNumber,
+                date: new Date().toLocaleString()
+            };
+
+            localStorage.setItem('registrationData', JSON.stringify(registrationData));
+
+            const receiptContent = `
+                <div class="flex justify-between items-center mb-6">
+                    <img src="https://www.svgrepo.com/show/30581/book.svg" alt="Logo" class="receipt-logo">
+                    <div>
+                        <p><strong>Bill Number:</strong> ${billNumber}</p>
+                        <p><strong>Registration Number:</strong> ${registrationNumber}</p>
+                        <p><strong>Date:</strong> ${registrationData.date}</p>
+                    </div>
+                </div>
+                <h3 class="text-xl font-semibold mb-4">Student Information</h3>
+                <p class="mb-2"><strong>Name:</strong> ${profileData.firstName} ${profileData.lastName}</p>
+                <p class="mb-2"><strong>Email:</strong> ${profileData.email}</p>
+                <p class="mb-2"><strong>Phone:</strong> ${profileData.phone}</p>
+                <h3 class="text-xl font-semibold mt-6 mb-4">Course Details</h3>
+                <p class="mb-2"><strong>Selected Courses:</strong> ${selectedCourses.join(', ')}</p>
+                <p class="mb-2"><strong>Total Cost:</strong> ₹${totalCost.toLocaleString()}</p>
+                <p class="mt-4 text-sm text-gray-500">Thank you for registering with GRP Career!</p>
+            `;
+            document.getElementById('receipt-content').innerHTML = receiptContent;
+
+            document.getElementById('terms-section').classList.add('hidden');
+            document.getElementById('receipt-section').classList.remove('hidden');
+            updateStepper('receipt');
+        }
+
+        // Print receipt
+        function printReceipt() {
+            const receiptContent = document.getElementById('receipt-content').innerHTML;
+            const printWindow = window.open('', '_blank');
+            printWindow.document.write(`
+                <html>
+                    <head>
+                        <title>Course Registration Receipt</title>
+                        <style>
+                            body { font-family: 'Inter', sans-serif; padding: 20px; color: #000; }
+                            .receipt-container { border: 1px solid #000; padding: 20px; }
+                            .receipt-logo { width: 100px; }
+                            h3 { font-family: 'Playfair Display', serif; font-size: 16pt; margin: 20px 0 10px; }
+                            p { margin: 5px 0; font-size: 12pt; }
+                            .text-sm { font-size: 10pt; }
+                        </style>
+                    </head>
+                    <body>
+                        <h2>Course Registration Receipt</h2>
+                        ${receiptContent}
+                    </body>
+                </html>
+            `);
+            printWindow.document.close();
+            printWindow.print();
+        }
+
+        // Navigation
+        function backToProfile() {
+            document.getElementById('course-section').classList.add('hidden');
+            document.getElementById('profile-section').classList.remove('hidden');
+            updateStepper('profile');
+        }
+
+        function backToCourses() {
+            document.getElementById('terms-section').classList.add('hidden');
+            document.getElementById('course-section').classList.remove('hidden');
+            updateStepper('courses');
+        }
+
+        function backToTerms() {
+            document.getElementById('receipt-section').classList.add('hidden');
+            document.getElementById('terms-section').classList.remove('hidden');
+            updateStepper('terms');
+        }
+
+        // Initialize
+        loadSavedData();
+        updateStepper('profile');
+    </script>
+</body>
+</html>

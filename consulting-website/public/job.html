@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Career Opportunities | GRP Career</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2563eb;
+            --primary-light: #3b82f6;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+            --gray-light: #e2e8f0;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+        
+        /* Header */
+        header {
+            padding: 2rem 0;
+            border-bottom: 1px solid var(--gray-light);
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-decoration: none;
+        }
+        
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        
+        /* Hero */
+        .hero {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05) 0%, rgba(59, 130, 246, 0.05) 100%);
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, var(--primary), var(--primary-light));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        /* Search and Filters */
+        .search-filters {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            margin: -2rem auto 3rem;
+            max-width: 1000px;
+        }
+        
+        .search-container {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .search-input {
+            flex: 1;
+            padding: 0.8rem 1.2rem;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .search-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        
+        .filter-dropdown {
+            position: relative;
+            min-width: 200px;
+        }
+        
+        .filter-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            border-radius: 8px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        
+        .filter-btn:hover {
+            border-color: var(--primary-light);
+            transition: border-color 1s ease; /* Increased duration */
+        }
+        
+        .filter-dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            width: 100%;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            z-index: 1;
+            padding: 0.5rem 0;
+            margin-top: 0.5rem;
+            opacity: 0; /* Added opacity for fade effect */
+            transition: opacity 1s ease; /* Adjusted transition for slower fade */
+        }
+        
+        .filter-dropdown-content a {
+            color: var(--dark);
+            padding: 0.8rem 1.2rem;
+            text-decoration: none;
+            display: block;
+            font-size: 0.9rem;
+        }
+        
+        .filter-dropdown-content a:hover {
+            background-color: var(--gray-light);
+        }
+        
+        .filter-dropdown:hover .filter-dropdown-content {
+            display: block;
+            opacity: 1; /* Set opacity to fully visible */
+        }
+        
+        .reset-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: auto;
+            padding: 0.5rem 0;
+        }
+        
+        /* Job Listings */
+        .job-listings {
+            padding: 3rem 0;
+        }
+        
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            color: var(--dark);
+        }
+        
+        .job-card {
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .job-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .job-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+        
+        .job-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+            flex-wrap: wrap;
+        }
+        
+        .job-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .job-description {
+            margin-bottom: 1.5rem;
+            color: var(--dark);
+        }
+        
+        .job-tags {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .job-tag {
+            background-color: var(--gray-light);
+            color: var(--dark);
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+        
+        .job-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+        
+        .apply-btn {
+            display: inline-block;
+            background-color: var(--primary);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .apply-btn:hover {
+            background-color: var(--primary-light);
+            transform: translateY(-2px);
+        }
+        
+        .save-btn {
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.9rem;
+        }
+        
+        .save-btn:hover {
+            color: var(--primary);
+        }
+        
+        .save-btn.saved {
+            color: var(--primary);
+        }
+        
+        .save-btn.saved i::before {
+            content: "\f02e";
+        }
+        
+        /* Departments */
+        .departments {
+            padding: 3rem 0;
+            background-color: var(--light);
+        }
+        
+        .dept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .dept-card {
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            background-color: white;
+        }
+        
+        .dept-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .dept-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .dept-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .dept-count {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Benefits Section */
+        .benefits {
+            padding: 3rem 0;
+        }
+        
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .benefit-card {
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+        
+        .benefit-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .benefit-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.8rem;
+        }
+        
+        .benefit-description {
+            color: var(--gray);
+        }
+        
+        /* How We Hire */
+        .hiring-process {
+            padding: 3rem 0;
+            background-color: var(--light);
+        }
+        
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+        
+        .process-step {
+            flex: 1;
+            min-width: 200px;
+            text-align: center;
+            padding: 1.5rem;
+        }
+        
+        .step-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+        
+        .step-title {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        
+        .step-description {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* Testimonials */
+        .testimonials {
+            padding: 3rem 0;
+        }
+        
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+        
+        .testimonial-card {
+            background-color: white;
+            border: 1px solid var(--gray-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .testimonial-card:hover {
+            border-color: var(--primary-light);
+            box-shadow: 0 4px 20px rgba(37, 99, 235, 0.1);
+        }
+        
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 1rem;
+            color: var(--dark);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--gray-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .author-info h4 {
+            font-weight: 600;
+            margin-bottom: 0.2rem;
+        }
+        
+        .author-info p {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+        
+        /* CTA */
+        .cta {
+            padding: 4rem 0;
+            text-align: center;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+        
+        .cta h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .cta p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+        
+        .cta-btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            padding: 3rem 0;
+            color: white;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .footer-col h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+        
+        .footer-col ul {
+            list-style: none;
+        }
+        
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-col ul li a {
+            color: var(--gray-light);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .footer-col ul li a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--gray-light);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .job-meta {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .search-container {
+                flex-direction: column;
+            }
+            
+            .process-steps {
+                flex-direction: column;
+            }
+            
+            .process-step {
+                text-align: left;
+                display: flex;
+                gap: 1rem;
+                align-items: flex-start;
+            }
+            
+            .step-number {
+                margin-bottom: 0;
+                flex-shrink: 0;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+        
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: var(--gray);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <a href="img/logo.png" class="logo" aria-label="Company Home">GRP Career</a>
+                <div class="nav-links">
+                    <a href="index.html" aria-label="Home Page">Home</a>
+                    <a href="about.html" aria-label="About Us">About</a>
+                    <a href="service.html" aria-label="Our Products">Products</a>
+                    <a href="job.html" aria-label="Careers Page">Careers</a>
+                    <a href="company_reg.html" aria-label="Contact Us">Contact</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>Join Our Team</h1>
+            <p>We're building the future and looking for talented individuals to join us on this journey. Explore our open positions below.</p>
+        </div>
+    </section>
+    
+    <div class="container">
+        <div class="search-filters" role="search">
+            <div class="search-container">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search jobs by title, keyword, or location" aria-label="Search jobs">
+                <button class="apply-btn" id="searchBtn" aria-label="Search jobs">Search</button>
+            </div>
+            <div class="filter-container">
+                <div class="filter-dropdown">
+                    <button class="filter-btn" id="deptFilterBtn">All Departments <i class="fas fa-chevron-down"></i></button>
+                    <div class="filter-dropdown-content" id="deptFilter">
+                        <a href="#" data-value="all">All Departments</a>
+                        <a href="#" data-value="engineering">Engineering</a>
+                        <a href="#" data-value="design">Design</a>
+                        <a href="#" data-value="marketing">Marketing</a>
+                        <a href="#" data-value="operations">Operations</a>
+                        <a href="#" data-value="hr">Human Resources</a>
+                    </div>
+                </div>
+                <div class="filter-dropdown">
+                    <button class="filter-btn" id="locationFilterBtn">All Locations <i class="fas fa-chevron-down"></i></button>
+                    <div class="filter-dropdown-content" id="locationFilter">
+                        <a href="#" data-value="all">All Locations</a>
+                        <a href="#" data-value="remote">Remote</a>
+                        <a href="#" data-value="san francisco">Noida</a>
+                        <!-- <a href="#" data-value="new york">Noida</a>
+                        <a href="#" data-value="london">Noida</a>
+                        <a href="#" data-value="berlin">Noida</a> -->
+                    </div>
+                </div>
+                <div class="filter-dropdown">
+                    <button class="filter-btn" id="typeFilterBtn">All Types <i class="fas fa-chevron-down"></i></button>
+                    <div class="filter-dropdown-content" id="typeFilter">
+                        <a href="#" data-value="all">All Types</a>
+                        <a href="#" data-value="full-time">Full-time</a>
+                        <a href="#" data-value="part-time">Part-time</a>
+                        <a href="#" data-value="contract">Contract</a>
+                        <a href="#" data-value="internship">Internship</a>
+                    </div>
+                </div>
+                <button class="reset-btn" id="resetFilters" aria-label="Reset all filters">Reset Filters</button>
+            </div>
+        </div>
+    </div>
+    
+    <section class="job-listings">
+        <div class="container">
+            <h2 class="section-title">Current Openings</h2>
+            <div id="jobListings"></div>
+            <div style="text-align: center; margin-top: 3rem;">
+                <button class="apply-btn" id="loadMoreBtn" style="background-color: white; color: var(--primary); border: 1px solid var(--primary);" aria-label="Load more jobs">
+                    Load More Jobs
+                </button>
+            </div>
+        </div>
+    </section>
+    
+    <section class="departments">
+        <div class="container">
+            <h2 class="section-title">Browse by Department</h2>
+            <div class="dept-grid">
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3 class="dept-name">Engineering</h3>
+                    <p class="dept-count">8 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="engineering">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="dept-name">Design</h3>
+                    <p class="dept-count">3 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="design">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3 class="dept-name">Marketing</h3>
+                    <p class="dept-count">5 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="marketing">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="dept-name">People & HR</h3>
+                    <p class="dept-count">2 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="hr">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-cog"></i>
+                    </div>
+                    <h3 class="dept-name">Operations</h3>
+                    <p class="dept-count">4 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="operations">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+                <div class="dept-card">
+                    <div class="dept-icon">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="dept-name">Customer Support</h3>
+                    <p class="dept-count">3 open positions</p>
+                    <a href="#" style="color: var(--primary); text-decoration: none; font-size: 0.9rem; margin-top: 0.5rem; display: inline-block;" data-dept="customer support">View all <i class="fas fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="benefits">
+        <div class="container">
+            <h2 class="section-title">Why Join Us?</h2>
+            <p style="color: var(--gray); max-width: 700px; margin-bottom: 2rem;">We offer competitive benefits and a culture that fosters growth, collaboration, and innovation.</p>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="benefit-title">Competitive Compensation</h3>
+                    <p class="benefit-description">We offer competitive salaries, equity, and bonuses to ensure our team is rewarded for their hard work.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <h3 class="benefit-title">Health & Wellness</h3>
+                    <p class="benefit-description">Comprehensive medical, dental, and vision insurance for you and your family.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <h3 class="benefit-title">Flexible Time Off</h3>
+                    <p class="benefit-description">Take the time you need to recharge with our unlimited PTO policy.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-home"></i>
+                    </div>
+                    <h3 class="benefit-title">Remote Work</h3>
+                    <p class="benefit-description">Work from anywhere with our remote-friendly policies and home office stipends.</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <h3 class="benefit-title">Learning & Development</h3>
+                    <p class="benefit-description">Annual stipend for professional development, courses, and conferences.</p>
+                </div>
+                <!-- <div class="benefit-card">
+                    <div class="benefit-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="benefit-title">Team Meals</h3>
+                    <p class="benefit-description">Enjoy catered lunches and team dinners when we're in the office together.</p>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    
+    <section class="hiring-process">
+        <div class="container">
+            <h2 class="section-title">Our Hiring Process</h2>
+            <p style="color: var(--gray); max-width: 700px; margin-bottom: 2rem;">We've designed our hiring process to be transparent, efficient, and fair for all candidates.</p>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4 class="step-title">Application Review</h4>
+                    <p class="step-description">Our team reviews your application and gets back to you within 5 business days.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4 class="step-title">Initial Screening</h4>
+                    <p class="step-description">A 30-minute call with our recruiter to discuss your background and the role.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4 class="step-title">Skills Assessment</h4>
+                    <p class="step-description">A practical assignment or technical interview to evaluate your skills.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4 class="step-title">Team Interviews</h4>
+                    <p class="step-description">Meet with team members to discuss the role and your experience in depth.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">5</div>
+                    <h4 class="step-title">Offer</h4>
+                    <p class="step-description">We extend an offer to successful candidates within 48 hours.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    
+    
+    <section class="cta">
+        <div class="container">
+            <h2>Ready to Make an Impact?</h2>
+            <p>Join our team and help shape the future of our industry. We can't wait to meet you!</p>
+            <a href="#job-listings" class="cta-btn" aria-label="View open positions">View Open Positions</a>
+        </div>
+    </section>
+    
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>GRP Career</h3>
+                    <ul>
+                        <li><a href="#" aria-label="About Us">About</a></li>
+                        <li><a href="#" aria-label="Our Mission">Mission</a></li>
+                        <li><a href="#" aria-label="Our Team">Team</a></li>
+                        <li><a href="#" aria-label="Careers Page">Careers</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Products</h3>
+                    <ul>
+                        <li><a href="#" aria-label="Product Features">Features</a></li>
+                        <li><a href="#" aria-label="Pricing Plans">Pricing</a></li>
+                        <li><a href="#" aria-label="Customer Stories">Customers</a></li>
+                        <li><a href="#" aria-label="Integrations">Integrations</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#" aria-label="Help Center">Help Center</a></li>
+                        <li><a href="#" aria-label="Contact Support">Contact Us</a></li>
+                        <li><a href="#" aria-label="Community Forum">Community</a></li>
+                        <li><a href="#" aria-label="Status Page">Status</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Connect</h3>
+                    <div class="social-links">
+                        <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                        <a href="#" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; <span id="currentYear"></span> GRP Career. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Job data
+        const jobs = [
+            {
+                id: 1,
+                title: "Senior Frontend Developer",
+                department: "engineering",
+                location: "Remote",
+                type: "Full-time",
+                salary: "₹120,000 - ₹150,000",
+                posted: "2 days ago",
+                description: "We're looking for an experienced frontend developer to lead our web application development. You'll work with React, TypeScript, and modern web technologies to build beautiful, performant user interfaces.",
+                tags: ["React", "TypeScript", "CSS", "UI/UX"],
+                email: "info@grpcareer.com"
+            },
+            {
+                id: 2,
+                title: "Product Designer",
+                department: "design",
+                location: "Noida",
+                type: "Full-time",
+                salary: "₹110,000 - ₹140,000",
+                posted: "1 week ago",
+                description: "Join our design team to create intuitive, user-centered products. You'll collaborate with engineers and product managers to design flows, prototypes, and high-fidelity visuals for our products.",
+                tags: ["Figma", "UX Research", "Prototyping", "User Testing"],
+                email: "info@grpcareer.com"
+            },
+            {
+                id: 3,
+                title: "DevOps Engineer",
+                department: "engineering",
+                location: "Remote",
+                type: "Full-time",
+                salary: "₹130,000 - ₹160,000",
+                posted: "3 days ago",
+                description: "We need a DevOps engineer to build and maintain our cloud infrastructure. You'll work with AWS, Kubernetes, Terraform, and CI/CD pipelines to ensure our systems are scalable, reliable, and secure.",
+                tags: ["AWS", "Kubernetes", "Terraform", "CI/CD"],
+                email: "info@grpcareer.com"
+            },
+            {
+                id: 4,
+                title: "Marketing Specialist",
+                department: "marketing",
+                location: "Noida",
+                type: "Full-time",
+                salary: "₹80,000 - ₹100,000",
+                posted: "5 days ago",
+                description: "Join our marketing team to develop and execute campaigns that drive growth. You'll create content, manage social media, analyze performance metrics, and help shape our brand voice.",
+                tags: ["Content Marketing", "Social Media", "SEO", "Analytics"],
+                email: "info@grpcareer.com"
+            },
+            {
+                id: 5,
+                title: "Backend Engineer (Node.js)",
+                department: "engineering",
+                location: "Remote",
+                type: "Full-time",
+                salary: "₹115,000 - ₹145,000",
+                posted: "1 day ago",
+                description: "We're seeking a backend engineer to develop and maintain our server infrastructure. You'll work with Node.js, MongoDB, and microservices architecture to build scalable APIs and services.",
+                tags: ["Node.js", "MongoDB", "REST APIs", "Microservices"],
+                email: "info@grpcareer.com"
+            }
+        ];
+
+        // DOM elements
+        const jobListings = document.getElementById('jobListings');
+        const searchInput = document.getElementById('searchInput');
+        const searchBtn = document.getElementById('searchBtn');
+        const deptFilter = document.getElementById('deptFilter');
+        const locationFilter = document.getElementById('locationFilter');
+        const typeFilter = document.getElementById('typeFilter');
+        const deptFilterBtn = document.getElementById('deptFilterBtn');
+        const locationFilterBtn = document.getElementById('locationFilterBtn');
+        const typeFilterBtn = document.getElementById('typeFilterBtn');
+        const resetFilters = document.getElementById('resetFilters');
+        const loadMoreBtn = document.getElementById('loadMoreBtn');
+        const currentYear = document.getElementById('currentYear');
+
+        // State
+        let filters = {
+            search: '',
+            department: 'all',
+            location: 'all',
+            type: 'all'
+        };
+        let savedJobs = JSON.parse(localStorage.getItem('savedJobs')) || [];
+        let displayedJobs = 3; // Initial number of jobs to display
+        const jobsPerPage = 3;
+
+        // Set current year
+        currentYear.textContent = new Date().getFullYear();
+
+        // Sanitize HTML to prevent XSS
+        function sanitizeHTML(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+
+        // Render jobs
+        function renderJobs() {
+            jobListings.innerHTML = '<div class="loading">Loading jobs...</div>';
+            setTimeout(() => {
+                const filteredJobs = jobs.filter(job => {
+                    const searchMatch = filters.search === '' ||
+                        job.title.toLowerCase().includes(filters.search.toLowerCase()) ||
+                        job.description.toLowerCase().includes(filters.search.toLowerCase()) ||
+                        job.location.toLowerCase().includes(filters.search.toLowerCase());
+                    const deptMatch = filters.department === 'all' || job.department === filters.department;
+                    const locationMatch = filters.location === 'all' || job.location.toLowerCase().includes(filters.location.toLowerCase());
+                    const typeMatch = filters.type === 'all' || job.type.toLowerCase() === filters.type.toLowerCase();
+                    return searchMatch && deptMatch && locationMatch && typeMatch;
+                });
+
+                const jobsToShow = filteredJobs.slice(0, displayedJobs);
+                jobListings.innerHTML = jobsToShow.length > 0 ? jobsToShow.map(job => `
+                    <div class="job-card" data-id="${job.id}">
+                        <h3 class="job-title">${sanitizeHTML(job.title)}</h3>
+                        <div class="job-meta">
+                            <span><i class="fas fa-map-marker-alt"></i> ${sanitizeHTML(job.location)}</span>
+                            <span><i class="fas fa-briefcase"></i> ${sanitizeHTML(job.type)}</span>
+                            <span><i class="fas fa-dollar-sign"></i> ${sanitizeHTML(job.salary)}</span>
+                            <span><i class="fas fa-clock"></i> Posted ${sanitizeHTML(job.posted)}</span>
+                        </div>
+                        <p class="job-description">${sanitizeHTML(job.description)}</p>
+                        <div class="job-tags">
+                            ${job.tags.map(tag => `<span class="job-tag">${sanitizeHTML(tag)}</span>`).join('')}
+                        </div>
+                        <div class="job-actions">
+                            <a href="mailto:${encodeURIComponent(job.email)}?subject=Application for ${encodeURIComponent(job.title)}" class="apply-btn" aria-label="Apply for ${sanitizeHTML(job.title)}">Apply Now</a>
+                            <button class="save-btn ${savedJobs.includes(job.id) ? 'saved' : ''}" data-id="${job.id}" aria-label="${savedJobs.includes(job.id) ? 'Remove from saved jobs' : 'Save job'} ${sanitizeHTML(job.title)}">
+                                <i class="far fa-bookmark"></i> ${savedJobs.includes(job.id) ? 'Saved' : 'Save'}
+                            </button>
+                        </div>
+                    </div>
+                `).join('') : '<p style="text-align: center; color: var(--gray);">No jobs match your criteria.</p>';
+
+                loadMoreBtn.style.display = displayedJobs >= filteredJobs.length ? 'none' : 'block';
+            }, 500);
+        }
+
+        // Save job
+        function toggleSaveJob(jobId) {
+            const index = savedJobs.indexOf(jobId);
+            if (index === -1) {
+                savedJobs.push(jobId);
+                alert('Job saved!');
+            } else {
+                savedJobs.splice(index, 1);
+                alert('Job removed from saved!');
+            }
+            localStorage.setItem('savedJobs', JSON.stringify(savedJobs));
+            renderJobs();
+        }
+
+        // Update filter button text
+        function updateFilterButton(btn, value) {
+            const label = btn.parentElement.querySelector(`[data-value="${value}"]`).textContent;
+            btn.innerHTML = `${sanitizeHTML(label)} <i class="fas fa-chevron-down"></i>`;
+        }
+
+        // Event listeners
+        searchBtn.addEventListener('click', () => {
+            filters.search = searchInput.value.trim();
+            displayedJobs = jobsPerPage;
+            renderJobs();
+        });
+
+        searchInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                filters.search = searchInput.value.trim();
+                displayedJobs = jobsPerPage;
+                renderJobs();
+            }
+        });
+
+        deptFilter.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                filters.department = e.target.dataset.value;
+                updateFilterButton(deptFilterBtn, filters.department);
+                displayedJobs = jobsPerPage;
+                renderJobs();
+            }
+        });
+
+        locationFilter.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                filters.location = e.target.dataset.value;
+                updateFilterButton(locationFilterBtn, filters.location);
+                displayedJobs = jobsPerPage;
+                renderJobs();
+            }
+        });
+
+        typeFilter.addEventListener('click', (e) => {
+            if (e.target.tagName === 'A') {
+                e.preventDefault();
+                filters.type = e.target.dataset.value;
+                updateFilterButton(typeFilterBtn, filters.type);
+                displayedJobs = jobsPerPage;
+                renderJobs();
+            }
+        });
+
+        resetFilters.addEventListener('click', () => {
+            filters = { search: '', department: 'all', location: 'all', type: 'all' };
+            searchInput.value = '';
+            deptFilterBtn.innerHTML = 'All Departments <i class="fas fa-chevron-down"></i>';
+            locationFilterBtn.innerHTML = 'All Locations <i class="fas fa-chevron-down"></i>';
+            typeFilterBtn.innerHTML = 'All Types <i class="fas fa-chevron-down"></i>';
+            displayedJobs = jobsPerPage;
+            renderJobs();
+        });
+
+        loadMoreBtn.addEventListener('click', () => {
+            displayedJobs += jobsPerPage;
+            renderJobs();
+        });
+
+        jobListings.addEventListener('click', (e) => {
+            if (e.target.closest('.save-btn')) {
+                const btn = e.target.closest('.save-btn');
+                const jobId = parseInt(btn.dataset.id);
+                toggleSaveJob(jobId);
+            }
+        });
+
+        jobListings.addEventListener('keydown', (e) => {
+            if ((e.key === 'Enter' || e.key === ' ') && e.target.closest('.save-btn')) {
+                e.preventDefault();
+                const btn = e.target.closest('.save-btn');
+                const jobId = parseInt(btn.dataset.id, 10); // Specify radix
+                if (!isNaN(jobId)) {
+                    toggleSaveJob(jobId);
+                } else {
+                    console.error('Invalid job ID');
+                }
+            }
+        });
+
+        // Department filter from dept cards
+        const deptGrid = document.querySelector('.dept-grid');
+        if (deptGrid) {
+            deptGrid.addEventListener('click', (e) => {
+                if (e.target.closest('a[data-dept]')) {
+                    e.preventDefault();
+                    const dept = e.target.closest('a[data-dept]').dataset.dept;
+                    filters.department = dept;
+                    updateFilterButton(deptFilterBtn, dept);
+                    displayedJobs = jobsPerPage;
+                    renderJobs();
+                    if (jobListings) {
+                        window.scrollTo({ top: jobListings.offsetTop, behavior: 'smooth' });
+                    } else {
+                        console.error('Job listings container not found');
+                    }
+                }
+            });
+        } else {
+            console.error('Department grid not found');
+        }
+
+        // Initial render
+        renderJobs();
+    </script>
+</body>
+</html>

@@ -1,0 +1,144 @@
+/* Core Variables */
+:root {
+  --primary-color: #007bff;
+  --dark-color: #0a1f1b;
+  --light-color: #f8f9fa;
+  --text-color: #212529;
+  --transition: all 0.3s ease;
+  --shadow: 0 5px 15px rgba(0,0,0,0.1);
+  --parallax-depth: 1px;
+}
+
+/* Base Styles */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  line-height: 1.6;
+  color: var(--text-color);
+  overflow-x: hidden;
+  perspective: var(--parallax-depth);
+}
+
+/* Parallax & 3D Effects */
+.parallax-container {
+  perspective: 1px;
+  height: 100vh;
+  overflow-x: hidden;
+  transform-style: preserve-3d;
+}
+
+.parallax-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform-style: preserve-3d;
+}
+
+.parallax-deep {
+  transform: translateZ(-1px) scale(2);
+}
+
+.parallax-medium {
+  transform: translateZ(-0.5px) scale(1.5);
+}
+
+/* Animation Keyframes */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Card Effects */
+.card-3d {
+  transform-style: preserve-3d;
+  transition: var(--transition);
+}
+
+.card-3d:hover {
+  transform: translateY(-10px) rotateX(5deg) rotateY(5deg);
+  box-shadow: var(--shadow);
+}
+
+/* Custom Components */
+.btn-custom {
+  padding: 12px 28px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: var(--transition);
+  border: none;
+  cursor: pointer;
+}
+
+.btn-custom:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow);
+}
+
+/* Navigation */
+.navbar-custom {
+  padding: 1rem 2rem;
+  transition: var(--transition);
+  background-color: transparent;
+}
+
+.navbar-custom.scrolled {
+  background-color: var(--dark-color);
+  box-shadow: var(--shadow);
+}
+
+/* Hero Section */
+.hero-section {
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  color: white;
+}
+
+.hero-background {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: -1;
+  transform: translateZ(-1px) scale(2);
+}
+
+/* Floating Elements */
+.float-element {
+  animation: float 6s infinite ease-in-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero-section {
+    height: auto;
+    min-height: 80vh;
+  }
+  
+  .parallax-container {
+    perspective: none;
+  }
+  
+  .card-3d:hover {
+    transform: translateY(-5px);
+  }
+}

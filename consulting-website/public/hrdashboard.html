@@ -1,0 +1,796 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - HR Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/buttons/2.4.1/css/buttons.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 20px; }
+        .dashboard-header { margin-bottom: 30px; }
+        .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .nav-tabs .nav-link.active { font-weight: bold; }
+        .table-responsive { overflow-x: auto; }
+        .file-link { cursor: pointer; color: #0d6efd; }
+        .file-link:hover { text-decoration: underline; }
+        .status-badge { font-size: 0.8rem; }
+        #calendar { background-color: white; padding: 15px; border-radius: 5px; }
+        .notification-item:hover { background-color: #f8f9fa; }
+        @media (max-width: 768px) {
+            .dashboard-header h1 { font-size: 2rem; }
+            .dashboard-header h2 { font-size: 1.5rem; }
+            .card { margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <div class="row align-items-center">
+                <div class="col-md-8 text-center text-md-start">
+                    <h1 class="display-4">GRP Career Portal</h1>
+                    <h2>HR Dashboard</h2>
+                </div>
+                <div class="col-md-4 text-end">
+                    <div class="position-relative d-inline-block">
+                        <button class="btn btn-light position-relative" id="notificationBtn">
+                            <i class="bi bi-bell"></i>
+                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationCount">3</span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-0" id="notificationDropdown" style="width: 300px; display: none;">
+                            <div class="list-group" id="notificationList">
+                                <a href="#" class="list-group-item list-group-item-action notification-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">New Candidate</h6>
+                                        <small>2 min ago</small>
+                                    </div>
+                                    <p class="mb-1">John Doe has submitted his application</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action notification-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">Interview Reminder</h6>
+                                        <small>1 hour ago</small>
+                                    </div>
+                                    <p class="mb-1">Interview with Jane Smith at 2:00 PM</p>
+                                </a>
+                                <a href="#" class="list-group-item list-group-item-action notification-item">
+                                    <div class="d-flex w-100 justify-content-between">
+                                        <h6 class="mb-1">New Company Registration</h6>
+                                        <small>3 hours ago</small>
+                                    </div>
+                                    <p class="mb-1">TechCorp has registered and posted 5 jobs</p>
+                                </a>
+                            </div>
+                            <div class="text-center p-2">
+                                <a href="#" class="text-decoration-none">View All Notifications</a>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="btn btn-primary ms-2">
+                        <i class="bi bi-plus-circle"></i> Add New
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Cards -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="card text-white bg-primary">
+                    <div class="card-body">
+                        <h5 class="card-title">Total Candidates</h5>
+                        <h2 class="card-text" id="totalCandidates">247</h2>
+                        <p class="card-text"><small>+12 this week</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title">Active Companies</h5>
+                        <h2 class="card-text" id="activeCompanies">38</h2>
+                        <p class="card-text"><small>+3 this month</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title">New This Week</h5>
+                        <h2 class="card-text" id="newThisWeek">24</h2>
+                        <p class="card-text"><small>5 students, 19 professionals</small></p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title">Interviews</h5>
+                        <h2 class="card-text" id="upcomingInterviews">9</h2>
+                        <p class="card-text"><small>3 today</small></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab">Students</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="professionals-tab" data-bs-toggle="tab" data-bs-target="#professionals" type="button" role="tab">Professionals</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="companies-tab" data-bs-toggle="tab" data-bs-target="#companies" type="button" role="tab">Companies</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="calendar-tab" data-bs-toggle="tab" data-bs-target="#calendar" type="button" role="tab">Calendar</button>
+            </li>
+        </ul>
+
+        <div class="tab-content p-3 border border-top-0 rounded-bottom" id="dashboardTabsContent">
+            <!-- Students Tab -->
+            <div class="tab-pane fade show active" id="students" role="tabpanel">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>Advanced Search</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Date Range</label>
+                                <input type="text" class="form-control" id="studentDateRange" placeholder="Select date range">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Skills/Requirements</label>
+                                <input type="text" class="form-control" id="studentSkills" placeholder="Enter skills">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Expected CTC Range</label>
+                                <select class="form-select" id="studentCTCRange">
+                                    <option value="">All</option>
+                                    <option value="0-5">0-5 LPA</option>
+                                    <option value="5-10">5-10 LPA</option>
+                                    <option value="10-20">10-20 LPA</option>
+                                    <option value="20+">20+ LPA</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Status</label>
+                                <select class="form-select" id="studentStatus">
+                                    <option value="">All</option>
+                                    <option value="New">New</option>
+                                    <option value="Contacted">Contacted</option>
+                                    <option value="Interview">Interview</option>
+                                    <option value="Hired">Hired</option>
+                                    <option value="Rejected">Rejected</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" id="studentSearchBtn">Search</button>
+                                <button class="btn btn-secondary" id="studentResetBtn">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="studentsTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Requirements</th>
+                                <th>Expected CTC</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John Doe</td>
+                                <td>john.doe@example.com</td>
+                                <td>9876543210</td>
+                                <td>Full Stack Developer, React, Node.js</td>
+                                <td>8 LPA</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="1">
+                                        <option selected>New</option>
+                                        <option>Contacted</option>
+                                        <option>Interview</option>
+                                        <option>Hired</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="1">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="1">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Jane Smith</td>
+                                <td>jane.smith@example.com</td>
+                                <td>8765432109</td>
+                                <td>Data Science, Python, Machine Learning</td>
+                                <td>12 LPA</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="2">
+                                        <option>New</option>
+                                        <option selected>Contacted</option>
+                                        <option>Interview</option>
+                                        <option>Hired</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="2">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="2">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Professionals Tab -->
+            <div class="tab-pane fade" id="professionals" role="tabpanel">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>Advanced Search</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Date Range</label>
+                                <input type="text" class="form-control" id="professionalDateRange" placeholder="Select date range">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Skills/Requirements</label>
+                                <input type="text" class="form-control" id="professionalSkills" placeholder="Enter skills">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Experience</label>
+                                <select class="form-select" id="professionalExperience">
+                                    <option value="">All</option>
+                                    <option value="0-2">0-2 years</option>
+                                    <option value="2-5">2-5 years</option>
+                                    <option value="5-10">5-10 years</option>
+                                    <option value="10+">10+ years</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Notice Period</label>
+                                <select class="form-select" id="professionalNoticePeriod">
+                                    <option value="">All</option>
+                                    <option value="Immediate">Immediate</option>
+                                    <option value="15 days">15 days</option>
+                                    <option value="1 month">1 month</option>
+                                    <option value="2 months">2 months</option>
+                                    <option value="3 months">3 months</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" id="professionalSearchBtn">Search</button>
+                                <button class="btn btn-secondary" id="professionalResetBtn">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="professionalsTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Current Company</th>
+                                <th>Experience</th>
+                                <th>Current Salary</th>
+                                <th>Notice Period</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Michael Johnson</td>
+                                <td>michael.j@example.com</td>
+                                <td>Tech Solutions Inc.</td>
+                                <td>5 years</td>
+                                <td>15 LPA</td>
+                                <td>1 month</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="3">
+                                        <option>New</option>
+                                        <option>Contacted</option>
+                                        <option selected>Interview</option>
+                                        <option>Hired</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="3">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="3">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Sarah Williams</td>
+                                <td>sarah.w@example.com</td>
+                                <td>Data Analytics Co.</td>
+                                <td>8 years</td>
+                                <td>22 LPA</td>
+                                <td>2 months</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="4">
+                                        <option>New</option>
+                                        <option selected>Contacted</option>
+                                        <option>Interview</option>
+                                        <option>Hired</option>
+                                        <option>Rejected</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="4">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="4">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Companies Tab -->
+            <div class="tab-pane fade" id="companies" role="tabpanel">
+                <div class="card mb-3">
+                    <div class="card-header">
+                        <h5>Advanced Search</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Date Range</label>
+                                <input type="text" class="form-control" id="companyDateRange" placeholder="Select date range">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Company Name</label>
+                                <input type="text" class="form-control" id="companyName" placeholder="Enter company name">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Job Roles</label>
+                                <input type="text" class="form-control" id="companyJobRoles" placeholder="Enter job roles">
+                            </div>
+                            <div class="col-md-3">
+                                <label>Location</label>
+                                <input type="text" class="form-control" id="companyLocation" placeholder="Enter location">
+                            </div>
+                        </div>
+                        <div class="row mt-2">
+                            <div class="col-md-12 text-end">
+                                <button class="btn btn-primary" id="companySearchBtn">Search</button>
+                                <button class="btn btn-secondary" id="companyResetBtn">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table id="companiesTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Company</th>
+                                <th>Contact</th>
+                                <th>Email</th>
+                                <th>Job Roles</th>
+                                <th>Vacancies</th>
+                                <th>Location</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>TechCorp</td>
+                                <td>David Wilson</td>
+                                <td>david@techcorp.com</td>
+                                <td>Software Engineer, QA Engineer</td>
+                                <td>5</td>
+                                <td>Bangalore</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="5">
+                                        <option>New</option>
+                                        <option selected>Contacted</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="5">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="5">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>DataWorld</td>
+                                <td>Emily Brown</td>
+                                <td>emily@dataworld.com</td>
+                                <td>Data Scientist, Data Analyst</td>
+                                <td>3</td>
+                                <td>Hyderabad</td>
+                                <td>
+                                    <select class="form-select status-select" data-id="6">
+                                        <option selected>New</option>
+                                        <option>Contacted</option>
+                                        <option>Active</option>
+                                        <option>Inactive</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <button class="btn btn-sm btn-outline-primary view-btn" data-id="6">
+                                        <i class="bi bi-eye"></i> View
+                                    </button>
+                                    <button class="btn btn-sm btn-outline-success contact-btn" data-id="6">
+                                        <i class="bi bi-envelope"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Calendar Tab -->
+            <div class="tab-pane fade" id="calendar" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div id="calendar"></div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h5>Upcoming Events</h5>
+                            </div>
+                            <div class="card-body">
+                                <div class="list-group">
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Interview with John Doe</h6>
+                                            <small>Today, 2:00 PM</small>
+                                        </div>
+                                        <p class="mb-1">For Senior Developer position</p>
+                                        <small>TechCorp</small>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Meeting with DataWorld</h6>
+                                            <small>Tomorrow, 11:00 AM</small>
+                                        </div>
+                                        <p class="mb-1">Discuss new job requirements</p>
+                                        <small>Emily Brown</small>
+                                    </a>
+                                    <a href="#" class="list-group-item list-group-item-action">
+                                        <div class="d-flex w-100 justify-content-between">
+                                            <h6 class="mb-1">Candidate Screening</h6>
+                                            <small>Wed, 10:00 AM</small>
+                                        </div>
+                                        <p class="mb-1">5 candidates for QA positions</p>
+                                        <small>Internal</small>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h5>Add New Event</h5>
+                            </div>
+                            <div class="card-body">
+                                <form id="eventForm">
+                                    <div class="mb-3">
+                                        <label class="form-label">Title</label>
+                                        <input type="text" class="form-control" id="eventTitle" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Date & Time</label>
+                                        <input type="datetime-local" class="form-control" id="eventDateTime" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Type</label>
+                                        <select class="form-select" id="eventType">
+                                            <option>Interview</option>
+                                            <option>Meeting</option>
+                                            <option>Call</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary">Add Event</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile View Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalTitle">Profile Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="profileModalBody">
+                    <div class="row">
+                        <div class="col-md-4 text-center">
+                            <img src="https://via.placeholder.com/150" class="img-thumbnail mb-3" alt="Profile Image">
+                            <h4 id="profileName">John Doe</h4>
+                            <p class="text-muted" id="profileRole">Full Stack Developer</p>
+                            <div class="d-flex justify-content-center gap-2 mb-3">
+                                <a href="#" class="btn btn-outline-primary btn-sm">
+                                    <i class="bi bi-linkedin"></i> LinkedIn
+                                </a>
+                                <a href="#" class="btn btn-outline-secondary btn-sm">
+                                    <i class="bi bi-download"></i> Resume
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="mb-3">
+                                <h5>Contact Information</h5>
+                                <p><strong>Email:</strong> <span id="profileEmail">john.doe@example.com</span></p>
+                                <p><strong>Phone:</strong> <span id="profilePhone">9876543210</span></p>
+                                <p><strong>Location:</strong> <span id="profileLocation">Bangalore, India</span></p>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Professional Details</h5>
+                                <p><strong>Current Company:</strong> <span id="profileCompany">-</span></p>
+                                <p><strong>Experience:</strong> <span id="profileExperience">2 years</span></p>
+                                <p><strong>Current Salary:</strong> <span id="profileSalary">-</span></p>
+                                <p><strong>Expected CTC:</strong> <span id="profileExpectedCTC">8 LPA</span></p>
+                                <p><strong>Notice Period:</strong> <span id="profileNoticePeriod">-</span></p>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Skills & Requirements</h5>
+                                <div id="profileSkills">
+                                    <span class="badge bg-primary me-1">React</span>
+                                    <span class="badge bg-primary me-1">Node.js</span>
+                                    <span class="badge bg-primary me-1">JavaScript</span>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h5>Notes</h5>
+                                <textarea class="form-control" id="profileNotes" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save Notes</button>
+                    <button type="button" class="btn btn-success">Schedule Interview</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.bootstrap5.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.print.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/2.4.1/js/buttons.colVis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize DataTables with export buttons
+            const studentsTable = $('#studentsTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            const professionalsTable = $('#professionalsTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            const companiesTable = $('#companiesTable').DataTable({
+                dom: 'Bfrtip',
+                buttons: [
+                    'copy', 'csv', 'excel', 'pdf', 'print'
+                ]
+            });
+
+            // Initialize FullCalendar
+            const calendarEl = document.getElementById('calendar');
+            const calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: 'dayGridMonth',
+                headerToolbar: {
+                    left: 'prev,next today',
+                    center: 'title',
+                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                },
+                events: [
+                    {
+                        title: 'Interview with John Doe',
+                        start: new Date(),
+                        end: new Date(new Date().setHours(new Date().getHours() + 1)),
+                        color: '#0d6efd'
+                    },
+                    {
+                        title: 'Meeting with DataWorld',
+                        start: new Date(new Date().setDate(new Date().getDate() + 1)),
+                        end: new Date(new Date().setDate(new Date().getDate() + 1)),
+                        color: '#198754'
+                    },
+                    {
+                        title: 'Candidate Screening',
+                        start: new Date(new Date().setDate(new Date().getDate() + 2)),
+                        end: new Date(new Date().setDate(new Date().getDate() + 2)),
+                        color: '#fd7e14'
+                    }
+                ]
+            });
+            calendar.render();
+
+            // Notification dropdown toggle
+            $('#notificationBtn').click(function() {
+                $('#notificationDropdown').toggle();
+            });
+
+            // Close notification dropdown when clicking outside
+            $(document).click(function(event) {
+                if (!$(event.target).closest('#notificationBtn, #notificationDropdown').length) {
+                    $('#notificationDropdown').hide();
+                }
+            });
+
+            // View profile modal
+            $(document).on('click', '.view-btn', function() {
+                const id = $(this).data('id');
+                // In a real app, you would fetch data based on the ID
+                // For demo, we're using static data
+                $('#profileModalTitle').text('Candidate Profile');
+                $('#profileName').text(id === 1 ? 'John Doe' : id === 2 ? 'Jane Smith' : id === 3 ? 'Michael Johnson' : 'Sarah Williams');
+                $('#profileEmail').text(id === 1 ? 'john.doe@example.com' : id === 2 ? 'jane.smith@example.com' : id === 3 ? 'michael.j@example.com' : 'sarah.w@example.com');
+                $('#profilePhone').text(id === 1 ? '9876543210' : id === 2 ? '8765432109' : id === 3 ? '7654321098' : '6543210987');
+                $('#profileRole').text(id === 1 ? 'Full Stack Developer' : id === 2 ? 'Data Scientist' : id === 3 ? 'Senior Developer' : 'Data Analyst');
+                $('#profileCompany').text(id === 1 ? '-' : id === 2 ? '-' : id === 3 ? 'Tech Solutions Inc.' : 'Data Analytics Co.');
+                $('#profileExperience').text(id === 1 ? 'Fresher' : id === 2 ? 'Fresher' : id === 3 ? '5 years' : '8 years');
+                $('#profileSalary').text(id === 1 ? '-' : id === 2 ? '-' : id === 3 ? '15 LPA' : '22 LPA');
+                $('#profileExpectedCTC').text(id === 1 ? '8 LPA' : id === 2 ? '12 LPA' : id === 3 ? '18 LPA' : '25 LPA');
+                $('#profileNoticePeriod').text(id === 1 ? '-' : id === 2 ? '-' : id === 3 ? '1 month' : '2 months');
+                $('#profileLocation').text(id === 1 ? 'Bangalore' : id === 2 ? 'Hyderabad' : id === 3 ? 'Pune' : 'Delhi');
+                
+                // Update skills based on ID
+                let skillsHtml = '';
+                if (id === 1) {
+                    skillsHtml = '<span class="badge bg-primary me-1">React</span><span class="badge bg-primary me-1">Node.js</span><span class="badge bg-primary me-1">JavaScript</span>';
+                } else if (id === 2) {
+                    skillsHtml = '<span class="badge bg-primary me-1">Python</span><span class="badge bg-primary me-1">Machine Learning</span><span class="badge bg-primary me-1">Data Science</span>';
+                } else if (id === 3) {
+                    skillsHtml = '<span class="badge bg-primary me-1">Java</span><span class="badge bg-primary me-1">Spring Boot</span><span class="badge bg-primary me-1">Microservices</span>';
+                } else {
+                    skillsHtml = '<span class="badge bg-primary me-1">SQL</span><span class="badge bg-primary me-1">Power BI</span><span class="badge bg-primary me-1">Tableau</span>';
+                }
+                $('#profileSkills').html(skillsHtml);
+
+                $('#profileModal').modal('show');
+            });
+
+            // Status change handler
+            $(document).on('change', '.status-select', function() {
+                const id = $(this).data('id');
+                const newStatus = $(this).val();
+                
+                // In a real app, you would send this to your backend
+                console.log(`Changing status for ID ${id} to ${newStatus}`);
+                
+                // Show a toast notification
+                showToast('Status Updated', `Status changed to ${newStatus} for candidate ${id}`, 'success');
+            });
+
+            // Add new event form
+            $('#eventForm').submit(function(e) {
+                e.preventDefault();
+                const title = $('#eventTitle').val();
+                const dateTime = $('#eventDateTime').val();
+                const type = $('#eventType').val();
+                
+                // Add to calendar
+                calendar.addEvent({
+                    title: title,
+                    start: dateTime,
+                    allDay: false,
+                    color: type === 'Interview' ? '#0d6efd' : type === 'Meeting' ? '#198754' : '#fd7e14'
+                });
+                
+                // Show success message
+                showToast('Event Added', 'The new event has been added to your calendar', 'success');
+                
+                // Reset form
+                $('#eventForm')[0].reset();
+            });
+
+            // Search functionality for students
+            $('#studentSearchBtn').click(function() {
+                const dateRange = $('#studentDateRange').val();
+                const skills = $('#studentSkills').val();
+                const ctcRange = $('#studentCTCRange').val();
+                const status = $('#studentStatus').val();
+                
+                // In a real app, you would send these filters to your backend
+                console.log('Searching students with filters:', { dateRange, skills, ctcRange, status });
+                
+                // For demo, just show a toast
+                showToast('Search Applied', 'Student filters applied', 'info');
+            });
+
+            // Similar search handlers for professionals and companies would go here
+
+            // Helper function to show toast notifications
+            function showToast(title, message, type) {
+                const toastHtml = `
+                    <div class="toast align-items-center text-white bg-${type} border-0 position-fixed bottom-0 end-0 m-3" role="alert" aria-live="assertive" aria-atomic="true">
+                        <div class="d-flex">
+                            <div class="toast-body">
+                                <strong>${title}</strong><br>${message}
+                            </div>
+                            <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+                        </div>
+                    </div>
+                `;
+                
+                $(toastHtml).appendTo('body').toast({ autohide: true, delay: 3000 }).toast('show');
+            }
+
+            // Refresh tables when switching tabs
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function (e) {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
+        });
+
+        function downloadFile(filepath) {
+            window.open(`/contact/download/${encodeURIComponent(filepath)}`, '_blank');
+        }
+    </script>
+</body>
+</html>

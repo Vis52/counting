@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="GRP Career offers career transformation through personalized coaching, certifications, and job placement services.">
+    <meta name="keywords" content="career coaching, job placement, certifications, project management, personal branding">
+    <title>GRP Career | Transform Your Career</title>
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Owl Carousel -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css">
+    <!-- AOS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <style>
+        :root {
+            --primary: #1a3c34; /* Deep Forest Green */
+            --secondary: #f4a261; /* Warm Orange */
+            --accent: #2a9d8f; /* Teal */
+            --light: #e9ecef; /* Soft Gray */
+            --dark: #0a1f1b; /* Charcoal */
+            --success: #06d6a0; /* Bright Green */
+            --white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+        }
+
+        /* Top Bar */
+        .top-bar {
+            background: var(--light);
+            padding: 0.75rem 0;
+            font-size: 0.95rem;
+            color: #666;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .top-bar .contact-info i {
+            margin-right: 0.5rem;
+            color: var(--secondary);
+        }
+
+        .top-bar .social-icons a {
+            color: #666;
+            margin-left: 1.2rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .top-bar .social-icons a:hover {
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 767px) {
+            .top-bar {
+                display: none;
+            }
+        }
+
+        /* Navbar */
+        .navbar {
+            background: var(--dark);
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .navbar-brand img {
+            height: 45px;
+            transition: transform 0.3s;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--white);
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 500;
+            margin-left: 1.8rem;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .get-started-btn {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.6rem 2rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+            border: 2px solid var(--accent);
+            transition: all 0.3s;
+        }
+
+        .get-started-btn:hover {
+            background: transparent;
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Hero Carousel */
+        .hero-carousel .carousel-item {
+            height: 700px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-carousel .carousel-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(10, 31, 27, 0.7), rgba(26, 60, 52, 0.7));
+            z-index: 1;
+        }
+
+        .hero-carousel .carousel-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: var(--white);
+            padding-top: 200px;
+        }
+
+        .hero-carousel h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-carousel p {
+            font-size: 1.3rem;
+            max-width: 700px;
+            margin: 0 auto 2.5rem;
+            opacity: 0.9;
+            animation: fadeInUp 1.2s ease;
+        }
+
+        .hero-carousel .btn-primary {
+            background: var(--accent);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            margin-right: 1rem;
+            transition: all 0.3s;
+        }
+
+        .hero-carousel .btn-outline-light {
+            border-color: var(--white);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .hero-carousel .btn-primary:hover, .hero-carousel .btn-outline-light:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .carousel-control-prev-icon, .carousel-control-next-icon {
+            background-color: var(--accent);
+            border-radius: 50%;
+            padding: 25px;
+            transition: background 0.3s;
+        }
+
+        .carousel-indicators li {
+            background-color: var(--white);
+            opacity: 0.5;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+
+        .carousel-indicators .active {
+            opacity: 1;
+            background-color: var(--secondary);
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Stats Section */
+        .stats-section {
+            padding: 5rem 0;
+            background: var(--light);
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.5rem;
+            background: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .stat-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .stat-card p {
+            color: #666;
+        }
+
+        /* About Section */
+        .about-section {
+            padding: 7rem 0;
+            background: var(--white);
+        }
+
+        .about-image {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-image img.primary {
+            width: 100%;
+            border-radius: 15px;
+            transition: transform 0.5s;
+        }
+
+        .about-image img.primary:hover {
+            transform: scale(1.05);
+        }
+
+        .about-image img.secondary {
+            width: 220px;
+            position: absolute;
+            bottom: -30px;
+            right: -30px;
+            border: 6px solid var(--white);
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .experience-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.6rem 1.2rem;
+            border-radius: 25px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 0.95rem;
+        }
+
+        .about-section h5 {
+            color: var(--secondary);
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .about-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            transition: transform 0.3s;
+        }
+
+        .service-item:hover {
+            transform: translateX(10px);
+        }
+
+        .service-item i {
+            font-size: 2.5rem;
+            color: var(--accent);
+            margin-right: 1.5rem;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 7rem 0;
+            background: linear-gradient(135deg, var(--white), var(--light));
+        }
+
+        .services-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            position: relative;
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .services-section h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--secondary);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .service-card {
+            padding: 2.5rem;
+            background: var(--white);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .service-card i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .service-card .read-more {
+            color: var(--accent);
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+
+        .service-card .read-more:hover {
+            color: var(--secondary);
+        }
+
+        /* Partners Section */
+        .partners-section {
+            padding: 5rem 0;
+            background: var(--dark);
+            color: var(--white);
+        }
+
+        .partners-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .partner-logo img {
+            filter: grayscale(100%) opacity(0.7);
+            transition: all 0.3s;
+            height: 70px;
+        }
+
+        .partner-logo img:hover {
+            filter: grayscale(0%) opacity(1);
+            transform: scale(1.1);
+        }
+
+        /* Testimonials Section */
+        .testimonials-section {
+            padding: 7rem 0;
+            background: var(--white);
+        }
+
+        .testimonials-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .testimonial-card {
+            padding: 2.5rem;
+            background: var(--white);
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .testimonial-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .testimonial-card img {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+            border: 4px solid var(--accent);
+        }
+
+        .stars i {
+            color: #f1c40f;
+            font-size: 1.2rem;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            padding: 7rem 0;
+            background: linear-gradient(135deg, var(--light), var(--white));
+        }
+
+        .contact-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .contact-info i {
+            color: var(--accent);
+            margin-right: 0.8rem;
+        }
+
+        .contact-form .form-control {
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--light);
+            padding: 0.8rem;
+        }
+
+        .contact-form .btn-primary {
+            background: var(--accent);
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            transition: all 0.3s;
+        }
+
+        .contact-form .btn-primary:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+        }
+
+        /* Blog Section */
+        .blog-section {
+            padding: 7rem 0;
+            background: var(--white);
+        }
+
+        .blog-section h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .blog-card {
+            background: var(--white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .blog-card img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+
+        .blog-date {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.6rem 1rem;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 5rem 0 3rem;
+        }
+
+        footer h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        footer a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        footer a:hover {
+            color: var(--accent);
+        }
+
+        .newsletter-form .form-control {
+            border-radius: 25px 0 0 25px;
+            border: none;
+            padding: 0.8rem;
+        }
+
+        .newsletter-form .btn {
+            border-radius: 0 25px 25px 0;
+            background: var(--accent);
+            padding: 0.8rem 1.5rem;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form .btn:hover {
+            background: var(--secondary);
+        }
+
+        .social-links a {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container d-flex justify-content-between align-items-center">
+            <div class="contact-info">
+                <span><i class="fas fa-phone-alt"></i> +91 9643058418, 01204097776</span>
+                <span><i class="fas fa-clock"></i> Mon-Sat 9am-6pm</span>
+            </div>
+            <div class="social-icons">
+                <a href="#"><i class="fab fa-twitter"></i></a>
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-linkedin"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#"><img src="https://via.placeholder.com/150x45?text=GRP+Career" alt="GRP Career Logo"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#features">Features</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#advisor">Advisor</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#review">Review</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="pagesDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Pages</a>
+                        <div class="dropdown-menu" aria-labelledby="pagesDropdown">
+                            <a class="dropdown-item" href="#">Blog</a>
+                            <a class="dropdown-item" href="#">Single Page</a>
+                        </div>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+                    <li class="nav-item"><a class="nav-link get-started-btn" href="#contact">Get Started</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Carousel -->
+    <div id="heroCarousel" class="carousel slide hero-carousel" data-ride="carousel">
+        <ol class="carousel-indicators">
+            <li data-target="#heroCarousel" data-slide-to="0" class="active"></li>
+            <li data-target="#heroCarousel" data-slide-to="1"></li>
+            <li data-target="#heroCarousel" data-slide-to="2"></li>
+        </ol>
+        <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://images.unsplash.com/photo-1516321310766-61b7c99e0f51')">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Transform Your Career</h1>
+                    <p>Unlock your potential with personalized coaching and certifications.</p>
+                    <a href="#contact" class="btn btn-primary" aria-label="Start Your Journey">Start Your Journey</a>
+                    <a href="#services" class="btn btn-outline-light" aria-label="See How It Works">See How It Works</a>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1521791136064-7986c2920216')">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Achieve Your Goals</h1>
+                    <p>Master skills with our expert-led programs and job placement support.</p>
+                    <a href="#contact" class="btn btn-primary" aria-label="Start Your Journey">Start Your Journey</a>
+                    <a href="#services" class="btn btn-outline-light" aria-label="See How It Works">See How It Works</a>
+                </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c')">
+                <div class="carousel-overlay"></div>
+                <div class="carousel-content">
+                    <h1>Build Your Future</h1>
+                    <p>Join 12,000+ professionals who’ve advanced with GRP Career.</p>
+                    <a href="#contact" class="btn btn-primary" aria-label="Start Your Journey">Start Your Journey</a>
+                    <a href="#services" class="btn btn-outline-light" aria-label="See How It Works">See How It Works</a>
+                </div>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#heroCarousel" role="button" data-slide="prev" aria-label="Previous Slide">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        </a>
+        <a class="carousel-control-next" href="#heroCarousel" role="button" data-slide="next" aria-label="Next Slide">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </a>
+    </div>
+
+    <!-- Stats Section -->
+    <section class="stats-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-card" data-aos="fade-up">
+                        <i class="fas fa-users"></i>
+                        <h3 data-count="150">0</h3>
+                        <h4>Qualified Experts</h4>
+                        <p>Our team of certified professionals guides you to success.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h3 data-count="100">0</h3>
+                        <h4>Personalized Plans</h4>
+                        <p>Tailored strategies for your career goals.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-check-circle"></i>
+                        <h3 data-count="100">0</h3>
+                        <h4>Success Rate</h4>
+                        <p>Proven results in career advancement.</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-smile"></i>
+                        <h3 data-count="98">0</h3>
+                        <h4>Client Satisfaction</h4>
+                        <p>Trusted by thousands worldwide.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <div class="about-image" data-aos="fade-right">
+                        <img src="https://images.unsplash.com/photo-1516321310766-61b7c99e0f51" alt="About GRP Career" class="primary">
+                        <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Secondary Image" class="secondary">
+                        <span class="experience-badge">25 Years Experience</span>
+                    </div>
+                </div>
+                <div class="col-md-6" data-aos="fade-left">
+                    <h5>Your Career Partner</h5>
+                    <h2>Building Futures Since 1999</h2>
+                    <p>GRP Career empowers professionals with personalized coaching, certifications, and job placement services to achieve their career goals.</p>
+                    <div class="service-item">
+                        <i class="fas fa-briefcase"></i>
+                        <div>
+                            <h4>Career Counseling</h4>
+                            <p>One-on-one sessions to map your career path.</p>
+                        </div>
+                    </div>
+                    <div class="service-item">
+                        <i class="fas fa-handshake"></i>
+                        <div>
+                            <h4>Job Placement</h4>
+                            <p>Connect with top employers in your field.</p>
+                        </div>
+                    </div>
+                    <a href="#testimonials" class="btn btn-primary mr-2">Our Success Stories</a>
+                    <a href="#contact" class="btn btn-outline-primary">Free Consultation</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services-section">
+        <div class="container">
+            <h2>Our Services</h2>
+            <div class="row">
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Business Strategy</h4>
+                        <p>Develop winning strategies for growth.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-tasks"></i>
+                        <h4>Project Management</h4>
+                        <p>Master PMP, Agile, and Scrum certifications.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-search"></i>
+                        <h4>Market Research</h4>
+                        <p>Gain insights to stay ahead.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-users"></i>
+                        <h4>Human Resource</h4>
+                        <p>Build high-performing teams.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up">
+                        <i class="fas fa-laptop"></i>
+                        <h4>Online Business</h4>
+                        <p>Launch and scale digital ventures.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="100">
+                        <i class="fas fa-dollar-sign"></i>
+                        <h4>Capital Management</h4>
+                        <p>Optimize financial resources.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="200">
+                        <i class="fas fa-shield-alt"></i>
+                        <h4>Business Insurance</h4>
+                        <p>Protect your enterprise.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6">
+                    <div class="service-card" data-aos="fade-up" data-aos-delay="300">
+                        <i class="fas fa-bullhorn"></i>
+                        <h4>Online Marketing</h4>
+                        <p>Boost your brand’s reach.</p>
+                        <a href="#" class="read-more">Read More <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="partners-section">
+        <div class="container">
+            <h2>Trusted Partners</h2>
+            <div class="owl-carousel owl-theme partner-carousel">
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Google" alt="Google"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Microsoft" alt="Microsoft"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Amazon" alt="Amazon"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=IBM" alt="IBM"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Accenture" alt="Accenture"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Deloitte" alt="Deloitte"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=TCS" alt="TCS"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Infosys" alt="Infosys"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Wipro" alt="Wipro"></div>
+                <div class="partner-logo"><img src="https://via.placeholder.com/150x70?text=Cognizant" alt="Cognizant"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="review" class="testimonials-section">
+        <div class="container">
+            <h2>What Our Clients Say</h2>
+            <div class="owl-carousel owl-theme testimonial-carousel">
+                <div class="testimonial-card" data-aos="fade-up">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330" alt="Client 1">
+                    <p>"GRP Career helped me land my dream job!"</p>
+                    <h4>Neha Kapoor</h4>
+                    <p>Project Manager</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d" alt="Client 2">
+                    <p>"The PMP certification boosted my career."</p>
+                    <h4>Rohan Mehta</h4>
+                    <p>Scrum Master</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.unsplash.com/photo-1519086787939-1e97c0db71bb" alt="Client 3">
+                    <p>"Personalized coaching made all the difference."</p>
+                    <h4>Anjali Rao</h4>
+                    <p>Consultant</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star-half-alt"></i></div>
+                </div>
+                <div class="testimonial-card" data-aos="fade-up" data-aos-delay="300">
+                    <img src="https://images.unsplash.com/photo-1522556189639-b1509e4e2f4a" alt="Client 4">
+                    <p>"Job placement support was exceptional."</p>
+                    <h4>Vikram Singh</h4>
+                    <p>Team Lead</p>
+                    <div class="stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact-section">
+        <div class="container">
+            <h2>Get in Touch</h2>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="contact-info">
+                        <p><i class="fas fa-map-marker-alt"></i> <a href="https://maps.google.com" target="_blank">Corp. Off: 2nd Floor, A-55, Sec-02, Noida G.B Nagar (U.P) - 201301</a></p>
+                        <p><i class="fas fa-phone-alt"></i> +91 9643058418, 01204097776</p>
+                        <p><i class="fas fa-envelope"></i> <a href="mailto:info@grpcareer.com">info@grpcareer.com</a></p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="subject" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" id="message" rows="5" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                        <div id="form-message" class="mt-3"></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="blog-section">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h2>Latest Insights</h2>
+                <a href="#" class="text-primary">View All Articles</a>
+            </div>
+            <div class="row">
+                <div class="col-md-4" data-aos="fade-up">
+                    <div class="blog-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1516321310766-61b7c99e0f51" alt="Blog 1">
+                            <span class="blog-date">Apr 16, 2025</span>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-muted">Career Growth • 5 min read</p>
+                            <h4>How to Ace Your Next Interview</h4>
+                            <p>Top tips to prepare and impress hiring managers.</p>
+                            <a href="#" class="text-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="blog-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216" alt="Blog 2">
+                            <span class="blog-date">Apr 10, 2025</span>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-muted">Leadership • 7 min read</p>
+                            <h4>Leading Teams in 2025</h4>
+                            <p>Strategies for modern leadership success.</p>
+                            <a href="#" class="text-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="blog-card">
+                        <div class="position-relative">
+                            <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c" alt="Blog 3">
+                            <span class="blog-date">Apr 5, 2025</span>
+                        </div>
+                        <div class="p-3">
+                            <p class="text-muted">Career Change • 6 min read</p>
+                            <h4>Switching Industries Successfully</h4>
+                            <p>A guide to navigating career transitions.</p>
+                            <a href="#" class="text-primary">Read More</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>GRP Career</h3>
+                    <p>Corp. Off: 2nd Floor, A-55, Sec-02, Noida G.B Nagar (U.P) - 201301</p>
+                    <p><i class="fas fa-phone-alt"></i> +91 9643058418, 01204097776</p>
+                    <p><a href="mailto:info@grpcareer.com"><i class="fas fa-envelope"></i> info@grpcareer.com</a></p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h3>Quick Links</h3>
+                    <ul class="list-unstyled">
+                        <li><a href="#">Terms of Use</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">Help</a></li>
+                        <li><a href="#">FAQs</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4">
+                    <h3>Newsletter</h3>
+                    <p>Stay updated with career tips and insights.</p>
+                    <form id="newsletter-form" class="newsletter-form d-flex">
+                        <input type="email" class="form-control" placeholder="Your Email" required>
+                        <button type="submit" class="btn">Subscribe</button>
+                    </form>
+                    <div id="newsletter-message" class="mt-3"></div>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 GRP Career. All rights reserved. Designed by <a href="#">GRP Team</a>.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+    <script>
+        // AOS Initialization
+        AOS.init({ duration: 1000, once: true });
+
+        // Stats Counter
+        const counters = document.querySelectorAll('.stat-card h3');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const target = entry.target;
+                    const count = parseInt(target.getAttribute('data-count'));
+                    let current = 0;
+                    const increment = count / 50;
+                    const updateCount = () => {
+                        current += increment;
+                        target.textContent = Math.ceil(current);
+                        if (current < count) {
+                            requestAnimationFrame(updateCount);
+                        } else {
+                            target.textContent = count;
+                        }
+                    };
+                    updateCount();
+                    observer.unobserve(target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        counters.forEach(counter => observer.observe(counter));
+
+        // Partner Carousel
+        $('.partner-carousel').owlCarousel({
+            loop: true,
+            margin: 20,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: { items: 2 },
+                600: { items: 4 },
+                1000: { items: 6 }
+            }
+        });
+
+        // Testimonial Carousel
+        $('.testimonial-carousel').owlCarousel({
+            loop: true,
+            margin: 20,
+            autoplay: true,
+            autoplayTimeout: 5000,
+            autoplayHoverPause: true,
+            responsive: {
+                0: { items: 1 },
+                600: { items: 2 },
+                1000: { items: 3 }
+            }
+        });
+
+        // Contact Form
+        $('#contact-form').submit(function(e) {
+            e.preventDefault();
+            const formData = {
+                name: $('#name').val(),
+                email: $('#email').val(),
+                subject: $('#subject').val(),
+                message: $('#message').val()
+            };
+            $.ajax({
+                url: '/contact-submit',
+                type: 'POST',
+                data: JSON.stringify(formData),
+                contentType: 'application/json',
+                success: function(response) {
+                    $('#form-message').html('<p class="text-success">Message sent successfully!</p>');
+                    $('#contact-form')[0].reset();
+                },
+                error: function() {
+                    $('#form-message').html('<p class="text-danger">Error sending message. Please try again.</p>');
+                }
+            });
+        });
+
+        // Newsletter Form
+        $('#newsletter-form').submit(function(e) {
+            e.preventDefault();
+            const email = $(this).find('input').val();
+            $.ajax({
+                url: '/subscribe-newsletter',
+                type: 'POST',
+                data: JSON.stringify({ email }),
+                contentType: 'application/json',
+                success: function(response) {
+                    $('#newsletter-message').html('<p class="text-success">Subscribed successfully!</p>');
+                    $('#newsletter-form')[0].reset();
+                },
+                error: function() {
+                    $('#newsletter-message').html('<p class="text-danger">Error subscribing. Please try again.</p>');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

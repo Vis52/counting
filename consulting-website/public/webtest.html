@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GRP Career Pvt Ltd.</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="consultancy" name="keywords">
+        <meta content="consultancy" name="description">
+
+        <!-- Favicon -->
+        <link href="img/logo.png" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="/css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <i class="far fa-clock"></i>
+                                <h2>10:00 - 7:00</h2>
+                                <p>Mon - Sat</p>
+                            </div>
+                            <div class="text">
+                                <i class="fa fa-phone-alt"></i>
+                                <h2>+91 9643058418, </h2>
+                                <h2>01204097776</h2>
+                                <p>For Appointment</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/share/16egu8TAQ3/"><i class="fab fa-facebook-f"></i></a>
+                                <a href="https://www.linkedin.com/in/grp-career-548736359/"><i class="fab fa-linkedin-in"></i></a>
+                                <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA=="><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+<!-- Nav Bar Start -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-gradient-primary">
+    <div class="container-fluid px-4"> <!-- Changed to container-fluid with padding -->
+        <!-- Logo (100px height) -->
+        <a class="navbar-brand mr-0" href="index.html"> <!-- Removed right margin -->
+            <img src="img/logo.png" alt="GRP Career" style="height: 100px; width: auto;">
+        </a>
+        
+        <!-- Mobile Toggle -->
+        <button class="navbar-toggler ml-auto" type="button" data-toggle="collapse" data-target="#mainNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        
+        <!-- Navigation Links - Fully Right Aligned -->
+        <div class="collapse navbar-collapse flex-grow-0" id="mainNav"> <!-- flex-grow-0 prevents expansion -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active" href="/index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about.html">About</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        Services
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/service.html">All Services</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Career Counseling</a>
+                        <a class="dropdown-item" href="#">Resume Building</a>
+                        <a class="dropdown-item" href="#">Interview Prep</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/feature.html">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/advisor.html">Advisors</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                        More
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="/review.html">Reviews</a>
+                        <a class="dropdown-item" href="blog.html">Blog</a>
+                        <a class="dropdown-item" href="company_reg.html">Company Registration</a>
+                    </div>
+                </li>
+                <li class="nav-item pl-lg-3">
+                    <a href="/company_reg.html" class="btn btn-light btn-rounded px-4 py-2">
+                        <i class="fas fa-envelope mr-2"></i> Contact Us
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- CSS -->
+<style>
+    .bg-gradient-primary {
+        background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+    
+    .navbar {
+        padding: 0.5rem 1rem;
+    }
+    
+    .navbar-brand {
+        padding: 0;
+    }
+    
+    .nav-link {
+        font-weight: 500;
+        padding: 0.8rem 1.2rem !important;
+        position: relative;
+    }
+    
+    .nav-link:before {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 1.2rem;
+        width: 0;
+        height: 2px;
+        background: white;
+        transition: width 0.3s ease;
+    }
+    
+    .nav-link:hover:before,
+    .nav-link.active:before {
+        width: calc(100% - 2.4rem);
+    }
+    
+    .dropdown-menu {
+        border: none;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        border-radius: 0.5rem;
+    }
+    
+    .btn-rounded {
+        border-radius: 50px;
+        white-space: nowrap;
+    }
+    
+    @media (max-width: 991px) {
+        .navbar-brand img {
+            height: 80px !important;
+        }
+        .navbar-collapse {
+            text-align: right;
+        }
+    }
+</style>
+     <!-- estimonial Section HTML -->
+<section class="client-testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Client Voices</span>
+            <h2 class="section-title">Trusted by Thousands of Professionals</h2>
+            <div class="section-divider"></div>
+            <p class="section-description">Hear what our clients say about their career transformation journey with us</p>
+        </div>
+
+        <div class="testimonials-carousel">
+            <!-- Testimonial cards will be added here -->
+        </div>
+
+        <div class="carousel-controls">
+            <button class="control-btn prev-btn" aria-label="Previous testimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="testimonial-indicators"></div>
+            <button class="control-btn next-btn" aria-label="Next testimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Testimonial data - replace with your actual testimonials
+    const testimonials = [
+        {
+            name: "Sarah Johnson",
+            position: "Marketing Director at TechCorp",
+            quote: "The career counseling I received completely transformed my job search approach. Within weeks, I had multiple offers!",
+            image: "img/testimonial-1.jpg",
+            rating: 5
+        },
+        {
+            name: "Michael Chen",
+            position: "Senior Developer at FinTech",
+            quote: "The technical interview preparation was exceptional. My coach helped me master system design concepts.",
+            image: "img/testimonial-2.jpg",
+            rating: 5
+        },
+        {
+            name: "Priya Patel",
+            position: "Product Manager at HealthInnovate",
+            quote: "After being out of the workforce for 3 years, the career reboot program gave me the confidence to return stronger.",
+            image: "img/testimonial-3.jpg",
+            rating: 4.5
+        },
+        {
+            name: "David Wilson",
+            position: "Sales Executive at GlobalTech",
+            quote: "The negotiation training paid for itself 10 times over. I increased my compensation package by 45%.",
+            image: "img/testimonial-4.jpg",
+            rating: 5
+        }
+    ];
+
+    const carousel = document.querySelector('.testimonials-carousel');
+    const indicatorsContainer = document.querySelector('.testimonial-indicators');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    let currentIndex = 0;
+
+    // Create testimonial cards
+    function createTestimonialCards() {
+        testimonials.forEach((testimonial, index) => {
+            const card = document.createElement('div');
+            card.className = 'testimonial-card';
+            card.setAttribute('data-index', index);
+            
+            // Create rating stars
+            let stars = '';
+            for (let i = 1; i <= 5; i++) {
+                if (i <= Math.floor(testimonial.rating)) {
+                    stars += '<i class="fas fa-star"></i>';
+                } else if (i === Math.ceil(testimonial.rating) && testimonial.rating % 1 !== 0) {
+                    stars += '<i class="fas fa-star-half-alt"></i>';
+                } else {
+                    stars += '<i class="far fa-star"></i>';
+                }
+            }
+
+            card.innerHTML = `
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <img src="${testimonial.image}" alt="${testimonial.name}" loading="lazy">
+                        <div class="rating">${stars}</div>
+                    </div>
+                    <div class="client-details">
+                        <h3>${testimonial.name}</h3>
+                        <p>${testimonial.position}</p>
+                    </div>
+                </div>
+                <div class="testimonial-content">
+                    <p>"${testimonial.quote}"</p>
+                </div>
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            `;
+            
+            carousel.appendChild(card);
+            
+            // Create indicator
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator';
+            if (index === 0) indicator.classList.add('active');
+            indicator.addEventListener('click', () => goToTestimonial(index));
+            indicatorsContainer.appendChild(indicator);
+        });
+    }
+
+    // Go to specific testimonial
+    function goToTestimonial(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+
+    // Update carousel position and indicators
+    function updateCarousel() {
+        const cards = document.querySelectorAll('.testimonial-card');
+        const indicators = document.querySelectorAll('.indicator');
+        const cardWidth = cards[0].offsetWidth + 32; // including gap
+        
+        carousel.scrollTo({
+            left: currentIndex * cardWidth,
+            behavior: 'smooth'
+        });
+        
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+    }
+
+    // Initialize
+    createTestimonialCards();
+    const cards = document.querySelectorAll('.testimonial-card');
+    
+    // Navigation
+    prevBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : cards.length - 1;
+        updateCarousel();
+    });
+    
+    nextBtn.addEventListener('click', () => {
+        currentIndex = (currentIndex < cards.length - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+    });
+    
+    // Auto-advance (optional)
+    let autoScroll = setInterval(() => {
+        currentIndex = (currentIndex < cards.length - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+    }, 5000);
+    
+    carousel.addEventListener('mouseenter', () => clearInterval(autoScroll));
+    carousel.addEventListener('mouseleave', () => {
+        autoScroll = setInterval(() => {
+            currentIndex = (currentIndex < cards.length - 1) ? currentIndex + 1 : 0;
+            updateCarousel();
+        }, 5000);
+    });
+    
+    // Handle window resize
+    window.addEventListener('resize', updateCarousel);
+});
+</script>
+
+
+
+        <!-- Testimonials Section -->
+<section class="client-testimonials">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-badge">Client Voices</span>
+            <h2 class="section-title">Trusted by Thousands of Professionals</h2>
+            <div class="section-divider"></div>
+            <p class="section-description">Hear what our clients say about their career transformation journey with us</p>
+        </div>
+
+        <div class="testimonials-carousel">
+            <!-- Testimonial 1 -->
+            <div class="testimonial-card">
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <img src="img/testimonial-1.jpg" alt="Sarah Johnson" loading="lazy">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-details">
+                        <h3>Sarah Johnson</h3>
+                        <p>Marketing Director at TechCorp</p>
+                    </div>
+                </div>
+                <div class="testimonial-content">
+                    <p>"The career counseling I received completely transformed my job search approach. Within weeks, I had multiple offers and landed my dream role with a 30% salary increase!"</p>
+                </div>
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+
+            <!-- Testimonial 2 -->
+            <div class="testimonial-card">
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <img src="img/testimonial-2.jpg" alt="Michael Chen" loading="lazy">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-details">
+                        <h3>Michael Chen</h3>
+                        <p>Senior Developer at FinTech Solutions</p>
+                    </div>
+                </div>
+                <div class="testimonial-content">
+                    <p>"The technical interview preparation was exceptional. My coach helped me master system design concepts that were crucial for landing this senior position."</p>
+                </div>
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+
+            <!-- Testimonial 3 -->
+            <div class="testimonial-card">
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <img src="img/testimonial-3.jpg" alt="Priya Patel" loading="lazy">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                    <div class="client-details">
+                        <h3>Priya Patel</h3>
+                        <p>Product Manager at HealthInnovate</p>
+                    </div>
+                </div>
+                <div class="testimonial-content">
+                    <p>"After being out of the workforce for 3 years, the career reboot program gave me the confidence and skills to return stronger than ever. I'm now leading a product team!"</p>
+                </div>
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+
+            <!-- Testimonial 4 -->
+            <div class="testimonial-card">
+                <div class="client-info">
+                    <div class="client-avatar">
+                        <img src="img/testimonial-4.jpg" alt="David Wilson" loading="lazy">
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <div class="client-details">
+                        <h3>David Wilson</h3>
+                        <p>Sales Executive at GlobalTech</p>
+                    </div>
+                </div>
+                <div class="testimonial-content">
+                    <p>"The negotiation training paid for itself 10 times over. I increased my compensation package by 45% thanks to the strategies I learned."</p>
+                </div>
+                <div class="quote-icon">
+                    <i class="fas fa-quote-right"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="carousel-controls">
+            <button class="control-btn prev-btn" aria-label="Previous testimonial">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="testimonial-indicators"></div>
+            <button class="control-btn next-btn" aria-label="Next testimonial">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </div>
+</section>
+
+<style>
+/* Testimonials Styling */
+.client-testimonials {
+    --primary-color: #4361ee;
+    --secondary-color: #3f37c9;
+    --accent-color: #4cc9f0;
+    --text-dark: #2b2d42;
+    --text-light: #6c757d;
+    --bg-light: #f8f9fa;
+    --transition-speed: 0.4s;
+    padding: 5rem 0;
+    background-color: var(--bg-light);
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.section-badge {
+    display: inline-block;
+    background-color: rgba(67, 97, 238, 0.1);
+    color: var(--primary-color);
+    padding: 0.5rem 1.25rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1rem;
+}
+
+.section-title {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text-dark);
+    margin-bottom: 1rem;
+    line-height: 1.2;
+}
+
+.section-divider {
+    width: 80px;
+    height: 4px;
+    background: var(--accent-color);
+    margin: 1.5rem auto;
+}
+
+.section-description {
+    font-size: 1.1rem;
+    color: var(--text-light);
+    max-width: 700px;
+    margin: 0 auto;
+    line-height: 1.6;
+}
+
+.testimonials-carousel {
+    display: flex;
+    gap: 2rem;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+.testimonials-carousel::-webkit-scrollbar {
+    display: none;
+}
+
+.testimonial-card {
+    flex: 0 0 calc(100% - 2rem);
+    scroll-snap-align: start;
+    background-color: white;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    transition: transform var(--transition-speed) ease;
+    position: relative;
+    margin: 0 1rem;
+}
+
+.client-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.client-avatar {
+    position: relative;
+    margin-right: 1.5rem;
+}
+
+.client-avatar img {
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.rating {
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: 50px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    gap: 0.25rem;
+}
+
+.rating i {
+    color: #FFD700;
+    font-size: 0.8rem;
+}
+
+.client-details h3 {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    margin-bottom: 0.25rem;
+    font-weight: 600;
+}
+
+.client-details p {
+    font-size: 0.9rem;
+    color: var(--text-light);
+    margin-bottom: 0;
+}
+
+.testimonial-content {
+    position: relative;
+}
+
+.testimonial-content p {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--text-dark);
+    font-style: italic;
+    margin-bottom: 0;
+    padding: 0 1rem;
+}
+
+.quote-icon {
+    position: absolute;
+    top: -15px;
+    right: 15px;
+    color: var(--primary-color);
+    opacity: 0.1;
+    font-size: 3rem;
+}
+
+.carousel-controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.control-btn {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: white;
+    border: 1px solid #e9ecef;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.control-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+.testimonial-indicators {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.testimonial-indicators .indicator {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #e9ecef;
+    cursor: pointer;
+    transition: all var(--transition-speed) ease;
+}
+
+.testimonial-indicators .indicator.active {
+    background: var(--primary-color);
+    transform: scale(1.2);
+}
+
+/* Responsive Design */
+@media (min-width: 768px) {
+    .testimonial-card {
+        flex: 0 0 calc(50% - 2rem);
+    }
+}
+
+@media (min-width: 992px) {
+    .testimonial-card {
+        flex: 0 0 calc(33.333% - 2rem);
+    }
+    
+    .testimonials-carousel {
+        overflow-x: hidden;
+    }
+}
+
+@media (max-width: 576px) {
+    .section-title {
+        font-size: 2rem;
+    }
+    
+    .client-info {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    .client-avatar {
+        margin-right: 0;
+        margin-bottom: 1rem;
+    }
+}
+</style>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const carousel = document.querySelector('.testimonials-carousel');
+    const cards = document.querySelectorAll('.testimonial-card');
+    const prevBtn = document.querySelector('.prev-btn');
+    const nextBtn = document.querySelector('.next-btn');
+    const indicatorsContainer = document.querySelector('.testimonial-indicators');
+    let currentIndex = 0;
+    
+    // Create indicators
+    cards.forEach((_, index) => {
+        const indicator = document.createElement('div');
+        indicator.classList.add('indicator');
+        if (index === 0) indicator.classList.add('active');
+        indicator.addEventListener('click', () => goToTestimonial(index));
+        indicatorsContainer.appendChild(indicator);
+    });
+    
+    // Update indicators and scroll position
+    function updateCarousel() {
+        const indicators = document.querySelectorAll('.indicator');
+        indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === currentIndex);
+        });
+        
+        const cardWidth = cards[0].offsetWidth + 32; // including gap
+        carousel.scrollTo({
+            left: currentIndex * cardWidth,
+            behavior: 'smooth'
+        });
+    }
+    
+    // Navigation functions
+    function goToTestimonial(index) {
+        currentIndex = index;
+        updateCarousel();
+    }
+    
+    function goToPrev() {
+        currentIndex = (currentIndex > 0) ? currentIndex - 1 : cards.length - 1;
+        updateCarousel();
+    }
+    
+    function goToNext() {
+        currentIndex = (currentIndex < cards.length - 1) ? currentIndex + 1 : 0;
+        updateCarousel();
+    }
+    
+    // Event listeners
+    prevBtn.addEventListener('click', goToPrev);
+    nextBtn.addEventListener('click', goToNext);
+    
+    // Auto-advance (optional)
+    let autoScroll = setInterval(goToNext, 5000);
+    
+    carousel.addEventListener('mouseenter', () => clearInterval(autoScroll));
+    carousel.addEventListener('mouseleave', () => autoScroll = setInterval(goToNext, 5000));
+    
+    // Handle window resize
+    window.addEventListener('resize', updateCarousel);
+});
+</script>
+
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="footer-contact">
+                                    <h2>Our Head Office</h2>
+                                    <p><a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank">Corp. Off: 2nd Floor ,A-55, Sec-02,Noida G.B Nagar(U.P) - 201301</a></p>
+                                    <p><i class="fa fa-phone-alt"></i>+91 9643058418, 01204097776</p>
+                                    <p><a href="mailto:info@grpcareer.com"><i class="fa fa-envelope"></i> info@grpcareer.com</a></p>
+                                    <div class="footer-social">
+                                        <a href=""><i class="fab fa-twitter"></i></a>
+                                        <a href=""><i class="fab fa-facebook-f"></i></a>
+                                        <a href=""><i class="fab fa-youtube"></i></a>
+                                        <a href=""><i class="fab fa-instagram"></i></a>
+                                        <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="footer-link">
+                                    <h2>Quick Links</h2>
+                                    <a href="">Terms of use</a>
+                                    <a href="">Privacy policy</a>
+                                    <a href="">Cookies</a>
+                                    <a href="">Help</a>
+                                    <a href="">FQAs</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="footer-newsletter">
+                          <h2>Newsletter</h2>
+                          <p>
+                            Welcome to the latest edition of GRP Pvt Ltd, your go-to newsletter for job updates, career tips, and industry insights. Whether you're actively job hunting or just exploring new opportunities, we’re here to support you every step of the way. Stay tuned for curated job openings, expert advice, and success stories to keep you motivated and informed!
+                          </p>
+                      
+                          <!-- Newsletter Form -->
+                          <form id="newsletterForm">
+                            <div class="form">
+                              <input class="form-control" type="email" name="email" placeholder="Email goes here" required>
+                              <button class="btn" type="submit">Submit</button>
+                            </div>
+                            <div id="newsletterMessage" style="margin-top: 10px; display: none;"></div>
+                          </form>
+                        </div>
+                      </div>
+                      
+                      <!-- JS script -->
+                       <script>
+                      document.addEventListener("DOMContentLoaded", function() {
+                        const newsletterForm = document.getElementById('newsletterForm');
+                        const messageEl = document.getElementById('newsletterMessage');
+                        
+                        if (newsletterForm) {
+                          newsletterForm.addEventListener('submit', function(e) {
+                            e.preventDefault();
+                            
+                            const email = this.querySelector('input[name="email"]').value.trim();
+                            
+                            // Show loading state
+                            const submitBtn = this.querySelector('button[type="submit"]');
+                            const originalBtnText = submitBtn.textContent;
+                            submitBtn.textContent = 'Submitting...';
+                            submitBtn.disabled = true;
+                            
+                            // Clear previous messages
+                            messageEl.style.display = 'none';
+                            
+                            if (!email) {
+                              showMessage('Please enter your email address', 'error');
+                              resetButton();
+                              return;
+                            }
+                            
+                            if (!validateEmail(email)) {
+                              showMessage('Please enter a valid email address', 'error');
+                              resetButton();
+                              return;
+                            }
+                            
+                            // Send the request
+                            fetch('/subscribe-newsletter', {
+                              method: 'POST',
+                              headers: {
+                                'Content-Type': 'application/json',
+                              },
+                              body: JSON.stringify({ email: email })
+                            })
+                            .then(response => {
+                              if (!response.ok) {
+                                throw new Error('Server error: ' + response.status);
+                              }
+                              return response.json();
+                            })
+                            .then(data => {
+                              if (data.success) {
+                                showMessage(data.message || 'Thank you for subscribing!', 'success');
+                                newsletterForm.reset();
+                              } else {
+                                showMessage(data.error || 'Subscription failed. Please try again.', 'error');
+                              }
+                            })
+                            .catch(error => {
+                              console.error('Error:', error);
+                              showMessage('Network error. Please try again later.', 'error');
+                            })
+                            .finally(() => {
+                              resetButton();
+                            });
+                            
+                            function resetButton() {
+                              submitBtn.textContent = originalBtnText;
+                              submitBtn.disabled = false;
+                            }
+                            
+                            function showMessage(message, type) {
+                              messageEl.textContent = message;
+                              messageEl.style.display = 'block';
+                              messageEl.style.color = type === 'success' ? 'green' : 'red';
+                              
+                              // Scroll to message if it's not visible
+                              if (!isElementInViewport(messageEl)) {
+                                messageEl.scrollIntoView({ behavior: 'smooth' });
+                              }
+                              
+                              // Hide message after delay
+                              setTimeout(() => {
+                                messageEl.style.display = 'none';
+                              }, 5000);
+                            }
+                            
+                            function validateEmail(email) {
+                              const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                              return re.test(email);
+                            }
+                            
+                            function isElementInViewport(el) {
+                              const rect = el.getBoundingClientRect();
+                              return (
+                                rect.top >= 0 &&
+                                rect.left >= 0 &&
+                                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                              );
+                            }
+                          });
+                        }
+                      });
+                    </script>
+                      
+            </div>
+            <div class="container copyright">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p>&copy; <a href="#">GRP Career Pvt Ltd.</a>, All Right Reserved.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p>Designed By <a href="">GRP Career Pvt Ltd.</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+   
+        <!-- Footer End -->
+  
+        <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+  
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/counterup/counterup.min.js"></script>
+        
+        <!-- Contact Javascript File -->
+        <script src="mail/jqBootstrapValidation.min.js"></script>
+        <script src="mail/contact.js"></script>
+  
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
+        <script src="js/session.js"></script>
+    </body>
+  </html>
+  

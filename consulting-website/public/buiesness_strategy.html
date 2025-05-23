@@ -1,0 +1,1792 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strategic Edge | Business Strategy Certification Program</title>
+    <style>
+        /* Color Scheme */
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --success: #27ae60;
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('strategy-pattern.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+        
+        /* Main Content Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 0.5rem auto 0;
+        }
+        
+        /* Why Choose Us Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Course Offerings Section */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            padding: 0.8rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .course-highlights {
+            margin-bottom: 2rem;
+        }
+        
+        .course-highlights h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .highlight-list {
+            list-style-type: none;
+        }
+        
+        .highlight-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .highlight-list li:before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .pricing {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .price small {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--dark);
+        }
+        
+        /* Syllabus Section */
+        .syllabus-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--dark);
+        }
+        
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .accordion-content {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .accordion-content-inner {
+            padding: 1.5rem;
+        }
+        
+        .module-list {
+            list-style-type: none;
+        }
+        
+        .module-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .module-duration {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: #dfe6e9;
+        }
+        
+        .faq-answer {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style-type: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="container header-content">
+            <nav>
+                <div class="logo">Strategic<span>Edge</span></div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#syllabus">Syllabus</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+            
+            <div class="hero">
+                <h1>Master Business Strategy in the Digital Age</h1>
+                <p>Our comprehensive certification program equips you with frameworks, tools, and real-world applications to develop winning strategies for modern businesses.</p>
+                <a href="#courses" class="cta-button">Explore Programs</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Why Choose Us Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our Business Strategy Program</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Industry-Proven Frameworks</h3>
+                    <p>Learn battle-tested strategy frameworks from McKinsey, BCG, Bain and other top consulting firms, adapted for today's business environment.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3>Expert Instructors</h3>
+                    <p>Our faculty includes former partners from top strategy consulting firms and Fortune 500 corporate strategists with real-world experience.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Applied Learning</h3>
+                    <p>Case studies and capstone projects with real companies ensure you can immediately apply what you learn to your current role.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Digital Strategy Focus</h3>
+                    <p>Special emphasis on digital transformation, platform strategies, and data-driven decision making missing from traditional programs.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Lifetime Network Access</h3>
+                    <p>Join our exclusive alumni network of 10,000+ strategy professionals worldwide with regular networking events and updates.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Recognized Certification</h3>
+                    <p>Our program is accredited by the Global Strategy Institute and recognized by top employers across industries.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Offerings Section -->
+    <section id="courses" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Business Strategy Programs</h2>
+            </div>
+            
+            <div class="course-tabs">
+                <button class="tab-button active" onclick="openTab(event, 'foundations')">Strategy Foundations</button>
+                <button class="tab-button" onclick="openTab(event, 'advanced')">Advanced Strategy</button>
+                <button class="tab-button" onclick="openTab(event, 'corporate')">Corporate Strategy</button>
+                <button class="tab-button" onclick="openTab(event, 'digital')">Digital Strategy</button>
+            </div>
+            
+            <div id="foundations" class="tab-content active">
+                <h3>Business Strategy Foundations Certification</h3>
+                <p>8-week intensive program covering essential strategy concepts for managers and aspiring strategists.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Core strategy frameworks (SWOT, Porter's 5 Forces, Value Chain, etc.)</li>
+                        <li>Competitive positioning and sustainable advantage</li>
+                        <li>Market analysis and industry structure evaluation</li>
+                        <li>Strategic decision-making processes</li>
+                        <li>Basic financial analysis for strategists</li>
+                        <li>Strategy implementation challenges</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price"> ₹ 1,495 <small>or 3 monthly payments of ₹ 525</small></div>
+                    <p>Next cohort starts June 5, 2023. Enrollment deadline May 28.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="advanced" class="tab-content">
+                <h3>Advanced Business Strategy Masterclass</h3>
+                <p>12-week deep dive for experienced professionals looking to master complex strategy challenges.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Advanced competitive dynamics and game theory</li>
+                        <li>M&A strategy and post-merger integration</li>
+                        <li>Global strategy and cross-border expansion</li>
+                        <li>Scenario planning and strategic foresight</li>
+                        <li>Resource allocation and portfolio strategy</li>
+                        <li>Organizational design for strategy execution</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹ 2,995 <small>or 3 monthly payments of ₹1,050</small></div>
+                    <p>Next cohort starts July 10, 2023. Enrollment deadline June 25.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="corporate" class="tab-content">
+                <h3>Corporate Strategy Executive Program</h3>
+                <p>6-month comprehensive program for senior leaders shaping enterprise-wide strategy.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Enterprise strategy development</li>
+                        <li>Corporate portfolio management</li>
+                        <li>Strategic leadership and change management</li>
+                        <li>Stakeholder management and board relations</li>
+                        <li>ESG integration into corporate strategy</li>
+                        <li>Transformation strategy execution</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4,995 <small>or 6 monthly payments of ₹ 875</small></div>
+                    <p>Next cohort starts September 5, 2023. Enrollment deadline August 15.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="digital" class="tab-content">
+                <h3>Digital Strategy Transformation Program</h3>
+                <p>10-week specialized program for leaders driving digital transformation initiatives.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Platform business models and network effects</li>
+                        <li>Digital ecosystem strategy</li>
+                        <li>Data-driven strategy formulation</li>
+                        <li>AI and automation strategic implications</li>
+                        <li>Digital transformation roadmap development</li>
+                        <li>Measuring digital strategy ROI</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹2,495 <small>or 3 monthly payments of ₹ 875</small></div>
+                    <p>Next cohort starts August 7, 2023. Enrollment deadline July 24.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Syllabus Section -->
+    <section id="syllabus">
+        <div class="container">
+            <div class="section-title">
+                <h2>Detailed Program Syllabus</h2>
+                <p>Below is the complete curriculum for our flagship Business Strategy Foundations Certification</p>
+            </div>
+            
+            <div class="syllabus-accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 1: Strategy Fundamentals</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to strategic management <span class="module-duration">2 hours</span></li>
+                                <li>The strategy process and strategic thinking <span class="module-duration">3 hours</span></li>
+                                <li>Vision, mission, and objective setting <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Apple's strategic evolution <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Develop strategy statement for your organization <span class="module-duration">4 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 2: External Environment Analysis</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>PESTEL analysis framework <span class="module-duration">3 hours</span></li>
+                                <li>Porter's Five Forces analysis <span class="module-duration">4 hours</span></li>
+                                <li>Industry structure and competitive dynamics <span class="module-duration">3 hours</span></li>
+                                <li>Strategic group mapping <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Airline industry analysis <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Analyze your industry's competitive forces <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 3: Internal Capability Analysis</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Resource-based view of the firm <span class="module-duration">3 hours</span></li>
+                                <li>VRIO framework for competitive advantage <span class="module-duration">3 hours</span></li>
+                                <li>Value chain analysis <span class="module-duration">4 hours</span></li>
+                                <li>Core competencies identification <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Amazon's capability system <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Map your organization's value chain <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 4: Strategy Formulation</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>SWOT analysis and TOWS matrix <span class="module-duration">3 hours</span></li>
+                                <li>Generic competitive strategies <span class="module-duration">4 hours</span></li>
+                                <li>Blue ocean strategy framework <span class="module-duration">3 hours</span></li>
+                                <li>Growth strategies (Ansoff Matrix) <span class="module-duration">3 hours</span></li>
+                                <li>Case study: Netflix's strategy shifts <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Develop strategic options for your business <span class="module-duration">6 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 5: Strategy Implementation</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Balanced scorecard approach <span class="module-duration">3 hours</span></li>
+                                <li>Strategy maps and alignment <span class="module-duration">3 hours</span></li>
+                                <li>Overcoming implementation barriers <span class="module-duration">3 hours</span></li>
+                                <li>Change management for strategists <span class="module-duration">3 hours</span></li>
+                                <li>Case study: Microsoft's cultural transformation <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Create implementation roadmap <span class="module-duration">6 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Capstone Project</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Project kickoff and scope definition <span class="module-duration">2 hours</span></li>
+                                <li>Research and data collection <span class="module-duration">8 hours</span></li>
+                                <li>Analysis and strategy development <span class="module-duration">10 hours</span></li>
+                                <li>Presentation preparation <span class="module-duration">5 hours</span></li>
+                                <li>Final presentation and feedback <span class="module-duration">3 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Who is this program designed for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our Business Strategy Foundations program is designed for:</p>
+                        <ul>
+                            <li>Mid-career professionals transitioning to strategy roles</li>
+                            <li>Managers and team leaders involved in strategic planning</li>
+                            <li>Entrepreneurs and business owners developing growth strategies</li>
+                            <li>Consultants looking to strengthen their strategy toolkit</li>
+                            <li>Recent graduates targeting strategy positions</li>
+                        </ul>
+                        <p>The program assumes basic business knowledge but no prior strategy experience is required.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is the time commitment required?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The 8-week Foundations program requires approximately 8-10 hours per week:</p>
+                        <ul>
+                            <li>3-4 hours of live sessions (recordings available)</li>
+                            <li>2-3 hours of readings and video lessons</li>
+                            <li>3-4 hours for assignments and project work</li>
+                        </ul>
+                        <p>The program is designed to be manageable alongside full-time work with proper time management.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What kind of certification will I receive?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Upon successful completion (80%+ overall score), you'll receive:</p>
+                        <ul>
+                            <li>Digital Business Strategy Foundations Certification from StrategicEdge</li>
+                            <li>Verified digital badge to display on LinkedIn and resumes</li>
+                            <li>PDF certificate with unique verification code</li>
+                            <li>Transcript of completed modules and grades</li>
+                        </ul>
+                        <p>Our certification is recognized by employers worldwide and can be verified through our website.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the technical requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You'll need:</p>
+                        <ul>
+                            <li>Reliable internet connection (minimum 5Mbps recommended)</li>
+                            <li>Computer with webcam and microphone for live sessions</li>
+                            <li>Modern web browser (Chrome, Firefox, Edge, or Safari)</li>
+                            <li>Microsoft Office or equivalent for assignments</li>
+                            <li>Zoom installed for virtual sessions</li>
+                        </ul>
+                        <p>No specialized software is required beyond these basics.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Is financial aid or payment plans available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes, we offer several options:</p>
+                        <ul>
+                            <li>Payment plans splitting tuition into 3-6 monthly installments</li>
+                            <li>Need-based scholarships (application required)</li>
+                            <li>Corporate group discounts (10% off for 3+ enrollments)</li>
+                            <li>Alumni discounts for returning students</li>
+                        </ul>
+                        <p>Contact our admissions team to discuss which option might work best for your situation.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is your refund policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a tiered refund policy:</p>
+                        <ul>
+                            <li>100% refund if requested before program start date</li>
+                            <li>75% refund within first 7 days of program start</li>
+                            <li>50% refund within first 14 days of program start</li>
+                            <li>No refunds after 14 days from program start</li>
+                        </ul>
+                        <p>Refund requests must be made in writing to our support team. Special circumstances may be considered on a case-by-case basis.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ready to Transform Your Strategic Thinking?</h2>
+                <p>Have questions or need guidance selecting the right program? Our team is here to help.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="mailto:admissions@strategicedge.com" class="cta-button">Email Us</a>
+                <a href="tel:+18005551234" class="cta-button" style="background: var(--primary); border-color: var(--primary); margin-left: 1rem;">Call Us</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>StrategicEdge</h3>
+                    <p>Empowering professionals with strategic thinking skills for the digital age through world-class education and practical application.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Programs</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Strategy Foundations</a></li>
+                        <li><a href="#">Advanced Strategy</a></li>
+                        <li><a href="#">Corporate Strategy</a></li>
+                        <li><a href="#">Digital Strategy</a></li>
+                        <li><a href="#">Custom Corporate Training</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Strategy Blog</a></li>
+                        <li><a href="#">Case Study Library</a></li>
+                        <li><a href="#">Research Reports</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Career Center</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Faculty</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 StrategicEdge. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            // Hide all tab contents
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            // Remove active class from all tab buttons
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            // Show current tab and mark button as active
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector(".accordion-icon");
+
+            // Toggle active class for the accordion item
+            item.classList.toggle("active");
+
+            // Adjust max-height for smooth transition
+            if (item.classList.contains("active")) {
+                content.style.maxHeight = content.scrollHeight + "px";
+                icon.textContent = "-";
+            } else {
+                content.style.maxHeight = "0";
+                icon.textContent = "+";
+            }
+        }
+    </script>
+    <button id="chatbot-toggle" style="position: fixed; bottom: 30px; right: 30px; padding: 15px; background: linear-gradient(135deg, #5e72e4, #825ee4); border: none; border-radius: 50%; cursor: pointer; z-index: 999; box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2); transition: all 0.3s ease;">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+      </svg>
+    </button>
+            <!-- Chatbot Container -->
+            <div id="chatbot-container" class="chatbot-popup">
+                <div id="chatbot-header">
+                  <div class="header-content">
+                    <div class="avatar">
+                      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <path d="M12 16v-4"></path>
+                        <path d="M12 8h.01"></path>
+                      </svg>
+                    </div>
+                    <div class="header-text">
+                      <h4>GRP Career Assistant</h4>
+                      <span class="status">Online</span>
+                    </div>
+                  </div>
+                  <button id="chatbot-close">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="18" y1="6" x2="6" y2="18"></line>
+                      <line x1="6" y1="6" x2="18" y2="18"></line>
+                    </svg>
+                  </button>
+                </div>
+                <div id="chatbot-messages"></div>
+                <div id="chatbot-input">
+                  <input type="text" id="user-input" placeholder="Type your message...">
+                  <button id="send-message">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="22" y1="2" x2="11" y2="13"></line>
+                      <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+              
+              <!-- Chatbot CSS -->
+              <style>
+                @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+              
+                .chatbot-popup {
+                  position: fixed;
+                  bottom: -500px;
+                  right: 30px;
+                  width: 350px;
+                  background: #fff;
+                  border-radius: 16px;
+                  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+                  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+                  z-index: 1000;
+                  display: flex;
+                  flex-direction: column;
+                  max-height: 500px;
+                  font-family: 'Inter', sans-serif;
+                  overflow: hidden;
+                }
+              
+                .chatbot-popup.active {
+                  bottom: 30px;
+                  transform: translateY(0) scale(1);
+                  opacity: 1;
+                }
+              
+                #chatbot-toggle {
+                  transform: scale(1);
+                  transition: transform 0.3s ease;
+                }
+              
+                #chatbot-toggle:hover {
+                  transform: scale(1.1);
+                }
+              
+                #chatbot-header {
+                  background: linear-gradient(135deg, #5e72e4, #825ee4);
+                  padding: 16px;
+                  border-radius: 16px 16px 0 0;
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  color: white;
+                }
+              
+                .header-content {
+                  display: flex;
+                  align-items: center;
+                }
+              
+                .avatar {
+                  width: 36px;
+                  height: 36px;
+                  background: rgba(255, 255, 255, 0.2);
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  margin-right: 12px;
+                }
+              
+                .header-text {
+                  display: flex;
+                  flex-direction: column;
+                }
+              
+                #chatbot-header h4 {
+                  margin: 0;
+                  font-size: 16px;
+                  font-weight: 600;
+                  color: white;
+                }
+              
+                .status {
+                  font-size: 12px;
+                  opacity: 0.8;
+                }
+              
+                #chatbot-close {
+                  background: rgba(255, 255, 255, 0.1);
+                  border: none;
+                  width: 30px;
+                  height: 30px;
+                  border-radius: 50%;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  cursor: pointer;
+                  transition: background 0.3s;
+                  padding: 0;
+                }
+              
+                #chatbot-close:hover {
+                  background: rgba(255, 255, 255, 0.2);
+                }
+              
+                #chatbot-messages {
+                  height: 350px;
+                  overflow-y: auto;
+                  padding: 20px;
+                  background: #f9fafc;
+                  flex-grow: 1;
+                  scroll-behavior: smooth;
+                }
+              
+                #chatbot-messages::-webkit-scrollbar {
+                  width: 6px;
+                }
+              
+                #chatbot-messages::-webkit-scrollbar-thumb {
+                  background: #d1d5db;
+                  border-radius: 10px;
+                }
+              
+                .message {
+                  margin: 8px 0;
+                  padding: 12px 16px;
+                  border-radius: 18px;
+                  max-width: 80%;
+                  word-wrap: break-word;
+                  line-height: 1.5;
+                  font-size: 14px;
+                  position: relative;
+                  animation: fadeIn 0.3s ease-out;
+                }
+              
+                @keyframes fadeIn {
+                  from { opacity: 0; transform: translateY(10px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+              
+                .user-message {
+                  background: linear-gradient(135deg, #5e72e4, #825ee4);
+                  color: white;
+                  margin-left: auto;
+                  border-bottom-right-radius: 4px;
+                  box-shadow: 0 2px 5px rgba(94, 114, 228, 0.3);
+                }
+              
+                .bot-message {
+                  background: #e9ecef;
+                  color: #495057;
+                  margin-right: auto;
+                  border-bottom-left-radius: 4px;
+                  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+                }
+              
+                #chatbot-input {
+                  display: flex;
+                  padding: 16px;
+                  background: #fff;
+                  border-top: 1px solid #f1f3f5;
+                  border-radius: 0 0 16px 16px;
+                }
+              
+                #user-input {
+                  flex: 1;
+                  padding: 12px 16px;
+                  border: 1px solid #e9ecef;
+                  border-radius: 24px;
+                  font-size: 14px;
+                  font-family: 'Inter', sans-serif;
+                  transition: all 0.3s;
+                  margin-right: 10px;
+                  outline: none;
+                }
+              
+                #user-input:focus {
+                  border-color: #5e72e4;
+                  box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.1);
+                }
+              
+                #send-message {
+                  width: 40px;
+                  height: 40px;
+                  background: linear-gradient(135deg, #5e72e4, #825ee4);
+                  color: white;
+                  border: none;
+                  border-radius: 50%;
+                  cursor: pointer;
+                  transition: all 0.3s;
+                  display: flex;
+                  align-items: center;
+                  justify-content: center;
+                  padding: 0;
+                  box-shadow: 0 2px 5px rgba(94, 114, 228, 0.3);
+                }
+              
+                #send-message:hover {
+                  transform: scale(1.05);
+                  box-shadow: 0 4px 10px rgba(94, 114, 228, 0.4);
+                }
+              
+                .typing-indicator {
+                  display: inline-block;
+                  padding: 12px 16px;
+                  background: #e9ecef;
+                  border-radius: 18px;
+                  border-bottom-left-radius: 4px;
+                  margin-right: auto;
+                  animation: fadeIn 0.5s;
+                }
+              
+                .typing-indicator span {
+                  display: inline-block;
+                  width: 8px;
+                  height: 8px;
+                  background: #adb5bd;
+                  border-radius: 50%;
+                  margin: 0 2px;
+                  animation: bounce 1.4s infinite ease-in-out;
+                }
+              
+                .typing-indicator span:nth-child(2) {
+                  animation-delay: 0.2s;
+                }
+              
+                .typing-indicator span:nth-child(3) {
+                  animation-delay: 0.4s;
+                }
+              
+                @keyframes bounce {
+                  0%, 60%, 100% { transform: translateY(0); }
+                  30% { transform: translateY(-5px); }
+                }
+              
+                /* Animation for messages */
+                @keyframes slideIn {
+                  from { opacity: 0; transform: translateY(10px); }
+                  to { opacity: 1; transform: translateY(0); }
+                }
+              
+                .message {
+                  animation: slideIn 0.3s ease forwards;
+                }
+              
+                /* Quick reply buttons */
+                .quick-replies {
+                  display: flex;
+                  flex-wrap: wrap;
+                  gap: 8px;
+                  margin-top: 10px;
+                }
+              
+                .quick-reply {
+                  background: #f1f3f5;
+                  border: none;
+                  border-radius: 20px;
+                  padding: 6px 12px;
+                  font-size: 12px;
+                  cursor: pointer;
+                  transition: all 0.2s;
+                }
+              
+                .quick-reply:hover {
+                  background: #dee2e6;
+                }
+              
+                /* Responsive adjustments */
+                @media (max-width: 480px) {
+                  .chatbot-popup {
+                    width: 90%;
+                    right: 5%;
+                    left: 5%;
+                  }
+                }
+              </style>
+              
+              <!-- Chatbot JavaScript -->
+              <script>
+                document.addEventListener('DOMContentLoaded', function() {
+                  // Enhanced chatbot data storage
+                  const userData = {
+                    name: "",
+                    email: "",
+                    phone: "",
+                    currentRole: "",
+                    careerGoal: "",
+                    experienceLevel: "",
+                    preferredLearning: "",
+                    interests: [],
+                    painPoints: [],
+                    conversation: [],
+                    lastActive: new Date().toISOString()
+                  };
+              
+                  // Comprehensive bot responses with multiple conversation paths
+                  const botResponses = {
+                    greeting: [
+                      "👋 Hello! I'm GRP Career Assistant. I'd love to help you with your career journey. What's your name?", 
+                      "Welcome to GRP Career Consultancy! 😊 To get started, may I know your name?"
+                    ],
+                    nameRequest: [
+                      "Nice to meet you, {name}! Could you share your email address so we can send you personalized career resources?", 
+                      "Thanks, {name}! What's a good email address to reach you with career opportunities?"
+                    ],
+                    emailRequest: [
+                      "Great! For quick updates, could you also share your phone number? (We promise no spam!)", 
+                      "Perfect! We sometimes share time-sensitive career opportunities. What's your phone number for quick alerts?"
+                    ],
+                    phoneRequest: [
+                      "Thank you! To better assist you, could you tell me your current role or job title?", 
+                      "Got it! What's your current professional role or position?"
+                    ],
+                    currentRoleRequest: [
+                      "Thanks for sharing! What's your primary career goal right now? (e.g., promotion, career change, skill development)", 
+                      "Understood! What are you hoping to achieve in your career in the next 6-12 months?"
+                    ],
+                    careerGoalRequest: [
+                      "Interesting! How many years of professional experience do you have in your field?", 
+                      "Got it! Would you describe yourself as entry-level, mid-career, or senior professional?"
+                    ],
+                    experienceRequest: [
+                      "Almost done! Do you prefer learning through online courses, in-person workshops, or coaching sessions?", 
+                      "Final question! What's your preferred way to develop new skills? (e.g., self-paced online, live training, 1-on-1 coaching)"
+                    ],
+                    learningPreferenceRequest: [
+                      "🎉 Thank you for sharing! Based on your inputs, I'd recommend exploring our {recommendation}. Would you like me to send more details to your email?", 
+                      "✅ Great! Our {recommendation} program would be perfect for you. Should I have a career advisor contact you?"
+                    ],
+                    serviceOptions: [
+                      "Here are services that might help you:\n\n" +
+                      "💼 <strong>Resume Masterclass</strong> - Transform your resume in 7 days\n" +
+                      "🎤 <strong>Interview Bootcamp</strong> - Ace any interview with confidence\n" +
+                      "🗺️ <strong>Career Roadmap</strong> - Personalized 5-year career plan\n\n" +
+                      "Which one interests you most?",
+                      
+                      "Based on your goals, consider these options:\n\n" +
+                      "📈 <strong>Career Acceleration</strong> - Fast-track promotions\n" +
+                      "🔄 <strong>Career Transition</strong> - Switch industries smoothly\n" +
+                      "🌟 <strong>Executive Presence</strong> - Leadership development\n\n" +
+                      "Want to explore any of these?"
+                    ],
+                    specificServiceInfo: {
+                      "resume": "Our <strong>Resume Masterclass</strong> helps you craft an ATS-friendly resume that gets interviews. It includes:\n- Custom templates\n- Keyword optimization\n- Achievement-focused writing\n- 5 resume reviews\n\nInterested in joining?",
+                      "interview": "The <strong>Interview Bootcamp</strong> prepares you for any interview format:\n- Mock interviews with feedback\n- STAR method training\n- Salary negotiation tactics\n- 30+ common questions mastered\n\nWant to practice with us?",
+                      "career": "Our <strong>Career Roadmap</strong> gives you:\n- Personalized 5-year plan\n- Skills gap analysis\n- Industry trends report\n- Mentor matching\n\nReady to map your future?"
+                    },
+                    pricingInfo: [
+                      "Our programs range from $99 for single workshops to $999 for comprehensive packages. Financial aid is available for qualified candidates.",
+                      "We offer flexible pricing:\n- $99-$299 for individual courses\n- $499-$999 for certification programs\n- Custom corporate rates available\n\nWhat budget range works for you?"
+                    ],
+                    contactInfo: [
+                      "You can reach our team at:\n📧 info@grpcareers.com\n📞 +91 9643058418, 01204097776\n🏢 Corp. Off: 2nd Floor ,A-55, Sec-02,Noida G.B Nagar(U.P) - 201301, ",
+                      "Contact options:\n- Email: info@grpcareers.com\n- +91 9643058418, 01204097776 (Mon-Sat 9am-6pm EST)\n- Call Us :>"
+                    ],
+                    farewell: [
+                      "Thank you! Our career advisor will contact you within 24 hours. Check your email for resources in the meantime! 🚀", 
+                      "All set! We'll be in touch soon with personalized recommendations. Wishing you career success! 🌟"
+                    ],
+                    default: [
+                      "How can I assist with your career development today?", 
+                      "What aspect of your career would you like to improve?",
+                      "Is there a specific career challenge you're facing?"
+                    ],
+                    error: [
+                      "I didn't quite catch that. Could you rephrase?", 
+                      "Hmm, I'm not sure I understand. Could you explain differently?"
+                    ]
+                  };
+              
+                  // Service recommendations based on user inputs
+                  const serviceRecommendations = {
+                    "entry-level": "Career Launchpad Program",
+                    "mid-career": "Career Accelerator",
+                    "senior": "Executive Leadership Program",
+                    "promotion": "Advancement Track",
+                    "career change": "Transition Masterclass",
+                    "skill development": "Skill Builder Intensive"
+                  };
+              
+                  // DOM elements
+                  const chatbotContainer = document.getElementById('chatbot-container');
+                  const chatbotMessages = document.getElementById('chatbot-messages');
+                  const userInput = document.getElementById('user-input');
+                  const sendButton = document.getElementById('send-message');
+                  const toggleButton = document.getElementById('chatbot-toggle');
+                  const closeButton = document.getElementById('chatbot-close');
+                  
+                  let conversationStage = 0; // Tracks where we are in the conversation flow
+                  let isWaitingForResponse = false;
+                  let currentQuickReplies = [];
+              
+                  // Toggle chatbot visibility
+                  toggleButton.addEventListener('click', () => {
+                    chatbotContainer.classList.toggle('active');
+                    if (chatbotContainer.classList.contains('active') && conversationStage === 0) {
+                      setTimeout(() => {
+                        addMessage('bot', getRandomResponse(botResponses.greeting));
+                      }, 600);
+                    }
+                  });
+              
+                  closeButton.addEventListener('click', () => {
+                    chatbotContainer.classList.remove('active');
+                  });
+              
+                  // Input sanitization
+                  function sanitizeInput(input) {
+                    const div = document.createElement('div');
+                    div.textContent = input;
+                    return div.innerHTML;
+                  }
+              
+                  // Validation functions
+                  function validateEmail(email) {
+                    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                  }
+              
+                  function validatePhone(phone) {
+                    return /^[\d\s\-()+]{10,}$/.test(phone);
+                  }
+              
+                  // Add message to chat
+                  function addMessage(sender, text, isQuickReply = false) {
+                    if (isWaitingForResponse && !isQuickReply) return;
+                    
+                    const messageDiv = document.createElement('div');
+                    messageDiv.classList.add('message', `${sender}-message`);
+                    
+                    if (typeof text === 'string') {
+                      messageDiv.innerHTML = text.replace(/{name}/g, userData.name);
+                    } else {
+                      // Handle DOM elements (for quick replies)
+                      messageDiv.appendChild(text);
+                    }
+                    
+                    chatbotMessages.appendChild(messageDiv);
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                    
+                    // Add timestamp for user messages
+                    if (sender === 'user') {
+                      const timestamp = document.createElement('div');
+                      timestamp.classList.add('timestamp');
+                      timestamp.style.fontSize = '10px';
+                      timestamp.style.opacity = '0.6';
+                      timestamp.style.textAlign = 'right';
+                      timestamp.style.marginTop = '4px';
+                      timestamp.style.marginRight = '4px';
+                      
+                      const now = new Date();
+                      timestamp.textContent = `${now.getHours().toString().padStart(2, '0')}:${now.getMinutes().toString().padStart(2, '0')}`;
+                      messageDiv.appendChild(timestamp);
+                    }
+                  }
+              
+                  // Show typing indicator
+                  function showTypingIndicator() {
+                    if (isWaitingForResponse) return;
+                    
+                    isWaitingForResponse = true;
+                    const typingDiv = document.createElement('div');
+                    typingDiv.classList.add('typing-indicator');
+                    typingDiv.id = 'typing-indicator';
+                    typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                    chatbotMessages.appendChild(typingDiv);
+                    chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+                  }
+              
+                  // Hide typing indicator
+                  function hideTypingIndicator() {
+                    const typingDiv = document.getElementById('typing-indicator');
+                    if (typingDiv) {
+                      typingDiv.remove();
+                    }
+                    isWaitingForResponse = false;
+                  }
+              
+                  // Get random response
+                  function getRandomResponse(array) {
+                    return array[Math.floor(Math.random() * array.length)];
+                  }
+              
+                  // Add quick reply buttons
+                  function addQuickReplies(replies) {
+                    currentQuickReplies = replies;
+                    const container = document.createElement('div');
+                    container.classList.add('quick-replies');
+                    
+                    replies.forEach(reply => {
+                      const button = document.createElement('button');
+                      button.classList.add('quick-reply');
+                      button.textContent = reply;
+                      button.addEventListener('click', () => {
+                        // Remove all quick replies
+                        document.querySelectorAll('.quick-replies').forEach(el => el.remove());
+                        addMessage('user', reply);
+                        processMessage(reply);
+                      });
+                      container.appendChild(button);
+                    });
+                    
+                    addMessage('bot', container, true);
+                  }
+              
+                  // Process user messages with conversation flow
+                  function processMessage(message) {
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                      hideTypingIndicator();
+                      let response;
+                      let quickReplies = [];
+                      
+                      switch(conversationStage) {
+                        case 0: // Name collection
+                          userData.name = message;
+                          userData.conversation.push({sender: 'user', message: message});
+                          response = getRandomResponse(botResponses.nameRequest).replace(/{name}/g, userData.name);
+                          conversationStage = 1;
+                          break;
+                          
+                        case 1: // Email collection
+                          if (validateEmail(message)) {
+                            userData.email = message;
+                            userData.conversation.push({sender: 'user', message: message});
+                            response = getRandomResponse(botResponses.emailRequest);
+                            conversationStage = 2;
+                          } else {
+                            response = "🔍 That email doesn't look quite right. Please enter a valid email (e.g., example@domain.com)";
+                          }
+                          break;
+                          
+                        case 2: // Phone collection
+                          if (validatePhone(message)) {
+                            userData.phone = message;
+                            userData.conversation.push({sender: 'user', message: message});
+                            response = getRandomResponse(botResponses.phoneRequest);
+                            conversationStage = 3;
+                          } else {
+                            response = "📱 Please enter a valid phone number (at least 10 digits)";
+                          }
+                          break;
+                          
+                        case 3: // Current role
+                          userData.currentRole = message;
+                          userData.conversation.push({sender: 'user', message: message});
+                          response = getRandomResponse(botResponses.currentRoleRequest);
+                          quickReplies = ["Promotion", "Career change", "Skill development"];
+                          conversationStage = 4;
+                          break;
+                          
+                        case 4: // Career goal
+                          userData.careerGoal = message.toLowerCase();
+                          userData.conversation.push({sender: 'user', message: message});
+                          response = getRandomResponse(botResponses.careerGoalRequest);
+                          quickReplies = ["Entry-level", "Mid-career", "Senior"];
+                          conversationStage = 5;
+                          break;
+                          
+                        case 5: // Experience level
+                          userData.experienceLevel = message.toLowerCase();
+                          userData.conversation.push({sender: 'user', message: message});
+                          response = getRandomResponse(botResponses.experienceRequest);
+                          quickReplies = ["Online courses", "In-person workshops", "Coaching"];
+                          conversationStage = 6;
+                          break;
+                          
+                        case 6: // Learning preference
+                          userData.preferredLearning = message.toLowerCase();
+                          userData.conversation.push({sender: 'user', message: message});
+                          
+                          // Generate personalized recommendation
+                          let recommendation = serviceRecommendations[userData.experienceLevel] || 
+                                             serviceRecommendations[userData.careerGoal] || 
+                                             "Career Success Program";
+                          
+                          response = getRandomResponse(botResponses.learningPreferenceRequest)
+                            .replace(/{recommendation}/g, recommendation)
+                            .replace(/{recommendation}/g, recommendation);
+                          
+                          quickReplies = ["Yes, please!", "More info first"];
+                          conversationStage = 7;
+                          break;
+                          
+                        case 7: // Free conversation
+                          userData.conversation.push({sender: 'user', message: message});
+                          const msg = message.toLowerCase();
+                          
+                          if (msg.includes('resume') || msg.includes('cv')) {
+                            response = botResponses.specificServiceInfo["resume"];
+                            userData.interests.push("resume services");
+                            quickReplies = ["Join Masterclass", "See pricing", "Contact advisor"];
+                          } 
+                          else if (msg.includes('interview') || msg.includes('prepare')) {
+                            response = botResponses.specificServiceInfo["interview"];
+                            userData.interests.push("interview preparation");
+                            quickReplies = ["Start Bootcamp", "Pricing info", "Talk to expert"];
+                          }
+                          else if (msg.includes('career') || msg.includes('plan')) {
+                            response = botResponses.specificServiceInfo["career"];
+                            userData.interests.push("career planning");
+                            quickReplies = ["Get Roadmap", "Cost?", "Schedule call"];
+                          }
+                          else if (msg.includes('price') || msg.includes('cost')) {
+                            response = getRandomResponse(botResponses.pricingInfo);
+                            quickReplies = ["Workshops", "Programs", "Contact us"];
+                          }
+                          else if (msg.includes('contact') || msg.includes('reach')) {
+                            response = getRandomResponse(botResponses.contactInfo);
+                            quickReplies = ["Services", "Pricing", "Website"];
+                          }
+                          else if (msg.includes('service') || msg.includes('offer')) {
+                            response = getRandomResponse(botResponses.serviceOptions);
+                            quickReplies = ["Resume", "Interview", "Career Plan"];
+                          }
+                          else if (msg.includes('start over') || msg.includes('reset')) {
+                            response = '🔄 Okay, let\'s start fresh. What\'s your name?';
+                            conversationStage = 0;
+                            // Reset user data except for conversation history
+                            userData.name = "";
+                            userData.email = "";
+                            userData.phone = "";
+                            userData.currentRole = "";
+                            userData.careerGoal = "";
+                            userData.experienceLevel = "";
+                            userData.preferredLearning = "";
+                          }
+                          else if (msg.includes('thank') || msg.includes('bye')) {
+                            response = "You're welcome! 😊 Is there anything else I can help with before you go?";
+                            quickReplies = ["Yes, one more thing", "No, that's all"];
+                          }
+                          else {
+                            response = getRandomResponse(botResponses.default);
+                            quickReplies = ["Services", "Pricing", "Contact"];
+                          }
+                          break;
+                          
+                        default:
+                          response = getRandomResponse(botResponses.error);
+                      }
+                      
+                      addMessage('bot', response);
+                      userData.conversation.push({sender: 'bot', message: response});
+                      
+                      // Add quick replies if any
+                      if (quickReplies.length > 0) {
+                        setTimeout(() => {
+                          addQuickReplies(quickReplies);
+                        }, 500);
+                      }
+                      
+                      // Save data when conversation reaches certain points
+                      if (conversationStage === 7 || message.toLowerCase().includes('bye')) {
+                        saveConversation();
+                      }
+                    }, 1000 + Math.random() * 1500);
+                  }
+              
+                  // Save conversation to database
+                 // Update the saveConversation function in the frontend JavaScript to send data to the backend
+      
+      function saveConversation() {
+      const conversationData = {
+        name: userData.name,
+        email: userData.email,
+        phone: userData.phone,
+        currentRole: userData.currentRole,
+        careerGoal: userData.careerGoal,
+        experienceLevel: userData.experienceLevel,
+        preferredLearning: userData.preferredLearning,
+        interests: userData.interests.join(', '),
+        painPoints: userData.painPoints.join(', '),
+        conversation: JSON.stringify(userData.conversation),
+        lastActive: new Date().toISOString()
+      };
+      
+      // Show saving indicator
+      const savingDiv = document.createElement('div');
+      savingDiv.classList.add('message', 'bot-message');
+      savingDiv.innerHTML = "💾 Saving your information...";
+      chatbotMessages.appendChild(savingDiv);
+      chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      
+      // Send data to backend
+      fetch('/save-chat', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          name: userData.name,
+          email: userData.email,
+          phone: userData.phone,
+          interests: userData.interests.join(', '),
+          conversation: userData.conversation
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          savingDiv.innerHTML = "✅ Your information has been saved successfully!";
+          console.log('Chat saved with ID:', data.chatId);
+        } else {
+          savingDiv.innerHTML = "❌ There was an error saving your information. Please try again.";
+          console.error('Error:', data.error);
+        }
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      })
+      .catch(error => {
+        console.error('Error saving conversation:', error);
+        savingDiv.innerHTML = "❌ There was an error saving your information. Please try again.";
+        chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+      });
+      }
+              
+                  // Send message function
+                  function sendMessage() {
+                    const message = sanitizeInput(userInput.value.trim());
+                    if (!message) {
+                      userInput.focus();
+                      return;
+                    }
+              
+                    addMessage('user', message);
+                    processMessage(message);
+                    userInput.value = '';
+                    userInput.focus();
+                  }
+              
+                  // Event listeners
+                  sendButton.addEventListener('click', sendMessage);
+                  userInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') sendMessage();
+                  });
+              
+                  // Add pulse animation to chat button when inactive
+                  let inactivityTimer;
+                  function startInactivityTimer() {
+                    clearTimeout(inactivityTimer);
+                    inactivityTimer = setTimeout(() => {
+                      if (!chatbotContainer.classList.contains('active')) {
+                        toggleButton.classList.add('pulse');
+                      }
+                    }, 30000);
+                  }
+              
+                  // Add pulse animation CSS
+                  const style = document.createElement('style');
+                  style.textContent = `
+                    @keyframes pulse {
+                      0% { box-shadow: 0 0 0 0 rgba(94, 114, 228, 0.4); }
+                      70% { box-shadow: 0 0 0 10px rgba(94, 114, 228, 0); }
+                      100% { box-shadow: 0 0 0 0 rgba(94, 114, 228, 0); }
+                    }
+                    #chatbot-toggle.pulse {
+                      animation: pulse 2s infinite;
+                    }
+                  `;
+                  document.head.appendChild(style);
+              
+                  // Initialize with greeting when opened
+                  document.addEventListener('mousemove', startInactivityTimer);
+                  document.addEventListener('click', startInactivityTimer);
+                  startInactivityTimer();
+              
+                  toggleButton.addEventListener('click', () => {
+                    toggleButton.classList.remove('pulse');
+                  });
+                });
+              </script>
+</body>
+</html>

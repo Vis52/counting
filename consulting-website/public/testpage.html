@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Scoring Tool</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.4.0/mammoth.browser.min.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 30px;
+            color: #333;
+            background-color: #f5f7fa;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .description {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+        }
+        .upload-container {
+            border: 2px dashed #bdc3c7;
+            padding: 40px;
+            text-align: center;
+            margin: 20px 0;
+            border-radius: 8px;
+            background: white;
+            transition: all 0.3s;
+        }
+        .upload-container:hover {
+            border-color: #3498db;
+        }
+        .upload-container.drag-over {
+            border-color: #2ecc71;
+            background-color: #f0fff4;
+        }
+        .results {
+            display: none;
+            margin-top: 30px;
+            padding: 30px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .score-container {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .score-value {
+            font-size: 48px;
+            font-weight: bold;
+            color: #2ecc71;
+            margin: 10px 0;
+        }
+        .score-meter {
+            height: 20px;
+            background: #ecf0f1;
+            border-radius: 10px;
+            margin: 20px 0;
+            overflow: hidden;
+            position: relative;
+        }
+        .score-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #e74c3c, #f39c12, #2ecc71);
+            width: 0%;
+            transition: width 1s ease-out;
+        }
+        .score-label {
+            position: absolute;
+            width: 100%;
+            text-align: center;
+            line-height: 20px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 1px 1px rgba(0,0,0,0.3);
+        }
+        .feedback-section {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+        .feedback-column {
+            flex: 1;
+        }
+        h3 {
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 8px;
+            margin-top: 0;
+        }
+        .feedback-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .feedback-item {
+            padding: 12px;
+            margin-bottom: 10px;
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            border-radius: 0 4px 4px 0;
+        }
+        .strength-item {
+            border-left-color: #2ecc71;
+        }
+        .improvement-item {
+            border-left-color: #e74c3c;
+        }
+        .btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s;
+            margin-top: 15px;
+        }
+        .btn:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .btn:disabled {
+            background: #bdc3c7;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        #loading {
+            display: none;
+            text-align: center;
+            margin: 30px 0;
+        }
+        .spinner {
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .keyword-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 20px;
+        }
+        .keyword {
+            padding: 5px 10px;
+            background: #e0f7fa;
+            border-radius: 15px;
+            font-size: 14px;
+            color: #00838f;
+        }
+        .keyword-important {
+            background: #b2ebf2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Resume Analysis Tool</h1>
+    <p class="description">Get instant feedback on your resume's strength and areas for improvement</p>
+    
+    <div class="upload-container" id="dropZone">
+        <form id="resumeForm">
+            <input type="file" id="resumeUpload" accept=".pdf,.doc,.docx" required style="display: none;">
+            <label for="resumeUpload" style="cursor: pointer;">
+                <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="#3498db" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                </svg>
+                <h3>Upload Your Resume</h3>
+                <p>Drag & drop your file here or click to browse</p>
+                <p>Supported formats: PDF, DOC, DOCX</p>
+                <button type="button" id="browseBtn" class="btn">Select File</button>
+            </label>
+            <div id="fileName" style="margin-top: 15px; font-weight: bold;"></div>
+            <button type="submit" id="analyzeBtn" class="btn" disabled>Analyze Resume</button>
+        </form>
+    </div>
+    
+    <div id="loading">
+        <div class="spinner"></div>
+        <p>Analyzing your resume...</p>
+        <p id="analysisStep">Extracting text content</p>
+    </div>
+    
+    <div id="results" class="results">
+        <div class="score-container">
+            <h2>Your Resume Score</h2>
+            <div class="score-value" id="scoreValue">0</div>
+            <div class="score-meter">
+                <div id="scoreProgress" class="score-progress"></div>
+                <div class="score-label" id="scoreLabel">Poor</div>
+            </div>
+        </div>
+        
+        <div class="feedback-section">
+            <div class="feedback-column">
+                <h3>✅ Strengths</h3>
+                <ul id="strengthsList" class="feedback-list"></ul>
+                
+                <h3>🔍 Keywords Found</h3>
+                <div id="keywordCloud" class="keyword-cloud"></div>
+            </div>
+            
+            <div class="feedback-column">
+                <h3>⚠️ Areas for Improvement</h3>
+                <ul id="improvementsList" class="feedback-list"></ul>
+                
+                <h3>📊 Missing Elements</h3>
+                <ul id="missingElementsList" class="feedback-list"></ul>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Set PDF.js worker path
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.11.338/pdf.worker.min.js';
+        
+        // DOM elements
+        const dropZone = document.getElementById('dropZone');
+        const resumeUpload = document.getElementById('resumeUpload');
+        const browseBtn = document.getElementById('browseBtn');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const fileName = document.getElementById('fileName');
+        const resumeForm = document.getElementById('resumeForm');
+        const loadingElement = document.getElementById('loading');  // Changed to loadingElement
+        const resultsElement = document.getElementById('results'); // Changed to resultsElement
+        const analysisStep = document.getElementById('analysisStep');
+        
+        // Event listeners
+        browseBtn.addEventListener('click', () => resumeUpload.click());
+        resumeUpload.addEventListener('change', handleFileSelect);
+        dropZone.addEventListener('dragover', handleDragOver);
+        dropZone.addEventListener('dragleave', handleDragLeave);
+        dropZone.addEventListener('drop', handleDrop);
+        resumeForm.addEventListener('submit', analyzeResume);
+        
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                displayFileName(file.name);
+                analyzeBtn.disabled = false;
+            }
+        }
+        
+        function handleDragOver(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.add('drag-over');
+        }
+        
+        function handleDragLeave(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('drag-over');
+        }
+        
+        function handleDrop(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            dropZone.classList.remove('drag-over');
+            
+            const file = e.dataTransfer.files[0];
+            if (file) {
+                const validTypes = ['application/pdf', 'application/msword', 
+                                    'application/vnd.openxmlformats-officedocument.wordprocessingml.document'];
+                if (validTypes.includes(file.type)) {
+                    resumeUpload.files = e.dataTransfer.files;
+                    displayFileName(file.name);
+                    analyzeBtn.disabled = false;
+                } else {
+                    alert('Please upload a PDF or Word document');
+                }
+            }
+        }
+        
+        function displayFileName(name) {
+            fileName.textContent = `Selected file: ${name}`;
+        }
+        
+        async function analyzeResume(e) {
+            e.preventDefault();
+            
+            const file = resumeUpload.files[0];
+            if (!file) return;
+            
+            // Show loading state
+            loadingElement.style.display = 'block';  // Use loadingElement
+            resultsElement.style.display = 'none';  // Use resultsElement
+            
+            try {
+                // Step 1: Extract text from the document
+                analysisStep.textContent = "Extracting text content...";
+                const text = await extractTextFromFile(file);
+                
+                // Step 2: Analyze the text
+                analysisStep.textContent = "Analyzing content...";
+                const analysisResults = analyzeText(text);
+                
+                // Step 3: Display results
+                displayResults(analysisResults);
+                
+            } catch (error) {
+                console.error('Analysis error:', error);
+                alert('Error analyzing resume: ' + error.message);
+            } finally {
+                loadingElement.style.display = 'none'; // Use loadingElement
+            }
+        }
+        
+        async function extractTextFromFile(file) {
+            if (file.type === 'application/pdf') {
+                return await extractTextFromPDF(file);
+            } else {
+                return await extractTextFromWord(file);
+            }
+        }
+        
+        async function extractTextFromPDF(file) {
+            try{
+                const arrayBuffer = await file.arrayBuffer();
+                const pdf = await pdfjsLib.getDocument(arrayBuffer).promise;
+                let text = '';
+    
+                for (let i = 1; i <= pdf.numPages; i++) {
+                    const page = await pdf.getPage(i);
+                    const content = await page.getTextContent();
+                    text += content.items.map(item => item.str).join(' ') + '\n';
+                }
+                return text;
+            } catch(error){
+                console.error("Error extracting text from PDF", error);
+                throw new Error("Error extracting text from PDF. Please ensure the PDF is not corrupted.")
+            }
+            
+        }
+        
+        async function extractTextFromWord(file) {
+            try{
+                const arrayBuffer = await file.arrayBuffer();
+                const result = await mammoth.extractRawText({ arrayBuffer });
+                return result.value;
+            } catch(error){
+                console.error("Error extracting text from Word", error);
+                 throw new Error("Error extracting text from Word. Please ensure the Word document is not corrupted.")
+            }
+            
+        }
+        
+        function analyzeText(text) {
+            // Convert to lowercase for case-insensitive analysis
+            const content = text.toLowerCase();
+            
+            // Calculate score based on various factors
+            let score = 0;
+            const feedback = {
+                strengths: [],
+                improvements: [],
+                missing: [],
+                keywords: []
+            };
+            
+            // 1. Check length (20 points)
+            const wordCount = content.split(/\s+/).length;
+            if (wordCount > 500) {
+                score += 10;
+                feedback.strengths.push("Good length (not too short)");
+            } else if (wordCount > 300) {
+                score += 15;
+                feedback.strengths.push("Ideal length");
+            } else {
+                score += 5;
+                feedback.improvements.push("Resume might be too short - consider adding more details");
+            }
+            
+            // 2. Check sections (20 points)
+            const sections = {
+                contact: /(contact information|contact details|personal information)/,
+                summary: /(summary|profile|professional profile)/,
+                experience: /(work experience|professional experience|employment history)/,
+                education: /(education|academic background)/,
+                skills: /(skills|technical skills|key skills)/
+            };
+            
+            let foundSections = 0;
+            for (const [section, regex] of Object.entries(sections)) {
+                if (regex.test(content)) {
+                    foundSections++;
+                } else {
+                    feedback.missing.push(`Missing ${section} section`);
+                }
+            }
+            
+            score += (foundSections / Object.keys(sections).length * 20);
+            
+            // 3. Check for action verbs (15 points)
+            const actionVerbs = [
+                'achieved', 'managed', 'developed', 'led', 'implemented', 
+                'increased', 'created', 'improved', 'organized', 'launched',
+                'coordinated', 'directed', 'supervised', 'oversaw', 'spearheaded'
+            ];
+            
+            const foundVerbs = actionVerbs.filter(verb => content.includes(verb));
+            if (foundVerbs.length > 5) {
+                score += 15;
+                feedback.strengths.push(`Strong action verbs (${foundVerbs.length} found)`);
+            } else if (foundVerbs.length > 2) {
+                score += 10;
+                feedback.improvements.push(`Could use more action verbs (only ${foundVerbs.length} found)`);
+            } else {
+                feedback.improvements.push("Add more action verbs to make your experience stand out");
+            }
+            
+            feedback.keywords.push(...foundVerbs);
+            
+            // 4. Check for quantifiable results (15 points)
+            const hasNumbers = /\d+/.test(content);
+            const hasPercent = /%\s*(increase|decrease|growth|reduction|improvement)/.test(content);
+            const hasDollar = /\$[\d,]+(\.\d{2})?/.test(content); // Added optional cents
+            const hasTimeframe = /(in\s*\d+\s*(days?|weeks?|months?|years?))/.test(content);
+            
+             if (hasNumbers && (hasPercent || hasDollar || hasTimeframe)) {
+                score += 15;
+                feedback.strengths.push("Good use of quantifiable achievements");
+            } else if (hasNumbers) {
+                score += 10;
+                feedback.improvements.push("Add more metrics (%, $, timeframes) to quantify your achievements");
+            } else {
+                feedback.improvements.push("Include numbers to quantify your impact (metrics, percentages, dollar amounts, timeframes)");
+            }
+            
+            // 5. Check for keywords (15 points)
+             const jobKeywords = [
+                'teamwork', 'communication', 'leadership', 'problem-solving',
+                'project management', 'analytical', 'technical', 'innovation',
+                'collaboration', 'planning', 'execution', 'strategy',
+                'customer service', 'sales', 'marketing', 'finance',  // Added more general keywords
+                'software', 'programming', 'data analysis', 'design',       // Added IT related keywords
+                'research', 'writing', 'presentation', 'training'      // Added more soft skills
+            ];
+            
+            const foundKeywords = jobKeywords.filter(keyword => content.includes(keyword));
+            score += (foundKeywords.length / jobKeywords.length) * 15;
+            
+            if (foundKeywords.length > 0) {
+                feedback.strengths.push(`Includes important keywords: ${foundKeywords.join(', ')}`);
+                feedback.keywords.push(...foundKeywords);
+            }
+            
+            // 6. Check for typos (15 points)
+            const commonTypos = [
+                'recieve', 'acheive', 'seperate', 'definately', 'occured',
+                'refered', 'untill', 'wich', 'accomodate', 'apparant',  // Original list
+                'teh', 'thier', 'wierd', 'adress', 'arguement',       // Added more common typos
+                'cemetary', 'existance', 'liason', 'maintanence', 'neccessary', // Added more
+                'posession', 'recieved', 'succesful', 'tommorow', 'untill'
+            ];
+            
+            const foundTypos = commonTypos.filter(typo => content.includes(typo));
+            if (foundTypos.length === 0) {
+                score += 15;
+                feedback.strengths.push("No obvious spelling errors detected");
+            } else {
+                feedback.improvements.push(`Potential typos found: ${foundTypos.join(', ')} - proofread carefully`);
+            }
+            
+            // Ensure score is between 0-100
+            score = Math.min(Math.max(Math.round(score), 0), 100);
+            
+            return {
+                score,
+                feedback,
+                wordCount,
+                foundSections,
+                foundVerbs: foundVerbs.length,
+                foundKeywords: foundKeywords.length,
+                foundTypos: foundTypos.length
+            };
+        }
+        
+        function displayResults(results) {
+            // Display score
+            document.getElementById('scoreValue').textContent = results.score;
+            document.getElementById('scoreProgress').style.width = `${results.score}%`;
+            
+            // Set score label
+            const scoreLabel = document.getElementById('scoreLabel');
+            if (results.score >= 80) {
+                scoreLabel.textContent = "Excellent";
+                scoreLabel.style.color = "#2ecc71";
+            } else if (results.score >= 60) {
+                scoreLabel.textContent = "Good";
+                scoreLabel.style.color = "#f39c12";
+            } else {
+                scoreLabel.textContent = "Needs Work";
+                scoreLabel.style.color = "#e74c3c";
+            }
+            
+            // Display strengths
+            const strengthsList = document.getElementById('strengthsList');
+            strengthsList.innerHTML = '';
+            results.feedback.strengths.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'feedback-item strength-item';
+                li.textContent = item;
+                strengthsList.appendChild(li);
+            });
+            
+            // Display improvements
+            const improvementsList = document.getElementById('improvementsList');
+            improvementsList.innerHTML = '';
+            results.feedback.improvements.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'feedback-item improvement-item';
+                li.textContent = item;
+                improvementsList.appendChild(li);
+            });
+            
+            // Display missing elements
+            const missingElementsList = document.getElementById('missingElementsList');
+            missingElementsList.innerHTML = '';
+            results.feedback.missing.forEach(item => {
+                const li = document.createElement('li');
+                li.className = 'feedback-item';
+                li.textContent = item;
+                missingElementsList.appendChild(li);
+            });
+            
+            // Display keyword cloud
+            const keywordCloud = document.getElementById('keywordCloud');
+            keywordCloud.innerHTML = '';
+            
+            // Count keyword frequency
+            const keywordCounts = {};
+            results.feedback.keywords.forEach(keyword => {
+                keywordCounts[keyword] = (keywordCounts[keyword] || 0) + 1;
+            });
+            
+            // Display keywords (most frequent first)
+            Object.entries(keywordCounts)
+                .sort((a, b) => b[1] - a[1])
+                .forEach(([keyword, count]) => {
+                    const span = document.createElement('span');
+                    span.className = count > 2 ? 'keyword keyword-important' : 'keyword';
+                    span.textContent = keyword;
+                    keywordCloud.appendChild(span);
+                });
+            
+            // Show results
+            resultsElement.style.display = 'block';  // Use resultsElement
+        }
+    </script>
+</body>
+</html>

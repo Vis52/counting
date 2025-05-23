@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot Messages</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <style>
+        .conversation-pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <h1>Chatbot Messages</h1>
+        <div class="card mt-4">
+            <div class="card-body">
+                <table id="chatMessagesTable" class="table table-striped" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Date</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Modal -->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Chat Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="modalBody">
+                    <div class="mb-3">
+                        <strong>Name:</strong> <span id="viewName"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Email:</strong> <span id="viewEmail"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Phone:</strong> <span id="viewPhone"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Interests:</strong> <span id="viewInterests"></span>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Conversation:</strong>
+                        <pre class="conversation-pre mt-2" id="viewConversation"></pre>
+                    </div>
+                    <div class="mb-3">
+                        <strong>Date:</strong> <span id="viewDate"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            const chatTable = $('#chatMessagesTable').DataTable({
+                ajax: {
+                    url: '/chat-messages',
+                    dataSrc: 'data'
+                },
+                columns: [
+                    { data: 'id' },
+                    { data: 'name' },
+                    { data: 'email' },
+                    { 
+                        data: 'created_at',
+                        render: function(data) {
+                            return new Date(data).toLocaleString();
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data) {
+                            return `<button class="btn btn-sm btn-primary view-btn" data-id="${data}">View</button>`;
+                        },
+                        orderable: false
+                    }
+                ]
+            });
+
+            // Handle view button clicks
+            $('#chatMessagesTable').on('click', '.view-btn', function() {
+                const id = $(this).data('id');
+                viewChatMessage(id);
+            });
+
+            function viewChatMessage(id) {
+                $.get(`/chat-messages/${id}`, function(response) {
+                    const data = response.data;
+                    $('#viewName').text(data.name || '-');
+                    $('#viewEmail').text(data.email || '-');
+                    $('#viewPhone').text(data.phone || '-');
+                    $('#viewInterests').text(data.interests || '-');
+                    
+                    try {
+                        // Try to parse and format if it's JSON
+                        const conversation = JSON.parse(data.conversation);
+                        $('#viewConversation').text(JSON.stringify(conversation, null, 2));
+                    } catch {
+                        // If not JSON, display as-is
+                        $('#viewConversation').text(data.conversation || '-');
+                    }
+                    
+                    $('#viewDate').text(new Date(data.created_at).toLocaleString());
+                    
+                    // Show modal
+                    const modal = new bootstrap.Modal(document.getElementById('viewModal'));
+                    modal.show();
+                }).fail(function() {
+                    alert('Error loading chat message');
+                });
+            }
+
+            // Refresh button (if you add one)
+            $('#refreshBtn').click(function() {
+                chatTable.ajax.reload();
+            });
+        });
+    </script>
+</body>
+</html>

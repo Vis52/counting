@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" viewBox="0 0 200 200">
+  <style>
+    .percent {
+      font-size: 60px;
+      font-weight: bold;
+      fill: #2ecc71;
+      font-family: 'Arial Black', sans-serif;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+      animation: pulse 2s infinite alternate; /* Pulse animation */
+    }
+    @keyframes pulse {
+      from { transform: scale(1); }
+      to { transform: scale(1.1); }
+    }
+    .placement {
+      font-size: 28px;
+      fill: #555;
+      font-family: 'Georgia', serif;
+      text-anchor: middle;
+    }
+    .circle {
+      fill: #f0f0f0;
+      stroke: #ddd;
+      stroke-width: 3;
+      filter: drop-shadow(4px 4px 6px rgba(0,0,0,0.1));
+      animation: rotate 5s linear infinite; /* Rotate animation */
+    }
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    .check {
+      stroke: #2ecc71;
+      stroke-width: 8;
+      stroke-linecap: round;
+      fill: none;
+      animation: drawCheck 1s ease-in-out forwards;
+    }
+    @keyframes drawCheck {
+      0% {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 100;
+      }
+      100% {
+        stroke-dasharray: 100;
+        stroke-dashoffset: 0;
+      }
+    }
+    .guarantee {
+      font-size: 18px;
+      font-style: italic;
+      fill: #3498db;
+      text-anchor: middle;
+      font-family: 'Verdana', sans-serif;
+      animation: fadeIn 1s ease-in-out forwards, slideIn 1s ease-in-out 0.5s forwards; /* Fade and slide */
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideIn {
+      from { transform: translateY(20px); }
+      to { transform: translateY(0); }
+    }
+  </style>
+  <circle class="circle" cx="100" cy="100" r="80"/>
+  <text class="percent" x="100" y="115" text-anchor="middle">100%</text>
+  <text class="placement" x="100" y="145">Placement</text>
+  <text class="guarantee" x="100" y="170">Guarantee</text>
+  <path class="check" d="M60 100 L85 130 L140 70"/>
+</svg>

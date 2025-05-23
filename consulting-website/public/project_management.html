@@ -1,0 +1,1194 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Elevate your career with GRP Career's project management certifications, mastering Agile, Scrum, PMP, and leadership skills.">
+    <meta name="keywords" content="project management, PMP certification, Agile, Scrum, leadership training">
+    <title>GRP Career | Project Management Certification Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Montserrat:wght@500;800&display=swap" rel="stylesheet">
+    <style>
+        /* Color Scheme */
+        :root {
+            --primary: #2e4053; /* Slate Blue */
+            --secondary: #e76f51; /* Warm Coral */
+            --accent: #f1c40f; /* Vibrant Yellow */
+            --light: #edf2f4; /* Soft Blue-Gray */
+            --dark: #1d2630; /* Deep Charcoal */
+            --success: #2ab7ca; /* Aqua */
+            --white: #ffffff;
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--white);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            position: relative;
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: var(--white);
+            padding: 4rem 0;
+            overflow: hidden;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1516321310766-61b7c99e0f51?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+            opacity: 0.4;
+            z-index: 1;
+        }
+
+        .header-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 3;
+            text-align: center;
+        }
+
+        nav {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 1.5rem 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 4;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: var(--white);
+            text-decoration: none;
+            font-size: 1.1rem;
+            font-weight: 500;
+            transition: color 0.3s, transform 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+            transform: translateY(-2px);
+        }
+
+        .hero {
+            padding: 2rem 0;
+        }
+
+        .hero h1 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--dark);
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        /* Section Styles */
+        section {
+            padding: 6rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.8rem;
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-title h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--secondary);
+            margin: 1rem auto;
+            border-radius: 2px;
+        }
+
+        .section-title p {
+            font-size: 1.1rem;
+            color: #666;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* Why Choose Us Section */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .feature-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card p {
+            font-size: 1rem;
+            color: #555;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .stat-item {
+            padding: 1.5rem;
+            background: var(--light);
+            border-radius: 10px;
+        }
+
+        .stat-item h4 {
+            font-size: 2rem;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1rem;
+            color: #666;
+        }
+
+        /* Course Offerings Section */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: var(--light);
+            border: none;
+            border-radius: 8px;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-button.active,
+        .tab-button:hover {
+            background: var(--accent);
+            color: var(--dark);
+        }
+
+        .tab-content {
+            display: none;
+            background: var(--white);
+            padding: 3rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .course-highlights h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight-list {
+            list-style-type: none;
+            columns: 2;
+            gap: 2rem;
+        }
+
+        .highlight-list li {
+            padding: 0.8rem 0;
+            position: relative;
+            padding-left: 1.8rem;
+            font-size: 1rem;
+            break-inside: avoid;
+        }
+
+        .highlight-list li:before {
+            content: '✔';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .pricing {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .price {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .price small {
+            font-size: 1.2rem;
+            color: #666;
+        }
+
+        /* Syllabus Section */
+        .syllabus-accordion {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .accordion-header {
+            background: var(--primary);
+            color: var(--white);
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .accordion-header:hover {
+            background: var(--dark);
+        }
+
+        .accordion-header h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+        }
+
+        .accordion-content {
+            background: var(--white);
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content-inner {
+            padding: 2rem;
+        }
+
+        .module-list {
+            list-style-type: none;
+        }
+
+        .module-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+        }
+
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+
+        .module-duration {
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .faq-question {
+            background: var(--light);
+            color: var(--dark);
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background 0.3s;
+        }
+
+        .faq-question:hover {
+            background: #d9e2ec;
+        }
+
+        .faq-question h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+        }
+
+        .faq-answer {
+            background: var(--white);
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 2rem;
+            max-height: 600px;
+        }
+
+        /* Testimonials Section */
+        .testimonials {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .testimonial-card {
+            background: var(--white);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .testimonial-card img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            object-fit: cover;
+        }
+
+        .testimonial-card p {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 1rem;
+        }
+
+        .testimonial-card h4 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.2rem;
+            color: var(--primary);
+        }
+
+        /* CTA Banner */
+        .cta-banner {
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            color: var(--dark);
+            padding: 3rem;
+            text-align: center;
+            border-radius: 12px;
+            margin: 3rem 0;
+        }
+
+        .cta-banner h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--dark);
+            color: var(--white);
+            padding: 4rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-column h3 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style-type: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-links a {
+            color: var(--white);
+            background: rgba(255, 255, 255, 0.1);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+
+        .social-links a:hover {
+            background: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .highlight-list {
+                columns: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+
+            .feature-card {
+                padding: 1.5rem;
+            }
+
+            .tab-button {
+                padding: 0.8rem 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="header-overlay"></div>
+        <nav>
+            <div class="container nav-container">
+                <div class="logo">GRP Career</div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#syllabus">Syllabus</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container header-content">
+            <div class="hero">
+                <h1>Lead Projects with Confidence</h1>
+                <p>Join our globally recognized project management certification programs to master Agile, Scrum, PMP, and leadership skills, backed by industry experts.</p>
+                <a href="#courses" class="cta-button">Explore Programs</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Why Choose Us Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why GRP Career?</h2>
+                <p>Our programs empower you to excel in project management with hands-on training and expert mentorship.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1531497865144-0464ef8fb9a9?q=80&w=2070&auto=format&fit=crop" alt="PMP Certification" class="feature-icon">
+                    <h3>PMP Certification</h3>
+                    <p>90% of graduates pass the PMP exam on their first attempt with our proven methodology.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=2069&auto=format&fit=crop" alt="Agile Expertise" class="feature-icon">
+                    <h3>Agile & Scrum Mastery</h3>
+                    <p>Learn from certified Scrum Masters with 10+ years of experience in Agile environments.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1516321310766-61b7c99e0f51?q=80&w=2070&auto=format&fit=crop" alt="Leadership Skills" class="feature-icon">
+                    <h3>Leadership Development</h3>
+                    <p>85% of participants report improved team management and stakeholder communication.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?q=80&w=2070&auto=format&fit=crop" alt="Practical Training" class="feature-icon">
+                    <h3>Hands-On Projects</h3>
+                    <p>Complete 15+ real-world project simulations to build practical skills.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1516321310766-61b7c99e0f51?q=80&w=2070&auto=format&fit=crop" alt="Global Recognition" class="feature-icon">
+                    <h3>Global Certification</h3>
+                    <p>Earn credentials recognized by 95% of employers, accredited by PMI and Scrum Alliance.</p>
+                </div>
+                <div class="feature-card">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=2070&auto=format&fit=crop" alt="Career Support" class="feature-icon">
+                    <h3>Career Advancement</h3>
+                    <p>80% of alumni report promotions or new job opportunities post-certification.</p>
+                </div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <h4>92%</h4>
+                    <p>Exam pass rate</p>
+                </div>
+                <div class="stat-item">
+                    <h4>12,000+</h4>
+                    <p>Global alumni</p>
+                </div>
+                <div class="stat-item">
+                    <h4>95%</h4>
+                    <p>Course satisfaction</p>
+                </div>
+                <div class="stat-item">
+                    <h4>60+</h4>
+                    <p>Corporate partners</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Offerings Section -->
+    <section id="courses" style="background: var(--light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Project Management Programs</h2>
+                <p>Choose from specialized tracks to advance your career in project management with industry-leading certifications.</p>
+            </div>
+            <div class="course-tabs">
+                <button class="tab-button active" onclick="openTab(event, 'pmp')">PMP Certification</button>
+                <button class="tab-button" onclick="openTab(event, 'agile')">Agile & Scrum</button>
+                <button class="tab-button" onclick="openTab(event, 'leadership')">Project Leadership</button>
+                <button class="tab-button" onclick="openTab(event, 'advanced')">Advanced PM Pro</button>
+            </div>
+            <div id="pmp" class="tab-content active">
+                <h3>PMP Certification Program</h3>
+                <p>15 days program to prepare for the PMI PMP exam with a 90% first-attempt pass rate.</p>
+                <div class="course-highlights">
+                    <h3>Learning Outcomes:</h3>
+                    <ul class="highlight-list">
+                        <li>Master PMBOK Guide principles</li>
+                        <li>Apply project management processes</li>
+                        <li>Manage risks and stakeholders</li>
+                        <li>Practice with 1,000+ exam questions</li>
+                        <li>Develop scheduling techniques</li>
+                        <li>Earn 35 PDUs for PMI certification</li>
+                    </ul>
+                </div>
+                <div class="pricing">
+                    <div class="price">₹ 4,999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            <div id="agile" class="tab-content">
+                <h3>Agile & Scrum Certification</h3>
+                <p>15 days program to become a certified Scrum Master or Agile practitioner (88% job placement rate).</p>
+                <div class="course-highlights">
+                    <h3>Learning Outcomes:</h3>
+                    <ul class="highlight-list">
+                        <li>Lead Agile teams effectively</li>
+                        <li>Implement Scrum frameworks</li>
+                        <li>Facilitate sprint planning</li>
+                        <li>Use tools like Jira and Trello</li>
+                        <li>Resolve Agile project challenges</li>
+                        <li>Earn Scrum Alliance certification</li>
+                    </ul>
+                </div>
+                <div class="pricing">
+                    <div class="price">₹ 4,999 <small></small></div>
+                    <p>Next cohort: July 7, 2025. Enrollment deadline: June 30.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            <div id="leadership" class="tab-content">
+                <h3>Project Leadership Masterclass</h3>
+                <p>15 days program to enhance leadership and communication skills for project managers (85% report promotions).</p>
+                <div class="course-highlights">
+                    <h3>Learning Outcomes:</h3>
+                    <ul class="highlight-list">
+                        <li>Lead cross-functional teams</li>
+                        <li>Manage stakeholder expectations</li>
+                        <li>Resolve conflicts effectively</li>
+                        <li>Build high-performance teams</li>
+                        <li>Develop strategic communication</li>
+                        <li>Apply leadership frameworks</li>
+                    </ul>
+                </div>
+                <div class="pricing">
+                    <div class="price">₹ 4,999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            <div id="advanced" class="tab-content">
+                <h3>Advanced Project Management Pro</h3>
+                <p>15 days program for experienced PMs to master advanced techniques (90% career advancement rate).</p>
+                <div class="course-highlights">
+                    <h3>Learning Outcomes:</h3>
+                    <ul class="highlight-list">
+                        <li>Manage complex portfolios</li>
+                        <li>Implement Lean methodologies</li>
+                        <li>Optimize resource allocation</li>
+                        <li>Use advanced analytics tools</li>
+                        <li>Lead enterprise-level projects</li>
+                        <li>Earn CAPM or PfMP credentials</li>
+                    </ul>
+                </div>
+                <div class="pricing">
+                    <div class="price">₹ 4,999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Syllabus Section -->
+    <section id="syllabus">
+        <div class="container">
+            <div class="section-title">
+                <h2>Detailed Program Syllabus</h2>
+                <p>Explore the comprehensive curriculum for our PMP Certification Program, with 50+ hours of expert-led content.</p>
+            </div>
+            <div class="syllabus-accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 1: Project Management Foundations</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to PMBOK Guide <span class="module-duration">3 hours</span></li>
+                                <li>Project lifecycle and phases <span class="module-duration">3 hours</span></li>
+                                <li>Role of a project manager <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Infosys project success <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Project charter <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 2: Project Scope and Schedule</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Defining project scope <span class="module-duration">3 hours</span></li>
+                                <li>Work breakdown structure (WBS) <span class="module-duration">3 hours</span></li>
+                                <li>Critical path method (CPM) <span class="module-duration">3 hours</span></li>
+                                <li>Case study: Tata Steel project planning <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Gantt chart creation <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 3: Cost and Resource Management</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Budget estimation techniques <span class="module-duration">3 hours</span></li>
+                                <li>Resource allocation strategies <span class="module-duration">3 hours</span></li>
+                                <li>Earned value management (EVM) <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Reliance Jio rollout <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Cost baseline plan <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 4: Risk and Quality Management</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Risk identification and analysis <span class="module-duration">3 hours</span></li>
+                                <li>Quality assurance processes <span class="module-duration">3 hours</span></li>
+                                <li>Risk response planning <span class="module-duration">2 hours</span></li>
+                                <li>Case study: ISRO mission planning <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Risk register <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 5: Stakeholder and Communication</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Stakeholder identification <span class="module-duration">2 hours</span></li>
+                                <li>Communication planning <span class="module-duration">3 hours</span></li>
+                                <li>Conflict resolution techniques <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Mumbai Metro project <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Stakeholder matrix <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Capstone Project</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Develop a full project plan <span class="module-duration">5 hours</span></li>
+                                <li>Simulate project execution <span class="module-duration">8 hours</span></li>
+                                <li>Present to mock stakeholders <span class="module-duration">5 hours</span></li>
+                                <li>Receive expert feedback <span class="module-duration">3 hours</span></li>
+                                <li>Final PMP exam prep <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- FAQ Section -->
+    <section id="faq" style="background: var(--light);">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+                <p>Find answers to common questions about our project management programs.</p>
+            </div>
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Who is this program for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The PMP Certification program is ideal for:</p>
+                        <ul>
+                            <li>Aspiring project managers (60% of enrollees)</li>
+                            <li>Professionals seeking PMI certification</li>
+                            <li>Team leads transitioning to PM roles</li>
+                            <li>Experienced PMs aiming for PMP</li>
+                            <li>Anyone managing projects</li>
+                        </ul>
+                        <p>Requires 3-5 years of project experience.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is the time commitment?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The 8-week PMP program requires 10-12 hours/week:</p>
+                        <ul>
+                            <li>4 hours live workshops (95% attendance)</li>
+                            <li>3 hours video content and readings</li>
+                            <li>3-5 hours assignments and practice</li>
+                        </ul>
+                        <p>Flexible for working professionals.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What certification will I receive?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Upon completion (85%+ score):</p>
+                        <ul>
+                            <li>PMP exam eligibility (35 PDUs)</li>
+                            <li>GRP Career PMP Prep Certificate</li>
+                            <li>Digital badge for LinkedIn</li>
+                            <li>Skills transcript (20+ competencies)</li>
+                        </ul>
+                        <p>Recognized by PMI globally.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the technical requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You’ll need:</p>
+                        <ul>
+                            <li>Internet (5Mbps+)</li>
+                            <li>Laptop/phone with webcam</li>
+                            <li>Zoom for live sessions</li>
+                            <li>Browser (Chrome/Firefox)</li>
+                            <li>Basic note-taking tools</li>
+                        </ul>
+                        <p>No special software required.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Are payment plans available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Options include:</p>
+                        <ul>
+                            <li>3-6 month plans (70% opt-in)</li>
+                            <li>Scholarships for top 10% applicants</li>
+                            <li>15% off for groups (3+)</li>
+                            <li>25% alumni discount</li>
+                        </ul>
+                        <p>Contact us for details.</p>
+                    </div>
+                </div>
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is the refund policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Refund structure:</p>
+                        <ul>
+                            <li>100% before start</li>
+                            <li>75% within 7 days</li>
+                            <li>50% within 14 days</li>
+                            <li>No refunds post-14 days</li>
+                        </ul>
+                        <p>Email requests required.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Banner -->
+    <section>
+        <div class="container">
+            <div class="cta-banner">
+                <h3>Ready to Lead Successful Projects?</h3>
+                <p>Join 12,000+ professionals who’ve advanced their careers with us.</p>
+                <a href="#contact" class="cta-button">Start Your Journey</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Connect with Our Experts</h2>
+                <p>Have questions or need help choosing a program? Our team is here to guide you.</p>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="mailto:info@grpcareer.com" class="cta-button">Email Us</a>
+                <a href="tel:+919643058418" class="cta-button" style="background: var(--primary); border-color: var(--primary); margin-left: 1rem;">Call Us</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GRP Career</h3>
+                    <p>Empowering professionals to lead projects with confidence through world-class certifications and training.</p>
+                    <p><i class="fas fa-map-marker-alt"></i> Corp. Off: 2nd Floor, A-55, Sec-02, Noida G.B Nagar (U.P) - 201301</p>
+                    <p><i class="fas fa-phone-alt"></i> +91 9643058418, 01204097776</p>
+                    <p><a href="mailto:info@grpcareer.com" style="color: #bdc3c7; text-decoration: none;"><i class="fas fa-envelope"></i> info@grpcareer.com</a></p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Programs</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">PMP Certification</a></li>
+                        <li><a href="#">Agile & Scrum</a></li>
+                        <li><a href="#">Project Leadership</a></li>
+                        <li><a href="#">Advanced PM Pro</a></li>
+                        <li><a href="#">Corporate Training</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">PM Blog</a></li>
+                        <li><a href="#">Certification Guides</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Community</a></li>
+                    </ul>
+                </div>
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Instructors</a></li>
+                        <li><a href="#">Testimonials</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 GRP Career. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+                <p>Images from <a href="https://unsplash.com" target="_blank">Unsplash</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Accordion functionality
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                const allContents = document.querySelectorAll('.accordion-content');
+                const allIcons = document.querySelectorAll('.accordion-icon');
+                allContents.forEach((c, i) => {
+                    c.style.maxHeight = null;
+                    allIcons[i].textContent = '+';
+                });
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.textContent = '−';
+            }
+        }
+
+        // FAQ toggle functionality
+        function toggleFaq(question) {
+            const item = question.parentElement;
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector('.faq-toggle');
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                const allToggles = document.querySelectorAll('.faq-toggle');
+                allAnswers.forEach((a, i) => {
+                    a.classList.remove('active');
+                    allToggles[i].textContent = '+';
+                });
+                answer.classList.add('active');
+                toggle.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,548 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career The Ultimate Guide to Building a Modern Resume</title>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --text-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --border-color: rgba(0, 0, 0, 0.09);
+            --background-accent: #f9fafb;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(250,250,250,0.8));
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        .author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .author-info {
+            text-align: left;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .author-title {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reading-time, .publish-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .reading-time:before {
+            content: "⏱️";
+            margin-right: 0.5rem;
+        }
+        
+        .publish-date:before {
+            content: "📅";
+            margin-right: 0.5rem;
+        }
+        
+        .article-content {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            color: #444;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background-color: var(--background-accent);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+        
+        .tip-card {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 20px var(--shadow-color);
+        }
+        
+        .tip-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .section-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        blockquote {
+            font-style: italic;
+            padding: 1rem 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--background-accent);
+            font-size: 1.1rem;
+        }
+        
+        blockquote cite {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .cta-box {
+            background: linear-gradient(to right, var(--primary-color), #5e78ff);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .cta-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .decoration {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.03;
+        }
+        
+        .decoration.top-right {
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 0 0 0 300px;
+            background: var(--primary-color);
+        }
+        
+        .decoration.bottom-left {
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 250px;
+            border-radius: 0 250px 0 0;
+            background: var(--primary-color);
+        }
+        
+        /* Small form at bottom */
+        .mini-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            margin-top: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #324ddd;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            background-color: #e3f9e5;
+            border-radius: 6px;
+            margin-top: 1rem;
+            color: #287d3c;
+        }
+        
+        @media (max-width: 768px) {
+            .section-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration top-right"></div>
+    <div class="decoration bottom-left"></div>
+    
+    <div class="container">
+        <header>
+            <h1> GRP Career The Ultimate Guide to Modern Resume Building</h1>
+            <p class="subtitle">Stand out from the crowd with a professional, tailored resume that gets results</p>
+            
+            <div class="author">
+                <div class="author-avatar">CR</div>
+                <div class="author-info">
+                    <div class="author-name"> GRP Career Resources Team</div>
+                    <div class="author-title">Professional Resume Experts</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="article-meta">
+            <div class="reading-time">8 min read</div>
+            <div class="publish-date">April 15, 2025</div>
+        </div>
+        
+        <div class="article-content">
+            <p>In today's competitive job market, your resume is often your first and only chance to make a strong impression on potential employers. With hiring managers spending an average of just 7.4 seconds scanning each resume, creating a document that effectively showcases your skills and experience has never been more important.</p>
+            
+            <p>This comprehensive guide will walk you through the essential elements of a modern, effective resume, from structure and content to design and formatting. Whether you're a recent graduate, changing careers, or looking to advance in your field, these tips will help you craft a resume that gets noticed.</p>
+            
+            <div class="highlight-box">
+                <h3>Why Your Resume Matters More Than Ever</h3>
+                <p>With the rise of applicant tracking systems (ATS) and increasingly competitive job markets, a well-crafted resume is essential. Research shows that 75% of resumes never reach a human reviewer because they don't pass initial ATS screening. Additionally, 77% of hiring managers say they're more likely to notice a well-designed resume with clean formatting.</p>
+            </div>
+            
+            <h2>Essential Elements of a Modern Resume</h2>
+            
+            <p>A standout resume incorporates several key components that effectively communicate your value to potential employers. Here's what to include:</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>Contact Information</h4>
+                    <p>Include your name, phone number, professional email address, LinkedIn profile, and location (city/state). For tech or creative roles, consider adding your portfolio website or GitHub profile.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Professional Summary</h4>
+                    <p>A concise 2-3 sentence overview that highlights your most relevant skills, experience, and achievements. This replaces the outdated "objective" statement.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Core Competencies</h4>
+                    <p>A list of 6-10 key skills relevant to the position you're applying for. Include both technical (hard) skills and interpersonal (soft) skills.</p>
+                </div>
+            </div>
+            
+            <h3>Professional Experience</h3>
+            
+            <p>This section forms the backbone of your resume. For each position, include:</p>
+            
+            <ul>
+                <li><strong>Company name and location</strong></li>
+                <li><strong>Your job title</strong></li>
+                <li><strong>Employment dates</strong> (month/year format)</li>
+                <li><strong>Accomplishments</strong> rather than just responsibilities</li>
+            </ul>
+            
+            <blockquote>
+                "The most effective resumes don't just tell me what you did—they show me what you achieved and the value you brought to your previous employers."
+                <cite>- Sarah Johnson, HR Director at Fortune 500 Company</cite>
+            </blockquote>
+            
+            <h3>Achievement-Focused Bullet Points</h3>
+            
+            <p>When describing your work experience, focus on achievements rather than daily tasks. Use this formula:</p>
+            
+            <div class="highlight-box">
+                <p><strong>Action Verb + Task + Result/Impact</strong></p>
+                <p>Example: "Implemented new inventory tracking system, reducing stockouts by 32% and saving $45,000 annually."</p>
+            </div>
+            
+            <h2>Formatting and Design Best Practices</h2>
+            
+            <p>How your resume looks is almost as important as what it contains. A clean, well-organized layout ensures hiring managers can easily find the information they need.</p>
+            
+            <h3>Layout Guidelines</h3>
+            
+            <ul>
+                <li><strong>Length:</strong> Keep it to 1-2 pages maximum. For most professionals with under 10 years of experience, one page is ideal.</li>
+                <li><strong>Font:</strong> Use clean, professional fonts like Arial, Calibri, or Helvetica at 10-12pt size.</li>
+                <li><strong>Margins:</strong> Keep margins between 0.5-1 inch on all sides.</li>
+                <li><strong>White space:</strong> Include adequate spacing to improve readability.</li>
+                <li><strong>File format:</strong> Unless otherwise specified, save and send your resume as a PDF to preserve formatting.</li>
+            </ul>
+            
+            <h3>ATS-Friendly Design</h3>
+            
+            <p>With over 90% of large companies using ATS software to screen resumes, creating an ATS-friendly document is crucial:</p>
+            
+            <div class="highlight-box">
+                <h3>ATS Optimization Tips</h3>
+                <ul>
+                    <li>Use standard section headings (e.g., "Work Experience" rather than "Career Journey")</li>
+                    <li>Incorporate keywords from the job description</li>
+                    <li>Avoid tables, headers/footers, text boxes, and images</li>
+                    <li>Use standard bullet points rather than custom symbols</li>
+                    <li>Limit the use of acronyms; spell out terms at least once</li>
+                </ul>
+            </div>
+            
+            <h2>Tailoring Your Resume for Each Application</h2>
+            
+            <p>Generic resumes rarely make it past the first screening. Customizing your resume for each position demonstrates your genuine interest and highlights your most relevant qualifications:</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>Research the Company</h4>
+                    <p>Understand the company's values, culture, and needs to align your resume accordingly.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Analyze the Job Description</h4>
+                    <p>Identify key skills and requirements, then ensure these are prominently featured in your resume.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Prioritize Relevant Experience</h4>
+                    <p>Expand on experiences most relevant to the position and condense others.</p>
+                </div>
+            </div>
+            
+            <h2>Common Resume Mistakes to Avoid</h2>
+            
+            <p>Even small errors can cost you an interview opportunity. Here are the most common pitfalls to avoid:</p>
+            
+            <ul>
+                <li><strong>Typos and grammatical errors</strong> - Always proofread multiple times and have someone else review it</li>
+                <li><strong>Including outdated information</strong> - Remove positions older than 15 years unless extremely relevant</li>
+                <li><strong>Using generic descriptions</strong> - Avoid clichés like "team player" or "hard worker" without supporting evidence</li>
+                <li><strong>Including personal information</strong> - Your age, marital status, and photo are unnecessary in North American resumes</li>
+                <li><strong>Inconsistent formatting</strong> - Maintain consistent fonts, bullet styles, and spacing throughout</li>
+            </ul>
+            
+            <div class="cta-box">
+                <h3>Ready to Build Your Standout Resume?</h3>
+                <p>Subscribe to our newsletter for more expert career advice, templates, and job search strategies delivered straight to your inbox.</p>
+                <a href="#subscribe-form" class="btn">Get Free Resume Tips</a>
+            </div>
+            
+            <h2>Resume Trends for 2025</h2>
+            
+            <p>Stay ahead of the curve with these emerging resume trends:</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>Skills-Based Formats</h4>
+                    <p>Functional resumes that highlight transferable skills are gaining popularity, especially for career changers.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Digital Integration</h4>
+                    <p>Including QR codes linking to portfolios or LinkedIn profiles can provide additional context to your experience.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Soft Skills Emphasis</h4>
+                    <p>With AI handling more technical tasks, human skills like communication, adaptability, and creativity are becoming more valuable.</p>
+                </div>
+            </div>
+            
+            <h2>Industry-Specific Resume Advice</h2>
+            
+            <p>Different fields have different resume expectations. Here are some industry-specific tips:</p>
+            
+            <h3>Technology</h3>
+            <p>Focus on specific technical skills, certifications, and measurable project outcomes. Consider including links to code repositories or technical portfolios.</p>
+            
+            <h3>Creative Fields</h3>
+            <p>Incorporate design elements that showcase your aesthetic while maintaining readability. Include a link to your portfolio rather than trying to include samples in the resume itself.</p>
+            
+            <h3>Business/Finance</h3>
+            <p>Emphasize quantifiable achievements, such as revenue growth, cost savings, or process improvements. Include relevant certifications (CPA, CFA, MBA, etc.).</p>
+            
+            <h3>Healthcare</h3>
+            <p>Include all relevant licenses, certifications, and specialized training. For clinical roles, detail experience with specific procedures, technologies, or patient populations.</p>
+            
+            <blockquote>
+                "The best resumes tell a coherent story about who you are professionally and where you're headed. Every element should support that narrative."
+                <cite>- Michael Chen, Executive Recruiter</cite>
+            </blockquote>
+        </div>
+        
+        <div class="mini-form" id="subscribe-form">
+            <h3>Get More Resume Tips</h3>
+            <p>Sign up for our newsletter to receive expert resume advice, templates, and job search strategies.</p>
+            
+            <form id="newsletter-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Your email address" required>
+                </div>
+                <button type="submit">Subscribe</button>
+            </form>
+            
+            <div class="success-message" id="success-message">
+                <p>Thanks for subscribing! Check your email for a welcome message and free resume template.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Career Resources. All rights reserved. Updated April 15, 2025.</p>
+        </footer>
+    </div>
+    
+    <script>
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get email
+            const email = document.getElementById('email').value;
+            
+            // Store subscription data (example only)
+            localStorage.setItem('subscribedEmail', email);
+            
+            // Show success message
+            document.getElementById('success-message').style.display = 'block';
+            
+            // Clear form
+            this.reset();
+            
+            console.log('Subscription saved:', email);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resource Detail - GRP Career Pvt Ltd.</title>
+    <meta name="keywords" content="consultancy, career, resources">
+    <meta name="description" content="Detailed view of career and educational resources at GRP Career Pvt Ltd.">
+
+    <!-- Favicon -->
+    <link href="img/logo.png" rel="icon">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#4338CA',
+                        accent: '#F59E0B',
+                        dark: '#111827',
+                        light: '#F9FAFB',
+                        success: '#10B981'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'float-logo': 'floatLogo 4s ease-in-out infinite',
+                        'scale-up': 'scaleUp 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'flowchart-pulse': 'flowchartPulse 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        floatLogo: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.05)' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        flowchartPulse: {
+                            '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(79, 70, 229, 0.4)' },
+                            '50%': { transform: 'scale(1.05)', boxShadow: '0 0 0 10px rgba(79, 70, 229, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(67, 56, 202, 0.95) 100%); }
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .feature-icon { transition: all 0.3s ease; }
+        .benefit-card:hover .feature-icon { transform: rotateY(180deg) scale(1.1); }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #4F46E5 0%, #F59E0B 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .image-hover:hover { transform: scale(1.05); }
+        .sticky-testimonial { transition: all 0.3s ease; }
+        .sticky-testimonial.sticky { position: sticky; top: 100px; }
+        .table-comparison tbody tr:hover { background-color: #F9FAFB; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .faq-item { transition: all 0.3s ease; }
+        .faq-item:hover { background-color: #F9FAFB; }
+        .flowchart-node { transition: all 0.3s ease; }
+        .flowchart-node:hover { transform: scale(1.1); }
+        .pinned-image { opacity: 0; transition: opacity 0.5s ease; }
+        .pinned-image.active { opacity: 1; }
+        .section-content { display: flex; align-items: center; min-height: 100vh; }
+        .resource-card, .suggestion-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .resource-card:hover, .suggestion-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .back-to-top { position: fixed; bottom: 20px; right: 20px; background: #4F46E5; color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
+        .back-to-top.active { opacity: 1; visibility: visible; }
+        .category-tag { color: #4F46E5; font-weight: 500; padding: 2px 8px; border-radius: 12px; background: #F3F4F6; transition: all 0.3s ease; }
+        .category-tag:hover { background: #E0E7FF; color: #4338CA; }
+        .prose img { max-width: 100%; height: auto; border-radius: 8px; }
+        .animate-fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @media (max-width: 768px) {
+            .parallax-bg { background-attachment: scroll; }
+            .flowchart-arrow { display: none; }
+            .pinned-image-column { position: static; width: 100%; }
+            .section-content { min-height: auto; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="index.html" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                        <i class="ri-briefcase-line text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-dark">GRP <span class="gradient-text">Career</span></span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="/service.html" class="nav-link text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="/feature.html" class="nav-link text-dark font-medium hover:text-primary transition">Why Choose Us</a>
+                    <a href="/review.html" class="nav-link text-dark font-medium hover:text-primary transition">Success Stories</a>
+                    <div class="relative group">
+                        <a href="#" class="nav-link text-dark font-medium hover:text-primary transition">Check Us Out</a>
+                        <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 right-0 w-48">
+                            <a href="blog.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-blog mr-2"></i>Blogs</a>
+                            <a href="resources.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-book mr-2"></i>Resources</a>
+                            <a href="job.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-briefcase mr-2"></i>Careers</a>
+                            <a href="about.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+                            <a href="advisor.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-users mr-2"></i>Advisor</a>
+                        </div>
+                    </div>
+                    <a href="/company_reg.html" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover flex items-center">
+                        <i class="ri-mail-send-line mr-2"></i> Contact Us
+                    </a>
+                </div>
+                <button aria-label="Toggle mobile menu" class="lg:hidden text-dark focus:outline-none" id="nav-toggle">
+                    <i class="ri-menu-line text-2xl"></i>
+                </button>
+            </div>
+            <div class="lg:hidden hidden mt-4 pb-4" id="nav-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="/service.html" class="text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="/feature.html" class="text-dark font-medium hover:text-primary transition">Why Choose Us</a>
+                    <a href="/review.html" class="text-dark font-medium hover:text-primary transition">Success Stories</a>
+                    <div>
+                        <a href="#" class="text-dark font-medium hover:text-primary transition">Check Us Out</a>
+                        <div class="ml-4 mt-2 space-y-2">
+                            <a href="blog.html" class="block text-dark hover:text-primary"><i class="fas fa-blog mr-2"></i>Blogs</a>
+                            <a href="resources.html" class="block text-dark hover:text-primary"><i class="fas fa-book mr-2"></i>Resources</a>
+                            <a href="job.html" class="block text-dark hover:text-primary"><i class="fas fa-briefcase mr-2"></i>Careers</a>
+                            <a href="about.html" class="block text-dark hover:text-primary"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+                            <a href="advisor.html" class="block text-dark hover:text-primary"><i class="fas fa-users mr-2"></i>Advisor</a>
+                        </div>
+                    </div>
+                    <a href="/company_reg.html" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Resource Detail Section -->
+    <section id="resource-detail" class="pt-32 pb-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto" id="resource-content" data-aos="fade-up">
+                <!-- Resource content will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Suggestions Section -->
+    <section id="suggestions" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">RECOMMENDED FOR YOU</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">You Might Also Like</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Explore more resources to fuel your career growth.</p>
+            </div>
+            <div id="suggestions-container" class="grid grid-cols-1 md:grid-cols-3 gap-6" data-aos="fade-up"></div>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta" class="py-20 bg-primary text-white relative overflow-hidden parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold bg-white text-primary rounded-full mb-4">KEEP LEARNING</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif">Ready to Boost Your Career?</h2>
+                <p class="text-xl mb-8 text-gray-100">Explore our resources or join our courses to take your skills to the next level.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="resources.html" class="bg-accent text-white px-8 py-3.5 rounded-lg font-medium hover:bg-yellow-600 transition btn-hover flex items-center justify-center">
+                        <i class="fas fa-book mr-2"></i> Browse Resources
+                    </a>
+                    <a href="tel:+919643058418" class="bg-white text-dark px-8 py-3.5 rounded-lg font-medium hover:bg-gray-100 transition btn-hover flex items-center justify-center">
+                        <i class="fas fa-phone mr-2"></i> Call Admissions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <a href="index.html" class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                            <i class="ri-briefcase-line text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">GRP <span class="gradient-text">Career</span></span>
+                    </a>
+                    <p class="text-gray-400 mb-4">GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784) offers resources and courses for career growth.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/share/16egu8TAQ3/" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://twitter.com" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.linkedin.com/in/grp-career-548736359/" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA==" class="text-gray-400 hover:text-white transition" target="_blank"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="index.html" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="about.html" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/service.html" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="resources.html" class="text-gray-400 hover:text-white transition">Resources</a></li>
+                        <li><a href="/company_reg.html" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-accent mr-3 mt-1"></i>
+                            <a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank" class="text-gray-400 hover:text-white transition">2nd Floor, A-55, Sec-02,<br>Noida G.B Nagar (U.P) - 201301</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-accent mr-3"></i>
+                            <a href="tel:+919643058418" class="text-gray-400 hover:text-white transition">+91 9643058418</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone text-accent mr-3"></i>
+                            <a href="tel:01204097776" class="text-gray-400 hover:text-white transition">01204097776</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-accent mr-3"></i>
+                            <a href="mailto:info@grpcareer.in" class="text-gray-400 hover:text-white transition">info@grpcareer.in</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to get the latest career tips and updates.</p>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" placeholder="Your email" class="w-full p-3 rounded-l-lg border-none focus:outline-none focus:ring-2 focus:ring-accent text-dark" required>
+                        <button type="submit" class="bg-accent text-white px-4 rounded-r-lg hover:bg-yellow-600 transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                    <div class="mt-4">
+                        <h4 class="font-medium text-white mb-2">Business Hours</h4>
+                        <p class="text-gray-400 text-sm">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">© 2025 GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784). All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Privacy Policy</a>
+                    <span class="text-gray-400">|</span>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Terms of Service</a>
+                    <span class="text-gray-400">|</span>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Mobile menu toggle
+        document.getElementById('nav-toggle').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('hidden');
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for back to top
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                // Close mobile menu if open
+                if (!document.getElementById('nav-menu').classList.contains('hidden')) {
+                    document.getElementById('nav-menu').classList.add('hidden');
+                }
+            });
+        });
+
+        // GSAP ScrollTrigger for Sticky Elements
+        gsap.utils.toArray('.sticky-testimonial').forEach((testimonial, index) => {
+            gsap.from(testimonial, {
+                scrollTrigger: {
+                    trigger: testimonial,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: index * 0.2,
+            });
+        });
+
+        // GSAP Parallax Effect
+        gsap.to('.parallax-bg', {
+            scrollTrigger: {
+                trigger: '.parallax-bg',
+                scrub: true,
+            },
+            backgroundPosition: '50% 100%',
+        });
+
+        // Hover Effects for Cards
+        document.querySelectorAll('.card, .suggestion-card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { scale: 1.02, duration: 0.3 });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { scale: 1, duration: 0.3 });
+            });
+        });
+
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+
+        // Load resource content
+        async function loadResourceDetail() {
+            const slug = window.location.pathname.split('/').pop();
+            const content = document.getElementById('resource-content');
+
+            try {
+                const response = await fetch(`/api/resources/${slug}`);
+                if (!response.ok) throw new Error('Resource not found');
+                const resource = await response.json();
+
+                document.title = `${resource.title} - GRP Career Pvt Ltd.`;
+                const formattedDate = new Date(resource.date).toLocaleDateString('en-GB', {
+                    day: 'numeric',
+                    month: 'long',
+                    year: 'numeric'
+                });
+
+                content.innerHTML = `
+                    <div class="animate-fade-in">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-6">${resource.title}</h1>
+                        <div class="resource-meta flex flex-wrap gap-4 mb-6 text-sm">
+                            <span class="flex items-center">
+                                <i class="fas fa-calendar-alt mr-2 text-blue-600"></i>
+                                Published: ${formattedDate}
+                            </span>
+                            <span class="flex items-center">
+                                <i class="fas fa-tags mr-2 text-blue-600"></i>
+                                Category:
+                                <a href="/resources?category=${resource.category}" class="category-tag ml-2">${resource.category}</a>
+                                ${resource.subcategory ? `<a href="/resources?subcategory=${resource.subcategory}" class="category-tag ml-2">${resource.subcategory}</a>` : ''}
+                            </span>
+                        </div>
+                        ${resource.image ? `
+                            <div class="resource-image mb-6">
+                                <img src="${resource.image}" alt="${resource.imageDescription || resource.title}" class="w-full h-96 object-cover rounded-lg shadow-lg">
+                                ${resource.imageCaption ? `
+                                    <p class="text-sm text-gray-600 mt-2 text-center">
+                                        ${resource.imageCaptionLink ? `
+                                            <a href="${resource.imageCaptionLink}" target="_blank" class="text-blue-600 hover:underline">${resource.imageCaption}</a>
+                                        ` : resource.imageCaption}
+                                    </p>
+                                ` : ''}
+                            </div>
+                        ` : ''}
+                        <div class="prose prose-lg max-w-none">${resource.description}</div>
+                        ${resource.youtubeLink ? `
+                            <div class="mt-8">
+                                <iframe class="w-full h-96 rounded-lg shadow-lg" src="${resource.youtubeLink.replace('watch?v=', 'embed/')}" 
+                                    title="YouTube video player" frameborder="0" 
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                            </div>
+                        ` : ''}
+                        <div class="mt-8 pt-6 border-t border-gray-200">
+                            <h4 class="text-lg font-semibold mb-4">Share this resource:</h4>
+                            <div class="flex space-x-4">
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" 
+                                   target="_blank" class="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center">
+                                    <i class="fab fa-facebook-f mr-2"></i> Facebook
+                                </a>
+                                <a href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(resource.title)}" 
+                                   target="_blank" class="bg-blue-400 text-white px-4 py-2 rounded-lg hover:bg-blue-500 flex items-center">
+                                    <i class="fab fa-twitter mr-2"></i> Twitter
+                                </a>
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url=${encodeURIComponent(window.location.href)}&title=${encodeURIComponent(resource.title)}" 
+                                   target="_blank" class="bg-blue-700 text-white px-4 py-2 rounded-lg hover:bg-blue-800 flex items-center">
+                                    <i class="fab fa-linkedin-in mr-2"></i> LinkedIn
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            } catch (error) {
+                content.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-exclamation-circle text-5xl text-red-500 mb-4"></i>
+                        <h2 class="text-2xl font-bold mb-2">Resource Not Found</h2>
+                        <p class="mb-4 text-gray-600">The resource you're looking for doesn't exist or may have been removed.</p>
+                        <a href="/resources.html" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700">Browse All Resources</a>
+                    </div>
+                `;
+                document.title = "Resource Not Found - GRP Career Pvt Ltd.";
+            }
+        }
+
+        // Load suggestions
+        async function loadSuggestions() {
+            const slug = window.location.pathname.split('/').pop();
+            const container = document.getElementById('suggestions-container');
+
+            try {
+                const response = await fetch(`/api/resources/suggestions/${slug}?limit=6`);
+                if (!response.ok) throw new Error('Failed to load suggestions');
+                const suggestions = await response.json();
+
+                container.innerHTML = suggestions.length > 0 ? suggestions.map(suggestion => `
+                    <div class="suggestion-card bg-white rounded-xl shadow-sm overflow-hidden">
+                        <img src="${suggestion.image || '/img/placeholder.jpg'}" alt="${suggestion.imageDescription || suggestion.title}" class="w-full h-48 object-cover">
+                        <div class="p-4">
+                            <h5 class="text-lg font-semibold text-gray-900 mb-2">${suggestion.title}</h5>
+                            <a href="/resource/${suggestion.slug}" class="text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                `).join('') : `
+                    <div class="col-span-3 text-center py-4">
+                        <p class="text-gray-500">No suggestions available at the moment.</p>
+                    </div>
+                `;
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="col-span-3 text-center py-4">
+                        <p class="text-red-500">Failed to load suggestions. Please refresh the page.</p>
+                    </div>
+                `;
+            }
+        }
+
+        // Newsletter Form Handler
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            console.log('Newsletter subscription:', email);
+            alert('Thank you for subscribing to our newsletter!');
+            this.reset();
+        });
+
+        // Initialize
+        loadResourceDetail();
+        loadSuggestions();
+    </script>
+</body>
+</html>

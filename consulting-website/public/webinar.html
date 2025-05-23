@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Webinars - GRP Career Pvt Ltd.</title>
+    <meta name="keywords" content="consultancy, career, webinars">
+    <meta name="description" content="Join our upcoming webinars at GRP Career Pvt Ltd. to enhance your career and skills.">
+
+    <!-- Favicon -->
+    <link href="img/logo.png" rel="icon">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+        }
+
+        .top-bar {
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            color: white;
+        }
+
+        .navbar {
+            background: #1e40af;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar-brand img {
+            height: 100px;
+            transition: transform 0.2s;
+        }
+
+        .navbar-brand img:hover {
+            transform: scale(1.05);
+        }
+
+        .nav-link {
+            color: #ffffff !important;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 8px;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #2563eb;
+            transition: width 0.3s;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-button {
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            color: white;
+            border-radius: 9999px;
+            padding: 8px 24px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+
+        .webinar-card {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            display: flex;
+            height: 200px;
+        }
+
+        .webinar-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        }
+
+        .webinar-card img {
+            width: 300px;
+            object-fit: cover;
+        }
+
+        .sidebar {
+            border-left: 2px solid #e5e7eb;
+            padding-left: 24px;
+        }
+
+        .sidebar a {
+            display: block;
+            margin-bottom: 12px;
+            color: #4b5563;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #2563eb;
+            text-decoration: underline;
+        }
+
+        .back-to-top {
+            background: linear-gradient(to right, #2563eb, #1e40af);
+            color: white;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+        }
+
+        .back-to-top.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(37, 99, 235, 0.2);
+            border-top-color: #2563eb;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Typography */
+        h1, h2, h3 {
+            color: #1f2937;
+        }
+
+        h2 {
+            font-size: 1.875rem;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            line-height: 1.4;
+        }
+
+        p {
+            font-size: 1rem;
+            font-weight: 400;
+            line-height: 1.75;
+            color: #4b5563;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                border-left: none;
+                padding-left: 0;
+                margin-top: 24px;
+            }
+
+            .webinar-card {
+                flex-direction: column;
+                height: auto;
+            }
+
+            .webinar-card img {
+                width: 100%;
+                height: 200px;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            h3 {
+                font-size: 1.125rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Top Bar -->
+    <div class="top-bar py-3 hidden md:block">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <div class="flex items-center space-x-6">
+                <div class="flex items-center">
+                    <i class="far fa-clock mr-2"></i>
+                    <div>
+                        <p class="text-sm font-medium">10:00 - 7:00</p>
+                        <p class="text-xs">Mon - Sat</p>
+                    </div>
+                </div>
+                <div class="flex items-center">
+                    <i class="fa fa-phone-alt mr-2"></i>
+                    <div>
+                        <p class="text-sm font-medium">+91 9643058418</p>
+                        <p class="text-xs">For Appointment</p>
+                    </div>
+                </div>
+            </div>
+            <div class="flex space-x-4">
+                <a href="#" class="text-white hover:text-gray-200"><i class="fab fa-twitter"></i></a>
+                <a href="https://www.facebook.com/share/16egu8TAQ3/" class="text-white hover:text-gray-200"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.linkedin.com/in/grp-career-548736359/" class="text-white hover:text-gray-200"><i class="fab fa-linkedin-in"></i></a>
+                <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA==" class="text-white hover:text-gray-200"><i class="fab fa-instagram"></i></a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navbar -->
+    <nav class="navbar sticky-top py-4">
+        <div class="container mx-auto px-4 flex justify-between items-center">
+            <a href="index.html" class="navbar-brand">
+                <img src="img/logo.png" alt="GRP Career Pvt Ltd.">
+            </a>
+            <button class="md:hidden" id="nav-toggle">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            <div class="hidden md:flex items-center space-x-6" id="nav-menu">
+                <a href="/service.html" class="nav-link">Courses</a>
+                <a href="/feature.html" class="nav-link">Why Choose Us</a>
+                <a href="/review.html" class="nav-link">Success Stories</a>
+                <div class="relative group">
+                    <a href="#" class="nav-link">Check Us Out</a>
+                    <div class="absolute hidden group-hover:block bg-white shadow-lg rounded-lg mt-2 right-0 w-48">
+                        <a href="blog.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-blog mr-2"></i>Blogs</a>
+                        <a href="webinars.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-video mr-2"></i>Webinars</a>
+                        <a href="job.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-briefcase mr-2"></i>Careers</a>
+                        <a href="about.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-info-circle mr-2"></i>About Us</a>
+                        <a href="advisor.html" class="block px-4 py-2 hover:bg-gray-100"><i class="fas fa-users mr-2"></i>Advisor</a>
+                    </div>
+                </div>
+                <a href="/company_reg.html" class="nav-button">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Webinars Section -->
+    <div class="container mx-auto px-4 py-12">
+        <div class="text-center mb-12">
+            <p class="text-blue-600 font-medium">Upcoming Webinars</p>
+            <h2 class="text-3xl font-bold">Join Our Webinars</h2>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
+            <div>
+                <select id="category" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    <option value="">All Categories</option>
+                    <option value="Tech">Tech</option>
+                    <option value="Career">Career</option>
+                    <option value="Business">Business</option>
+                </select>
+            </div>
+            <div>
+                <select id="subcategory" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    <option value="">All Subcategories</option>
+                </select>
+            </div>
+            <div>
+                <div class="flex">
+                    <input type="text" id="search" class="w-full p-3 border rounded-l-lg focus:ring-2 focus:ring-blue-600 focus:outline-none" placeholder="Search webinars...">
+                    <button id="search-btn" class="bg-blue-600 text-white px-4 py-3 rounded-r-lg hover:bg-blue-700"><i class="fas fa-search"></i></button>
+                </div>
+            </div>
+            <div>
+                <select id="sort" class="w-full p-3 border rounded-lg focus:ring-2 focus:ring-blue-600 focus:outline-none">
+                    <option value="date DESC">Upcoming First</option>
+                    <option value="date ASC">Past First</option>
+                    <option value="title ASC">Title A-Z</option>
+                    <option value="title DESC">Title Z-A</option>
+                </select>
+            </div>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+            <div class="lg:col-span-3">
+                <div class="grid grid-cols-1 gap-6" id="webinar-container">
+                    <!-- Webinars will be inserted here -->
+                </div>
+                <div class="mt-8 flex justify-center">
+                    <nav id="pagination" class="flex space-x-2">
+                        <!-- Pagination links -->
+                    </nav>
+                </div>
+            </div>
+            <div class="sidebar">
+                <h3 class="text-xl font-bold mb-6">All Webinars</h3>
+                <div id="webinar-links"></div>
+            </div>
+        </div>
+        <div class="mt-12">
+            <h2 class="text-2xl font-bold text-center mb-8">You Might Also Like</h2>
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6" id="suggestions-container">
+                <!-- Suggestions will be inserted here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-6">
+        <div class="container mx-auto px-4 text-center">
+            <p>© <a href="#" class="text-blue-400 hover:underline">GRP Career Pvt Ltd.</a> All Rights Reserved.</p>
+            <p class="mt-2">Designed by <a href="#" class="text-blue-400 hover:underline">GRP Career Pvt Ltd.</a></p>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <a href="#" class="back-to-top"><i class="fas fa-chevron-up"></i></a>
+
+    <!-- JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script>
+        // Mobile menu toggle
+        document.getElementById('nav-toggle').addEventListener('click', () => {
+            document.getElementById('nav-menu').classList.toggle('hidden');
+        });
+
+        // Back to top button
+        window.addEventListener('scroll', () => {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.classList.add('active');
+            } else {
+                backToTop.classList.remove('active');
+            }
+        });
+
+        // Smooth scroll for back to top
+        document.querySelector('.back-to-top').addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Subcategory mapping
+        const subcategories = {
+            Tech: ['Tech Interview Questions', 'Coding Tutorials', 'Tech Trends'],
+            Career: ['Resume Tips', 'Interview Prep', 'Career Growth'],
+            Business: ['Entrepreneurship', 'Marketing', 'Finance']
+        };
+
+        // Populate subcategories
+        document.getElementById('category').addEventListener('change', (e) => {
+            const category = e.target.value;
+            const subcategorySelect = document.getElementById('subcategory');
+            subcategorySelect.innerHTML = '<option value="">All Subcategories</option>';
+            if (category && subcategories[category]) {
+                subcategories[category].forEach(sub => {
+                    const option = document.createElement('option');
+                    option.value = sub;
+                    option.textContent = sub;
+                    subcategorySelect.appendChild(option);
+                });
+            }
+            loadWebinars();
+        });
+
+        // Strip HTML tags
+        function stripHtml(html) {
+            const div = document.createElement('div');
+            div.innerHTML = html;
+            return div.textContent || div.innerText || '';
+        }
+
+        // Format date and time
+        function formatDateTime(dateTime) {
+            return new Date(dateTime).toLocaleString('en-GB', {
+                day: '2-digit',
+                month: 'short',
+                year: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        // Load webinars
+        async function loadWebinars(page = 1) {
+            const search = document.getElementById('search').value;
+            const category = document.getElementById('category').value;
+            const subcategory = document.getElementById('subcategory').value;
+            const sort = document.getElementById('sort').value;
+            const container = document.getElementById('webinar-container');
+
+            try {
+                const response = await fetch(`/api/webinars?page=${page}&search=${encodeURIComponent(search)}&category=${encodeURIComponent(category)}&subcategory=${encodeURIComponent(subcategory)}&sort=${encodeURIComponent(sort)}`);
+                if (!response.ok) throw new Error('Failed to load webinars');
+                const data = await response.json();
+
+                container.innerHTML = '';
+                if (data.webinars && data.webinars.length > 0) {
+                    data.webinars.forEach(webinar => {
+                        const plainDescription = stripHtml(webinar.description).substring(0, 150) + '...';
+                        container.innerHTML += `
+                            <div class="webinar-card">
+                                <img src="${webinar.image || '/img/placeholder.jpg'}" alt="${webinar.imageDescription || webinar.title}">
+                                <div class="p-4 flex-1">
+                                    <h3 class="text-lg font-semibold text-gray-900 mb-2">${webinar.title}</h3>
+                                    <div class="text-sm text-gray-600 mb-3">
+                                        <i class="fas fa-list-alt mr-1"></i> ${webinar.category}${webinar.subcategory ? ` | ${webinar.subcategory}` : ''}<br>
+                                        <i class="fas fa-calendar-alt mr-1"></i> ${formatDateTime(webinar.date)}<br>
+                                        ${webinar.speaker ? `<i class="fas fa-user mr-1"></i> ${webinar.speaker}<br>` : ''}
+                                        ${webinar.duration ? `<i class="fas fa-clock mr-1"></i> ${webinar.duration}` : ''}
+                                    </div>
+                                    <p class="text-gray-600 mb-4">${plainDescription}</p>
+                                    <a href="/webinar/${webinar.slug}" class="text-blue-600 hover:text-blue-800 font-medium">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                                </div>
+                            </div>`;
+                    });
+
+                    const pagination = document.getElementById('pagination');
+                    pagination.innerHTML = '';
+                    const totalPages = data.totalPages || 1;
+                    pagination.innerHTML += `
+                        <button class="px-3 py-1 rounded-lg ${page === 1 ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}" ${page === 1 ? 'disabled' : ''} onclick="loadWebinars(${page - 1})">Previous</button>`;
+                    for (let i = 1; i <= totalPages; i++) {
+                        pagination.innerHTML += `
+                            <button class="px-3 py-1 rounded-lg ${i === page ? 'bg-blue-600 text-white' : 'bg-gray-100 text-gray-700 hover:bg-gray-200'}" onclick="loadWebinars(${i})">${i}</button>`;
+                    }
+                    pagination.innerHTML += `
+                        <button class="px-3 py-1 rounded-lg ${page === totalPages ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-blue-600 text-white hover:bg-blue-700'}" ${page === totalPages ? 'disabled' : ''} onclick="loadWebinars(${page + 1})">Next</button>`;
+                } else {
+                    container.innerHTML = '<p class="text-center text-gray-500">No webinars available.</p>';
+                }
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-red-500">Failed to load webinars. Please try again.</p>';
+            }
+        }
+
+        // Load webinar links for sidebar
+        async function loadWebinarLinks() {
+            const linksContainer = document.getElementById('webinar-links');
+            try {
+                const response = await fetch('/api/webinars?limit=100');
+                if (!response.ok) throw new Error('Failed to load webinars');
+                const data = await response.json();
+                linksContainer.innerHTML = '';
+                if (data.webinars && data.webinars.length > 0) {
+                    data.webinars.forEach(webinar => {
+                        linksContainer.innerHTML += `<a href="/webinar/${webinar.slug}">${webinar.title}</a>`;
+                    });
+                }
+            } catch (error) {
+                linksContainer.innerHTML = '<p class="text-red-500">Failed to load webinar links.</p>';
+            }
+        }
+
+        // Load suggestions
+        async function loadSuggestions() {
+            const container = document.getElementById('suggestions-container');
+            try {
+                const response = await fetch('/api/webinars/suggestions/0?limit=6');
+                if (!response.ok) throw new Error('Failed to load suggestions');
+                const suggestions = await response.json();
+                container.innerHTML = '';
+                if (suggestions && suggestions.length > 0) {
+                    suggestions.forEach(suggestion => {
+                        container.innerHTML += `
+                            <div class="webinar-card">
+                                <img src="${suggestion.image || '/img/placeholder.jpg'}" alt="${suggestion.imageDescription || suggestion.title}">
+                                <div class="p-4">
+                                    <h5 class="text-lg font-semibold text-gray-900 mb-2">${suggestion.title}</h5>
+                                    <a href="/webinar/${suggestion.slug}" class="text-blue-600 hover:text-blue-800 font-medium">Learn More <i class="fas fa-arrow-right ml-1"></i></a>
+                                </div>
+                            </div>`;
+                    });
+                } else {
+                    container.innerHTML = '<p class="text-center text-gray-500 col-span-3">No suggestions available at the moment.</p>';
+                }
+            } catch (error) {
+                container.innerHTML = '<p class="text-center text-red-500 col-span-3">Failed to load suggestions. Please refresh the page.</p>';
+            }
+        }
+
+        // Event handlers
+        document.getElementById('search-btn').addEventListener('click', () => loadWebinars());
+        document.getElementById('search').addEventListener('keyup', (e) => {
+            if (e.key === 'Enter') loadWebinars();
+        });
+        document.getElementById('subcategory').addEventListener('change', () => loadWebinars());
+        document.getElementById('sort').addEventListener('change', () => loadWebinars());
+
+        // Initial load
+        loadWebinars();
+        loadWebinarLinks();
+        loadSuggestions();
+    </script>
+</body>
+</html>

@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel | GRP Career</title>
+    <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.5/babel.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body>
+    <div id="root"></div>
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+
+        const AdminPanel = () => {
+            const [isAuthenticated, setIsAuthenticated] = useState(false);
+            const [password, setPassword] = useState('');
+            const [jobs, setJobs] = useState([]);
+            const [applications, setApplications] = useState([]);
+            const [partialSubmissions, setPartialSubmissions] = useState([]);
+            const [admins, setAdmins] = useState([]);
+            const [newJob, setNewJob] = useState({
+                title: '', department: '', location: '', type: '', salary: '', posted: '', description: '', tags: '', requirements: '', active_duration: ''
+            });
+            const [newAdmin, setNewAdmin] = useState({ id: null, name: '', title: '', email: '' });
+            const [editingJob, setEditingJob] = useState(null);
+
+            // Simple authentication
+            const handleLogin = (e) => {
+                e.preventDefault();
+                if (password === 'admin123') { // Replace with secure auth in production
+                    setIsAuthenticated(true);
+                } else {
+                    alert('Invalid password');
+                }
+            };
+
+            // Fetch jobs
+            const fetchJobs = async () => {
+                const response = await fetch('/api/admin/jobs', { headers: { Authorization: 'admin123' } });
+                const data = await response.json();
+                setJobs(data);
+            };
+
+            // Fetch applications
+            const fetchApplications = async () => {
+                const response = await fetch('/api/admin/applications', { headers: { Authorization: 'admin123' } });
+                const data = await response.json();
+                setApplications(data);
+            };
+
+            // Fetch partial submissions
+            const fetchPartialSubmissions = async () => {
+                const response = await fetch('/api/admin/partial-submissions', { headers: { Authorization: 'admin123' } });
+                const data = await response.json();
+                setPartialSubmissions(data);
+            };
+
+            // Fetch admins
+            const fetchAdmins = async () => {
+                const response = await fetch('/api/admin/admins', { headers: { Authorization: 'admin123' } });
+                const data = await response.json();
+                setAdmins(data);
+            };
+
+            // Handle job form submission
+            const handleJobSubmit = async (e) => {
+                e.preventDefault();
+                const jobData = {
+                    ...newJob,
+                    tags: newJob.tags.split(',').map(tag => tag.trim()),
+                    active_duration: parseInt(newJob.active_duration)
+                };
+                const url = editingJob ? `/api/admin/jobs/${editingJob.id}` : '/api/admin/jobs';
+                const method = editingJob ? 'PUT' : 'POST';
+                await fetch(url, {
+                    method,
+                    headers: { 'Content-Type': 'application/json', Authorization: 'admin123' },
+                    body: JSON.stringify(jobData)
+                });
+                setNewJob({ title: '', department: '', location: '', type: '', salary: '', posted: '', description: '', tags: '', requirements: '', active_duration: '' });
+                setEditingJob(null);
+                fetchJobs();
+            };
+
+            // Edit job
+            const handleEditJob = (job) => {
+                setEditingJob(job);
+                setNewJob({
+                    title: job.title,
+                    department: job.department,
+                    location: job.location,
+                    type: job.type,
+                    salary: job.salary,
+                    posted: job.posted,
+                    description: job.description,
+                    tags: job.tags.join(', '),
+                    requirements: job.requirements,
+                    active_duration: job.active_duration.toString()
+                });
+            };
+
+            // Delete job
+            const handleDeleteJob = async (id) => {
+                await fetch(`/api/admin/jobs/${id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: 'admin123' }
+                });
+                fetchJobs();
+            };
+
+            // Delete application
+            const handleDeleteApplication = async (id) => {
+                await fetch(`/api/admin/applications/${id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: 'admin123' }
+                });
+                fetchApplications();
+            };
+
+            // Delete partial submission
+            const handleDeletePartialSubmission = async (id) => {
+                await fetch(`/api/admin/partial-submissions/${id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: 'admin123' }
+                });
+                fetchPartialSubmissions();
+            };
+
+            // Handle admin form submission
+            const handleAdminSubmit = async (e) => {
+                e.preventDefault();
+                await fetch('/api/admin/admins', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json', Authorization: 'admin123' },
+                    body: JSON.stringify(newAdmin)
+                });
+                setNewAdmin({ id: null, name: '', title: '', email: '' });
+                fetchAdmins();
+            };
+
+            // Edit admin
+            const handleEditAdmin = (admin) => {
+                setNewAdmin(admin);
+            };
+
+            // Delete admin
+            const handleDeleteAdmin = async (id) => {
+                await fetch(`/api/admin/admins/${id}`, {
+                    method: 'DELETE',
+                    headers: { Authorization: 'admin123' }
+                });
+                fetchAdmins();
+            };
+
+            useEffect(() => {
+                if (isAuthenticated) {
+                    fetchJobs();
+                    fetchApplications();
+                    fetchPartialSubmissions();
+                    fetchAdmins();
+                }
+            }, [isAuthenticated]);
+
+            if (!isAuthenticated) {
+                return (
+                    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+                        <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
+                            <h2 className="text-2xl font-bold mb-6 text-center">Admin Login</h2>
+                            <form onSubmit={handleLogin}>
+                                <div className="mb-4">
+                                    <label className="block text-gray-700">Password</label>
+                                    <input
+                                        type="password"
+                                        value={password}
+                                        onChange={(e) => setPassword(e.target.value)}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700">
+                                    Login
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen bg-gray-100 p-6">
+                    <h1 className="text-3xl font-bold mb-6 text-center">Admin Panel</h1>
+                    <div className="max-w-6xl mx-auto">
+                        <h2 className="text-2xl font-bold mb-4">{editingJob ? 'Edit Job' : 'Post New Job'}</h2>
+                        <form onSubmit={handleJobSubmit} className="bg-white p-6 rounded-lg shadow-md mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label className="block text-gray-700">Title</label>
+                                    <input
+                                        type="text"
+                                        value={newJob.title}
+                                        onChange={(e) => setNewJob({ ...newJob, title: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Department</label>
+                                    <input
+                                        type="text"
+                                        value={newJob.department}
+                                        onChange={(e) => setNewJob({ ...newJob, department: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Location</label>
+                                    <input
+                                        type="text"
+                                        value={newJob.location}
+                                        onChange={(e) => setNewJob({ ...newJob, location: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Type</label>
+                                    <input
+                                        type="text"
+                                        value={newJob.type}
+                                        onChange={(e) => setNewJob({ ...newJob, type: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Salary</label>
+                                    <input
+                                        type="text"
+                                        value={newJob.salary}
+                                        onChange={(e) => setNewJob({ ...newJob, salary: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Posted Date</label>
+                                    <input
+                                        type="date"
+                                        value={newJob.posted}
+                                        onChange={(e) => setNewJob({ ...newJob, posted: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Active Duration (days)</label>
+                                    <input
+                                        type="number"
+                                        value={newJob.active_duration}
+                                        onChange={(e) => setNewJob({ ...newJob, active_duration: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-4">
+                                <label className="block text-gray-700">Description</label>
+                                <textarea
+                                    value={newJob.description}
+                                    onChange={(e) => setNewJob({ ...newJob, description: e.target.value })}
+                                    className="w-full px-3 py-2 border rounded-lg"
+                                    rows="4"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div className="mt-4">
+                                <label className="block text-gray-700">Tags (comma-separated)</label>
+                                <input
+                                    type="text"
+                                    value={newJob.tags}
+                                    onChange={(e) => setNewJob({ ...newJob, tags: e.target.value })}
+                                    className="w-full px-3 py-2 border rounded-lg"
+                                    required
+                                />
+                            </div>
+                            <div className="mt-4">
+                                <label className="block text-gray-700">Requirements</label>
+                                <textarea
+                                    value={newJob.requirements}
+                                    onChange={(e) => setNewJob({ ...newJob, requirements: e.target.value })}
+                                    className="w-full px-3 py-2 border rounded-lg"
+                                    rows="4"
+                                    required
+                                ></textarea>
+                            </div>
+                            <div className="mt-4 flex space-x-4">
+                                <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+                                    {editingJob ? 'Update Job' : 'Post Job'}
+                                </button>
+                                {editingJob && (
+                                    <button
+                                        type="button"
+                                        onClick={() => {
+                                            setEditingJob(null);
+                                            setNewJob({ title: '', department: '', location: '', type: '', salary: '', posted: '', description: '', tags: '', requirements: '', active_duration: '' });
+                                        }}
+                                        className="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700"
+                                    >
+                                        Cancel
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+
+                        <h2 className="text-2xl font-bold mb-4">Current Jobs</h2>
+                        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                            {jobs.length === 0 ? (
+                                <p className="text-gray-600">No jobs posted.</p>
+                            ) : (
+                                <ul>
+                                    {jobs.map(job => (
+                                        <li key={job.id} className="border-b py-4 flex justify-between items-center">
+                                            <div>
+                                                <h3 className="text-lg font-semibold">{job.title}</h3>
+                                                <p className="text-gray-600">{job.department} | {job.location} | {job.type} | Active for {job.active_duration} days</p>
+                                                <p className="text-gray-600">Requirements: {job.requirements}</p>
+                                            </div>
+                                            <div className="space-x-2">
+                                                <button
+                                                    onClick={() => handleEditJob(job)}
+                                                    className="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteJob(job.id)}
+                                                    className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                        <h2 className="text-2xl font-bold mb-4">Applications</h2>
+                        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                            {applications.length === 0 ? (
+                                <p className="text-gray-600">No applications received.</p>
+                            ) : (
+                                <ul>
+                                    {applications.map(app => (
+                                        <li key={app.id} className="border-b py-4">
+                                            <h3 className="text-lg font-semibold">Job ID: {app.job_id}</h3>
+                                            <p className="text-gray-600">Applicant: {app.applicant_name}</p>
+                                            <p className="text-gray-600">Email: {app.applicant_email}</p>
+                                            <p className="text-gray-600">Experience: {app.experience_level}</p>
+                                            <p className="text-gray-600">LinkedIn: <a href={app.linkedin_profile} target="_blank">{app.linkedin_profile}</a></p>
+                                            <p className="text-gray-600">CV: <a href={app.cv_url} target="_blank">View CV</a></p>
+                                            <p className="text-gray-600">Submitted: {app.submitted_at}</p>
+                                            <button
+                                                onClick={() => handleDeleteApplication(app.id)}
+                                                className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600 mt-2"
+                                            >
+                                                Delete
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                        <h2 className="text-2xl font-bold mb-4">Partial Submissions (Email Reminders)</h2>
+                        <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+                            {partialSubmissions.length === 0 ? (
+                                <p className="text-gray-600">No partial submissions.</p>
+                            ) : (
+                                <ul>
+                                    {partialSubmissions.map(sub => (
+                                        <li key={sub.id} className="border-b py-4 flex justify-between items-center">
+                                            <div>
+                                                <p className="text-gray-600">Email: {sub.email}</p>
+                                                <p className="text-gray-600">Submitted: {sub.submitted_at}</p>
+                                            </div>
+                                            <button
+                                                onClick={() => handleDeletePartialSubmission(sub.id)}
+                                                className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                                            >
+                                                Delete
+                                            </button>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+
+                        <h2 className="text-2xl font-bold mb-4">Manage Admins</h2>
+                        <form onSubmit={handleAdminSubmit} className="bg-white p-6 rounded-lg shadow-md mb-8">
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                <div>
+                                    <label className="block text-gray-700">Name</label>
+                                    <input
+                                        type="text"
+                                        value={newAdmin.name}
+                                        onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Title</label>
+                                    <input
+                                        type="text"
+                                        value={newAdmin.title}
+                                        onChange={(e) => setNewAdmin({ ...newAdmin, title: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                                <div>
+                                    <label className="block text-gray-700">Email</label>
+                                    <input
+                                        type="email"
+                                        value={newAdmin.email}
+                                        onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
+                                        className="w-full px-3 py-2 border rounded-lg"
+                                        required
+                                    />
+                                </div>
+                            </div>
+                            <div className="mt-4 flex space-x-4">
+                                <button type="submit" className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700">
+                                    {newAdmin.id ? 'Update Admin' : 'Add Admin'}
+                                </button>
+                                {newAdmin.id && (
+                                    <button
+                                        type="button"
+                                        onClick={() => setNewAdmin({ id: null, name: '', title: '', email: '' })}
+                                        className="bg-gray-600 text-white py-2 px-4 rounded-lg hover:bg-gray-700"
+                                    >
+                                        Cancel
+                                    </button>
+                                )}
+                            </div>
+                        </form>
+
+                        <h2 className="text-2xl font-bold mb-4">Current Admins</h2>
+                        <div className="bg-white p-6 rounded-lg shadow-md">
+                            {admins.length === 0 ? (
+                                <p className="text-gray-600">No admins added.</p>
+                            ) : (
+                                <ul>
+                                    {admins.map(admin => (
+                                        <li key={admin.id} className="border-b py-4 flex justify-between items-center">
+                                            <div>
+                                                <h3 className="text-lg font-semibold">{admin.name}</h3>
+                                                <p className="text-gray-600">{admin.title} | {admin.email}</p>
+                                            </div>
+                                            <div className="space-x-2">
+                                                <button
+                                                    onClick={() => handleEditAdmin(admin)}
+                                                    className="bg-yellow-500 text-white py-1 px-3 rounded-lg hover:bg-yellow-600"
+                                                >
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDeleteAdmin(admin.id)}
+                                                    className="bg-red-500 text-white py-1 px-3 rounded-lg hover:bg-red-600"
+                                                >
+                                                    Delete
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        ReactDOM.render(<AdminPanel />, document.getElementById('root'));
+    </script>
+</body>
+</html>

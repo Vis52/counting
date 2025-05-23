@@ -1,0 +1,457 @@
+<script type="text/javascript">
+    var gk_isXlsx = false;
+    var gk_xlsxFileLookup = {};
+    var gk_fileData = {};
+    function filledCell(cell) {
+      return cell !== '' && cell != null;
+    }
+    function loadFileData(filename) {
+    if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+        try {
+            var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+            var firstSheetName = workbook.SheetNames[0];
+            var worksheet = workbook.Sheets[firstSheetName];
+
+            // Convert sheet to JSON to filter blank rows
+            var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+            // Filter out blank rows (rows where all cells are empty, null, or undefined)
+            var filteredData = jsonData.filter(row => row.some(filledCell));
+
+            // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+            var headerRowIndex = filteredData.findIndex((row, index) =>
+              row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+            );
+            // Fallback
+            if (headerRowIndex === -1 || headerRowIndex > 25) {
+              headerRowIndex = 0;
+            }
+
+            // Convert filtered JSON back to CSV
+            var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+            csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+            return csv;
+        } catch (e) {
+            console.error(e);
+            return "";
+        }
+    }
+    return gk_fileData[filename] || "";
+    }
+    </script><!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vlog Admin Panel - GRP Career Pvt Ltd.</title>
+<!-- Tailwind CSS CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+<!-- Font Awesome for Icons -->
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+<!-- Quill.js CSS -->
+<link href="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 font-sans">
+<div id="root"></div>
+
+<!-- React and ReactDOM -->
+<script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js"></script>
+<!-- Babel for JSX -->
+<script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js"></script>
+<!-- Axios for API Requests -->
+<script src="https://cdn.jsdelivr.net/npm/axios@1.4.0/dist/axios.min.js"></script>
+<!-- Quill.js -->
+<script src="https://cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.min.js"></script>
+
+<script type="text/babel">
+    const { useState, useEffect, useRef } = React;
+
+    const AdminPanel = () => {
+        const [formData, setFormData] = useState({
+            title: '',
+            category: '',
+            date: '',
+            content: '',
+            image: null,
+            imageDescription: '',
+            imageCaption: '',
+            imageCaptionLink: '',
+            youtubeLink: ''
+        });
+        const [preview, setPreview] = useState(false);
+        const [error, setError] = useState('');
+        const [success, setSuccess] = useState('');
+        const quillRef = useRef(null);
+        const fileInputRef = useRef(null);
+
+        // Initialize Quill Editor
+        useEffect(() => {
+            const quill = new Quill(quillRef.current, {
+                theme: 'snow',
+                modules: {
+                    toolbar: [
+                        [{ 'header': [1, 2, 3, false] }],
+                        ['bold', 'italic', 'underline', 'strike'],
+                        [{ 'script': 'sub' }, { 'script': 'super' }],
+                        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+                        ['link', 'image', 'video'],
+                        ['table'],
+                        ['clean']
+                    ]
+                }
+            });
+
+            quill.on('text-change', () => {
+                setFormData(prev => ({
+                    ...prev,
+                    content: quill.root.innerHTML
+                }));
+            });
+
+            return () => {
+                quill.off('text-change');
+            };
+        }, []);
+
+        // Handle input changes
+        const handleChange = (e) => {
+            const { name, value } = e.target;
+            setFormData({ ...formData, [name]: value });
+        };
+
+        // Handle file input
+        const handleFileChange = (e) => {
+            setFormData({ ...formData, image: e.target.files[0] });
+        };
+
+        // Validate YouTube URL
+        const isValidYouTubeUrl = (url) => {
+            return url.match(/^(https?:\/\/)?(www\.)?(youtube\.com|youtu\.be)\/.+$/);
+        };
+
+        // Handle form submission
+        const handleSubmit = async (e) => {
+            e.preventDefault();
+            setError('');
+            setSuccess('');
+
+            // Validation
+            if (!formData.title || !formData.category || !formData.date || !formData.content) {
+                setError('Please fill in all required fields (Title, Category, Date, Content).');
+                return;
+            }
+            if (formData.youtubeLink && !isValidYouTubeUrl(formData.youtubeLink)) {
+                setError('Please enter a valid YouTube URL.');
+                return;
+            }
+            if (formData.imageCaptionLink && !formData.imageCaption) {
+                setError('Please provide a caption for the caption link.');
+                return;
+            }
+
+            // Prepare form data for API
+            const data = new FormData();
+            data.append('title', formData.title);
+            data.append('category', formData.category);
+            data.append('date', formData.date);
+            data.append('description', formData.content);
+            if (formData.image) data.append('image', formData.image);
+            data.append('imageDescription', formData.imageDescription);
+            data.append('imageCaption', formData.imageCaption);
+            data.append('imageCaptionLink', formData.imageCaptionLink);
+            data.append('youtubeLink', formData.youtubeLink);
+
+            try {
+                const response = await axios.post('/api/blogs', data, {
+                    headers: { 'Content-Type': 'multipart/form-data' }
+                });
+                setSuccess('Vlog created successfully!');
+                // Reset form
+                setFormData({
+                    title: '',
+                    category: '',
+                    date: '',
+                    content: '',
+                    image: null,
+                    imageDescription: '',
+                    imageCaption: '',
+                    imageCaptionLink: '',
+                    youtubeLink: ''
+                });
+                if (fileInputRef.current) fileInputRef.current.value = '';
+                if (quillRef.current) {
+                    const quill = Quill.find(quillRef.current);
+                    quill.setContents([]);
+                }
+            } catch (err) {
+                setError('Failed to create vlog. Please try again.');
+                console.error(err);
+            }
+        };
+
+        // Reset form
+        const handleReset = () => {
+            setFormData({
+                title: '',
+                category: '',
+                date: '',
+                content: '',
+                image: null,
+                imageDescription: '',
+                imageCaption: '',
+                imageCaptionLink: '',
+                youtubeLink: ''
+            });
+            if (fileInputRef.current) fileInputRef.current.value = '';
+            if (quillRef.current) {
+                const quill = Quill.find(quillRef.current);
+                quill.setContents([]);
+            }
+            setError('');
+            setSuccess('');
+            setPreview(false);
+        };
+
+        return (
+            <div className="container mx-auto p-6 max-w-4xl">
+                <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">Vlog Admin Panel</h1>
+                <div className="bg-white shadow-md rounded-lg p-6">
+                    <form onSubmit={handleSubmit} encType="multipart/form-data">
+                        {/* Title */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="title">
+                                <i className="fas fa-heading mr-2"></i>Blog Title *
+                            </label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                value={formData.title}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter vlog title"
+                                required
+                            />
+                        </div>
+
+                        {/* Category */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="category">
+                                <i className="fas fa-list-alt mr-2"></i>Category *
+                            </label>
+                            <input
+                                type="text"
+                                id="category"
+                                name="category"
+                                value={formData.category}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter category (e.g., Digital Transformation)"
+                                required
+                            />
+                        </div>
+
+                        {/* Date */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="date">
+                                <i className="fas fa-calendar-alt mr-2"></i>Date *
+                            </label>
+                            <input
+                                type="date"
+                                id="date"
+                                name="date"
+                                value={formData.date}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                required
+                            />
+                        </div>
+
+                        {/* Rich Text Editor */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2">
+                                <i className="fas fa-edit mr-2"></i>Vlog Content *
+                            </label>
+                            <div ref={quillRef} className="bg-white border rounded"></div>
+                        </div>
+
+                        {/* Image Upload */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="image">
+                                <i className="fas fa-image mr-2"></i>Upload Image
+                            </label>
+                            <input
+                                type="file"
+                                id="image"
+                                name="image"
+                                accept="image/*"
+                                onChange={handleFileChange}
+                                ref={fileInputRef}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                        </div>
+
+                        {/* Image Description */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageDescription">
+                                <i className="fas fa-info-circle mr-2"></i>Image Description
+                            </label>
+                            <textarea
+                                id="imageDescription"
+                                name="imageDescription"
+                                value={formData.imageDescription}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Describe the image for accessibility"
+                                rows="3"
+                            ></textarea>
+                        </div>
+
+                        {/* Image Caption */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageCaption">
+                                <i className="fas fa-comment mr-2"></i>Image Caption
+                            </label>
+                            <input
+                                type="text"
+                                id="imageCaption"
+                                name="imageCaption"
+                                value={formData.imageCaption}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter image caption"
+                            />
+                        </div>
+
+                        {/* Image Caption Link */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="imageCaptionLink">
+                                <i className="fas fa-link mr-2"></i>Image Caption Link
+                            </label>
+                            <input
+                                type="url"
+                                id="imageCaptionLink"
+                                name="imageCaptionLink"
+                                value={formData.imageCaptionLink}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter link for caption (optional)"
+                            />
+                        </div>
+
+                        {/* YouTube Video Link */}
+                        <div className="mb-4">
+                            <label className="block text-gray-700 font-semibold mb-2" htmlFor="youtubeLink">
+                                <i className="fab fa-youtube mr-2"></i>YouTube Video Link
+                            </label>
+                            <input
+                                type="url"
+                                id="youtubeLink"
+                                name="youtubeLink"
+                                value={formData.youtubeLink}
+                                onChange={handleChange}
+                                className="w-full p-2 border rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+                                placeholder="Enter YouTube video URL"
+                            />
+                        </div>
+
+                        {/* Error and Success Messages */}
+                        {error && (
+                            <div className="mb-4 p-3 bg-red-100 text-red-700 rounded">
+                                <i className="fas fa-exclamation-circle mr-2"></i>{error}
+                            </div>
+                        )}
+                        {success && (
+                            <div className="mb-4 p-3 bg-green-100 text-green-700 rounded">
+                                <i className="fas fa-check-circle mr-2"></i>{success}
+                            </div>
+                        )}
+
+                        {/* Buttons */}
+                        <div className="flex justify-between items-center">
+                            <div>
+                                <button
+                                    type="submit"
+                                    className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600 transition"
+                                >
+                                    <i className="fas fa-save mr-2"></i>Save Vlog
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleReset}
+                                    className="ml-2 bg-gray-500 text-white px-4 py-2 rounded hover:bg-gray-600 transition"
+                                >
+                                    <i className="fas fa-undo mr-2"></i>Reset
+                                </button>
+                            </div>
+                            <button
+                                type="button"
+                                onClick={() => setPreview(!preview)}
+                                className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600 transition"
+                            >
+                                <i className="fas fa-eye mr-2"></i>{preview ? 'Edit' : 'Preview'}
+                            </button>
+                        </div>
+                    </form>
+
+                    {/* Preview Mode */}
+                    {preview && (
+                        <div className="mt-6 p-6 bg-gray-50 rounded-lg shadow-md">
+                            <h2 className="text-2xl font-bold text-gray-800 mb-4">{formData.title}</h2>
+                            <p className="text-gray-600 mb-2">
+                                <i className="fas fa-list-alt mr-2"></i>{formData.category} |{' '}
+                                <i className="fas fa-calendar-alt mr-2"></i>
+                                {formData.date && new Date(formData.date).toLocaleDateString('en-GB', {
+                                    day: '2-digit',
+                                    month: 'short',
+                                    year: 'numeric'
+                                })}
+                            </p>
+                            {formData.image && (
+                                <div className="mb-4">
+                                    <img
+                                        src={URL.createObjectURL(formData.image)}
+                                        alt={formData.imageDescription}
+                                        className="w-full h-64 object-cover rounded"
+                                    />
+                                    {formData.imageCaption && (
+                                        <p className="text-gray-600 mt-2">
+                                            {formData.imageCaptionLink ? (
+                                                <a href={formData.imageCaptionLink} className="text-blue-500 hover:underline">
+                                                    {formData.imageCaption}
+                                                </a>
+                                            ) : (
+                                                formData.imageCaption
+                                            )}
+                                        </p>
+                                    )}
+                                </div>
+                            )}
+                            <div
+                                className="prose max-w-none"
+                                dangerouslySetInnerHTML={{ __html: formData.content }}
+                            ></div>
+                            {formData.youtubeLink && isValidYouTubeUrl(formData.youtubeLink) && (
+                                <div className="mt-4">
+                                    <iframe
+                                        width="100%"
+                                        height="315"
+                                        src={formData.youtubeLink.replace('watch?v=', 'embed/')}
+                                        title="YouTube video"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    ></iframe>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+            </div>
+        );
+    };
+
+    ReactDOM.render(<AdminPanel />, document.getElementById('root'));
+</script>
+</body>
+</html>

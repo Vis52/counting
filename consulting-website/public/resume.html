@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Resume Maker</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/pdfmake.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.10/vfs_fonts.js"></script>
+  <style>
+    .drag-over {
+      border: 2px dashed #3b82f6;
+      background-color: #eff6ff;
+    }
+    .section-card {
+      transition: all 0.2s ease;
+    }
+    .section-card:hover {
+      transform: translateY(-2px);
+    }
+    @media (max-width: 640px) {
+      .preview-panel {
+        height: 50vh;
+        overflow-y: auto;
+      }
+    }
+    /* Improved contrast for dark mode */
+    .dark .section-card {
+      background-color: #374151;
+    }
+    .dark input, .dark textarea {
+      background-color: #4b5563;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen flex flex-col">
+  <header class="bg-white dark:bg-gray-800 shadow p-4 flex justify-between items-center">
+    <h1 class="text-2xl font-bold">Resume Maker</h1>
+    <div class="flex space-x-4">
+      <button id="themeToggle" class="p-2 rounded bg-gray-200 dark:bg-gray-700">Toggle Theme</button>
+      <select id="templateSelect" class="p-2 rounded bg-gray-200 dark:bg-gray-700">
+        <option value="modern">Modern</option>
+        <option value="classic">Classic</option>
+        <option value="creative">Creative</option>
+      </select>
+      <button id="exportPDF" class="p-2 rounded bg-blue-500 text-white">Export PDF</button>
+      <button id="print" class="p-2 rounded bg-green-500 text-white">Print</button>
+    </div>
+  </header>
+
+  <main class="flex-1 flex flex-col md:flex-row p-4 gap-4">
+    <!-- Editor Panel -->
+    <div class="w-full md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow">
+      <h2 class="text-xl font-semibold mb-4">Build Your Resume</h2>
+      <div id="sections" class="space-y-4">
+        <!-- Contact Info -->
+        <div class="section-card bg-gray-50 dark:bg-gray-700 p-4 rounded" draggable="true" data-section="contact">
+          <h3 class="font-bold">Contact Info</h3>
+          <div class="mb-2">
+            <label for="name" class="block text-sm font-medium mb-1">Full Name</label>
+            <input type="text" id="name" placeholder="Full Name" class="w-full p-2 border rounded dark:bg-gray-600">
+          </div>
+          <div class="mb-2">
+            <label for="email" class="block text-sm font-medium mb-1">Email</label>
+            <input type="email" id="email" placeholder="Email" class="w-full p-2 border rounded dark:bg-gray-600">
+          </div>
+          <div class="mb-2">
+            <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
+            <input type="tel" id="phone" placeholder="Phone" class="w-full p-2 border rounded dark:bg-gray-600">
+          </div>
+          <div class="mb-2">
+            <label for="address" class="block text-sm font-medium mb-1">Address</label>
+            <input type="text" id="address" placeholder="Address" class="w-full p-2 border rounded dark:bg-gray-600">
+          </div>
+        </div>
+        <!-- Summary -->
+        <div class="section-card bg-gray-50 dark:bg-gray-700 p-4 rounded" draggable="true" data-section="summary">
+          <h3 class="font-bold">Summary</h3>
+          <textarea id="summary" placeholder="Professional Summary" class="w-full p-2 border rounded dark:bg-gray-600"></textarea>
+          <button class="suggest-btn text-blue-500 mt-2" data-type="summary">Suggest Summary</button>
+        </div>
+        <!-- Education -->
+        <div class="section-card bg-gray-50 dark:bg-gray-700 p-4 rounded" draggable="true" data-section="education">
+          <h3 class="font-bold">Education</h3>
+          <div class="education-entries">
+            <div class="education-entry mb-4">
+              <input type="text" placeholder="Degree" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+              <input type="text" placeholder="Institution" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+              <input type="text" placeholder="Year" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+            </div>
+          </div>
+          <button class="add-education text-blue-500 mt-2">Add Education</button>
+        </div>
+        <!-- Experience -->
+        <div class="section-card bg-gray-50 dark:bg-gray-700 p-4 rounded" draggable="true" data-section="experience">
+          <h3 class="font-bold">Experience</h3>
+          <div class="experience-entries">
+            <div class="experience-entry mb-4">
+              <input type="text" placeholder="Job Title" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+              <input type="text" placeholder="Company" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+              <input type="text" placeholder="Years" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+              <textarea placeholder="Description" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input"></textarea>
+              <button class="suggest-btn text-blue-500 mt-2" data-type="experience">Suggest Description</button>
+            </div>
+          </div>
+          <button class="add-experience text-blue-500 mt-2">Add Experience</button>
+        </div>
+        <!-- Skills -->
+        <div class="section-card bg-gray-50 dark:bg-gray-700 p-4 rounded" draggable="true" data-section="skills">
+          <h3 class="font-bold">Skills</h3>
+          <input type="text" id="skills" placeholder="Skills (comma-separated)" class="w-full p-2 mt-2 border rounded dark:bg-gray-600">
+          <button class="suggest-btn text-blue-500 mt-2" data-type="skills">Suggest Skills</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Preview Panel -->
+    <div class="w-full md:w-1/2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow preview-panel">
+      <h2 class="text-xl font-semibold mb-4">Live Preview</h2>
+      <div id="preview" class="p-4 bg-white dark:bg-gray-900 border rounded min-h-[600px]"></div>
+    </div>
+  </main>
+
+  <script>
+    // State Management
+    const resumeData = {
+      contact: { name: '', email: '', phone: '', address: '' },
+      summary: '',
+      education: [],
+      experience: [],
+      skills: []
+    };
+    let currentTemplate = 'modern';
+
+    // Suggestions
+    const suggestions = {
+      summary: [
+        'Results-driven professional with a strong background in [industry].',
+        'Motivated [role] with [X] years of experience in [field].'
+      ],
+      experience: [
+        'Led a team of [X] to successfully deliver [project].',
+        'Improved [metric] by [X]% through [strategy].'
+      ],
+      skills: ['JavaScript, Python, React', 'Project Management, Agile, Scrum']
+    };
+
+    // Template Styles
+    const templates = {
+      modern: {
+        container: 'p-8 bg-white font-sans',
+        name: 'text-3xl font-bold text-blue-600',
+        sectionTitle: 'text-xl font-semibold text-gray-800 mt-6 mb-2 border-b-2 border-blue-500',
+        text: 'text-gray-700'
+      },
+      classic: {
+        container: 'p-8 bg-white font-serif',
+        name: 'text-3xl font-bold text-black',
+        sectionTitle: 'text-xl font-semibold text-black mt-6 mb-2 uppercase',
+        text: 'text-gray-800'
+      },
+      creative: {
+        container: 'p-8 bg-gray-100 font-sans',
+        name: 'text-3xl font-extrabold text-purple-700',
+        sectionTitle: 'text-xl font-semibold text-purple-600 mt-6 mb-2 bg-purple-100 p-2 rounded',
+        text: 'text-gray-600'
+      }
+    };
+
+    // DOM Elements
+    const sectionsDiv = document.getElementById('sections');
+    const previewDiv = document.getElementById('preview');
+    const templateSelect = document.getElementById('templateSelect');
+    const exportPDFBtn = document.getElementById('exportPDF');
+    const printBtn = document.getElementById('print');
+    const themeToggle = document.getElementById('themeToggle');
+
+    // Theme Toggle
+    themeToggle.addEventListener('click', () => {
+      document.documentElement.classList.toggle('dark');
+      localStorage.setItem('theme', document.documentElement.classList.contains('dark') ? 'dark' : 'light');
+    });
+
+    if (localStorage.getItem('theme') === 'dark') {
+      document.documentElement.classList.add('dark');
+    }
+
+    // Drag and Drop
+    sectionsDiv.addEventListener('dragstart', (e) => {
+      if (e.target.classList.contains('section-card')) {
+        e.dataTransfer.setData('text/plain', e.target.dataset.section);
+      }
+    });
+
+    sectionsDiv.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      const sectionCard = e.target.closest('.section-card');
+      if (sectionCard) {
+        sectionCard.classList.add('drag-over');
+      }
+    });
+
+    sectionsDiv.addEventListener('dragleave', (e) => {
+      const sectionCard = e.target.closest('.section-card');
+      if (sectionCard) {
+        sectionCard.classList.remove('drag-over');
+      }
+    });
+
+    sectionsDiv.addEventListener('drop', (e) => {
+      e.preventDefault();
+      const draggedSection = e.dataTransfer.getData('text/plain');
+      const targetSection = e.target.closest('.section-card').dataset.section;
+      const sections = Array.from(sectionsDiv.querySelectorAll('.section-card'));
+      const draggedIndex = sections.findIndex(s => s.dataset.section === draggedSection);
+      const targetIndex = sections.findIndex(s => s.dataset.section === targetSection);
+      if (draggedIndex < targetIndex) {
+        sectionsDiv.insertBefore(sections[draggedIndex], sections[targetIndex].nextSibling);
+      } else {
+        sectionsDiv.insertBefore(sections[draggedIndex], sections[targetIndex]);
+      }
+      sections.forEach(s => s.classList.remove('drag-over'));
+      updatePreview();
+    });
+
+    // Input Handlers
+    document.getElementById('name').addEventListener('input', (e) => {
+      resumeData.contact.name = e.target.value;
+      updatePreview();
+    });
+    document.getElementById('email').addEventListener('input', (e) => {
+      resumeData.contact.email = e.target.value;
+      updatePreview();
+    });
+    document.getElementById('phone').addEventListener('input', (e) => {
+      resumeData.contact.phone = e.target.value;
+      updatePreview();
+    });
+    document.getElementById('address').addEventListener('input', (e) => {
+      resumeData.contact.address = e.target.value;
+      updatePreview();
+    });
+    document.getElementById('summary').addEventListener('input', (e) => {
+      resumeData.summary = e.target.value;
+      updatePreview();
+    });
+    document.getElementById('skills').addEventListener('input', (e) => {
+      resumeData.skills = e.target.value.split(',').map(s => s.trim());
+      updatePreview();
+    });
+
+    // Add Education
+    sectionsDiv.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-education')) {
+        const entriesContainer = e.target.parentElement.querySelector('.education-entries');
+        const entry = document.createElement('div');
+        entry.className = 'education-entry mb-4';
+        entry.innerHTML = `
+          <input type="text" placeholder="Degree" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+          <input type="text" placeholder="Institution" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+          <input type="text" placeholder="Year" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 education-input">
+          <button class="remove-education text-red-500 mt-2">Remove</button>
+        `;
+        entriesContainer.appendChild(entry);
+        addEducationInputListeners(entry);
+        updateEducation();
+      }
+      if (e.target.classList.contains('remove-education')) {
+        e.target.parentElement.remove();
+        updateEducation();
+      }
+    });
+
+    // Add Experience
+    sectionsDiv.addEventListener('click', (e) => {
+      if (e.target.classList.contains('add-experience')) {
+        const entriesContainer = e.target.parentElement.querySelector('.experience-entries');
+        const entry = document.createElement('div');
+        entry.className = 'experience-entry mb-4';
+        entry.innerHTML = `
+          <input type="text" placeholder="Job Title" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+          <input type="text" placeholder="Company" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+          <input type="text" placeholder="Years" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input">
+          <textarea placeholder="Description" class="w-full p-2 mt-2 border rounded dark:bg-gray-600 experience-input"></textarea>
+          <button class="suggest-btn text-blue-500 mt-2" data-type="experience">Suggest Description</button>
+          <button class="remove-experience text-red-500 mt-2">Remove</button>
+        `;
+        entriesContainer.appendChild(entry);
+        addExperienceInputListeners(entry);
+        updateExperience();
+      }
+      if (e.target.classList.contains('remove-experience')) {
+        e.target.parentElement.remove();
+        updateExperience();
+      }
+    });
+
+    // Add input listeners for education entries
+    function addEducationInputListeners(entry) {
+      entry.querySelectorAll('.education-input').forEach(input => {
+        input.addEventListener('input', updateEducation);
+      });
+    }
+
+    // Add input listeners for experience entries
+    function addExperienceInputListeners(entry) {
+      entry.querySelectorAll('.experience-input').forEach(input => {
+        input.addEventListener('input', updateExperience);
+      });
+    }
+
+    // Update Education
+    function updateEducation() {
+      resumeData.education = [];
+      document.querySelectorAll('.education-entry').forEach(entry => {
+        const inputs = entry.querySelectorAll('input');
+        if (inputs[0].value || inputs[1].value || inputs[2].value) {
+          resumeData.education.push({
+            degree: inputs[0].value,
+            institution: inputs[1].value,
+            year: inputs[2].value
+          });
+        }
+      });
+      updatePreview();
+    }
+
+    // Update Experience
+    function updateExperience() {
+      resumeData.experience = [];
+      document.querySelectorAll('.experience-entry').forEach(entry => {
+        const inputs = entry.querySelectorAll('input');
+        const textarea = entry.querySelector('textarea');
+        if (inputs[0].value || inputs[1].value || inputs[2].value || textarea.value) {
+          resumeData.experience.push({
+            title: inputs[0].value,
+            company: inputs[1].value,
+            years: inputs[2].value,
+            description: textarea.value
+          });
+        }
+      });
+      updatePreview();
+    }
+
+    // Suggestions
+    sectionsDiv.addEventListener('click', (e) => {
+      if (e.target.classList.contains('suggest-btn')) {
+        const type = e.target.dataset.type;
+        const randomSuggestion = suggestions[type][Math.floor(Math.random() * suggestions[type].length)];
+        if (type === 'summary') {
+          document.getElementById('summary').value = randomSuggestion;
+          resumeData.summary = randomSuggestion;
+        } else if (type === 'experience') {
+          e.target.parentElement.querySelector('textarea').value = randomSuggestion;
+          updateExperience();
+        } else if (type === 'skills') {
+          document.getElementById('skills').value = randomSuggestion;
+          resumeData.skills = randomSuggestion.split(',').map(s => s.trim());
+        }
+        updatePreview();
+      }
+    });
+
+    // Template Change
+    templateSelect.addEventListener('change', (e) => {
+      currentTemplate = e.target.value;
+      updatePreview();
+    });
+
+    // Update Preview
+    function updatePreview() {
+      const template = templates[currentTemplate];
+      let html = `<div class="${template.container}">`;
+      html += `<h1 class="${template.name}">${resumeData.contact.name || 'Your Name'}</h1>`;
+      html += `<p class="${template.text}">${resumeData.contact.email || 'email@example.com'} | ${resumeData.contact.phone || '(123) 456-7890'} | ${resumeData.contact.address || 'City, State'}</p>`;
+
+      if (resumeData.summary) {
+        html += `<h2 class="${template.sectionTitle}">Summary</h2>`;
+        html += `<p class="${template.text}">${resumeData.summary}</p>`;
+      }
+
+      if (resumeData.education.length) {
+        html += `<h2 class="${template.sectionTitle}">Education</h2>`;
+        resumeData.education.forEach(edu => {
+          if (edu.degree || edu.institution || edu.year) {
+            html += `<p class="${template.text}"><strong>${edu.degree}</strong>, ${edu.institution} (${edu.year})</p>`;
+          }
+        });
+      }
+
+      if (resumeData.experience.length) {
+        html += `<h2 class="${template.sectionTitle}">Experience</h2>`;
+        resumeData.experience.forEach(exp => {
+          if (exp.title || exp.company || exp.years || exp.description) {
+            html += `<p class="${template.text}"><strong>${exp.title}</strong>, ${exp.company} (${exp.years})</p>`;
+            html += `<p class="${template.text}">${exp.description}</p>`;
+          }
+        });
+      }
+
+      if (resumeData.skills.length) {
+        html += `<h2 class="${template.sectionTitle}">Skills</h2>`;
+        html += `<p class="${template.text}">${resumeData.skills.join(', ')}</p>`;
+      }
+
+      html += `</div>`;
+      previewDiv.innerHTML = html;
+    }
+
+    // Export PDF
+    exportPDFBtn.addEventListener('click', () => {
+  const docDefinition = {
+    content: [
+      { text: resumeData.contact.name || 'Your Name', style: 'header' },
+      { text: `${resumeData.contact.email || 'email@example.com'} | ${resumeData.contact.phone || '(123) 456-7890'} | ${resumeData.contact.address || 'City, State'}` },
+      resumeData.summary ? [{ text: 'Summary', style: 'sectionHeader' }, { text: resumeData.summary }] : [],
+      resumeData.education.length ? [
+        { text: 'Education', style: 'sectionHeader' },
+        ...resumeData.education.map(edu => ({ text: `${edu.degree}, ${edu.institution} (${edu.year})` }))
+      ] : [],
+      resumeData.experience.length ? [
+        { text: 'Experience', style: 'sectionHeader' },
+        ...resumeData.experience.map(exp => ([
+          { text: `${exp.title}, ${exp.company} (${exp.years})`, bold: true },
+          { text: exp.description }
+        ])).flat()
+      ] : [],
+      resumeData.skills.length ? [
+        { text: 'Skills', style: 'sectionHeader' },
+        { text: resumeData.skills.join(', ') }
+      ] : []
+    ].flat(),
+    styles: {
+      header: { fontSize: 24, bold: true, margin: [0, 0, 0, 10] },
+      sectionHeader: { fontSize: 16, bold: true, margin: [0, 10, 0, 5] }
+    },
+    // Add this font definition:
+    defaultStyle: {
+      font: 'Roboto'
+    }
+  };
+  
+  pdfMake.createPdf(docDefinition).download('resume.pdf');
+});
+    // Print
+    printBtn.addEventListener('click', () => {
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <html>
+          <head><title>Print Resume</title><style>body { font-family: Arial, sans-serif; padding: 20px; } h1 { font-size: 24px; } h2 { font-size: 18px; margin-top: 20px; }</style></head>
+          <body>${previewDiv.innerHTML}</body>
+        </html>
+      `);
+      printWindow.document.close();
+      printWindow.print();
+    });
+
+    // Initialize input listeners for existing elements
+    document.querySelectorAll('.education-input').forEach(input => {
+      input.addEventListener('input', updateEducation);
+    });
+    document.querySelectorAll('.experience-input').forEach(input => {
+      input.addEventListener('input', updateExperience);
+    });
+    updatePreview();
+  </script>
+</body>
+</html>

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        /* Popup container with animation */
+        .popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            width: 350px;
+            padding: 30px;
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            border: none;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 15px;
+            opacity: 0;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            text-align: center;
+            color: #fff;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .popup.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Overlay with fade effect */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            z-index: 999;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .overlay.active {
+            opacity: 1;
+        }
+        
+        /* Close button */
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            cursor: pointer;
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            transition: transform 0.2s;
+        }
+        
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+        
+        /* Popup content */
+        .popup h3 {
+            margin-top: 0;
+            font-size: 24px;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+        }
+        
+        .popup p {
+            margin-bottom: 25px;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        
+        /* CTA button */
+        .cta-btn {
+            background: #fff;
+            color: #ff6b6b;
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(0,0,0,0.15);
+        }
+        
+        /* Decorative elements */
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #f8f8f8;
+            opacity: 0.7;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Your website content here -->
+
+    <!-- Popup HTML -->
+    <div class="overlay" id="popupOverlay"></div>
+    <div class="popup" id="myPopup">
+        <span class="close-btn" onclick="closePopup()">&times;</span>
+        <h3>🎉 Special Offer! 🎉</h3>
+        <p>We're so glad you're here! Get <strong>10% off</strong> your first order with code: WELCOME10</p>
+        <button class="cta-btn" onclick="closePopup()">Claim Your Discount</button>
+    </div>
+
+    <script>
+        // Show popup when page loads
+        window.onload = function() {
+            setTimeout(function() {
+                document.getElementById('popupOverlay').style.display = 'block';
+                document.getElementById('myPopup').style.display = 'block';
+                
+                // Trigger animations
+                setTimeout(function() {
+                    document.getElementById('popupOverlay').classList.add('active');
+                    document.getElementById('myPopup').classList.add('active');
+                    
+                    // Add some confetti for extra celebration
+                    createConfetti();
+                }, 50);
+            }, 1500); // 1.5 second delay
+        };
+
+        // Close popup function
+        function closePopup() {
+            document.getElementById('popupOverlay').classList.remove('active');
+            document.getElementById('myPopup').classList.remove('active');
+            
+            // Wait for animation to finish before hiding
+            setTimeout(function() {
+                document.getElementById('popupOverlay').style.display = 'none';
+                document.getElementById('myPopup').style.display = 'none';
+            }, 300);
+        }
+        
+        // Close when clicking outside popup
+        document.getElementById('popupOverlay').onclick = function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        };
+        
+        // Create decorative confetti
+        function createConfetti() {
+            const popup = document.getElementById('myPopup');
+            const colors = ['#ff9a9e', '#fad0c4', '#a18cd1', '#fbc2eb', '#fff'];
+            
+            for (let i = 0; i < 20; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + '%';
+                confetti.style.top = Math.random() * 100 + '%';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 8 + 5 + 'px';
+                confetti.style.height = confetti.style.width;
+                confetti.style.animation = `float ${Math.random() * 3 + 2}s linear infinite`;
+                confetti.style.animationDelay = Math.random() * 5 + 's';
+                popup.appendChild(confetti);
+            }
+        }
+    </script>
+</body>
+</html>

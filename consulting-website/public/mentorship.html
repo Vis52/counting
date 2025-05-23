@@ -1,0 +1,566 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row =>
+                    row.some(cell => cell !== '' && cell !== null && cell !== undefined)
+                );
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Power of Mentorship: Your Guide to Success</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --text-color: #333;
+            --shadow-color: rgba(0, 0, 0, 0.05);
+            --border-color: rgba(0, 0, 0, 0.09);
+            --background-accent: #f9fafb;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: white;
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        header {
+            text-align: center;
+            padding: 3rem 0;
+            background: linear-gradient(to right, rgba(255,255,255,0.9), rgba(250,250,250,0.8));
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            margin-bottom: 3rem;
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: #666;
+            font-weight: 300;
+        }
+        
+        .author {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 2rem;
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 1rem;
+        }
+        
+        .author-info {
+            text-align: left;
+        }
+        
+        .author-name {
+            font-weight: 600;
+        }
+        
+        .author-title {
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .article-meta {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            padding: 1rem 0;
+            border-top: 1px solid #eee;
+            border-bottom: 1px solid #eee;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        
+        .reading-time, .publish-date {
+            display: flex;
+            align-items: center;
+        }
+        
+        .reading-time:before {
+            content: "⏱️";
+            margin-right: 0.5rem;
+        }
+        
+        .publish-date:before {
+            content: "📅";
+            margin-right: 0.5rem;
+        }
+        
+        .article-content {
+            margin-bottom: 3rem;
+        }
+        
+        h2 {
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem;
+            color: var(--primary-color);
+        }
+        
+        h3 {
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem;
+            color: #444;
+        }
+        
+        p {
+            margin-bottom: 1.5rem;
+        }
+        
+        ul, ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        
+        li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .highlight-box {
+            background-color: var(--background-accent);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .highlight-box h3 {
+            margin-top: 0;
+        }
+        
+        .tip-card {
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            border-radius: 8px;
+            background-color: white;
+            box-shadow: 0 4px 20px var(--shadow-color);
+            transition: transform 0.3s;
+        }
+        
+        .tip-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .tip-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .section-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .mentor-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 1rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.5s, transform 0.5s;
+        }
+        
+        .mentor-image.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        blockquote {
+            font-style: italic;
+            padding: 1rem 2rem;
+            margin: 2rem 0;
+            border-left: 4px solid var(--primary-color);
+            background-color: var(--background-accent);
+            font-size: 1.1rem;
+        }
+        
+        blockquote cite {
+            display: block;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            font-style: normal;
+        }
+        
+        .cta-box {
+            background: linear-gradient(to right, var(--primary-color), #5e78ff);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            text-align: center;
+            margin: 3rem 0;
+        }
+        
+        .cta-box h3 {
+            color: white;
+            margin-top: 0;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: white;
+            color: var(--primary-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .decoration {
+            position: fixed;
+            z-index: -1;
+            opacity: 0.03;
+        }
+        
+        .decoration.top-right {
+            top: 0;
+            right: 0;
+            width: 300px;
+            height: 300px;
+            border-radius: 0 0 0 300px;
+            background: var(--primary-color);
+        }
+        
+        .decoration.bottom-left {
+            bottom: 0;
+            left: 0;
+            width: 250px;
+            height: 250px;
+            border-radius: 0 250px 0 0;
+            background: var(--primary-color);
+        }
+        
+        .mini-form {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 30px var(--shadow-color);
+            margin-top: 3rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input, textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+        }
+        
+        button {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            font-size: 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            background-color: #324ddd;
+        }
+        
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 1rem;
+            background-color: #e3f9e5;
+            border-radius: 6px;
+            margin-top: 1rem;
+            color: #287d3c;
+        }
+        
+        @media (max-width: 768px) {
+            .section-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="decoration top-right"></div>
+    <div class="decoration bottom-left"></div>
+    
+    <div class="container">
+        <header>
+            <h1>The Power of Mentorship: Your Guide to Success</h1>
+            <p class="subtitle">Unlock your potential with guidance from experienced mentors</p>
+            
+            <div class="author">
+                <div class="author-avatar">MT</div>
+                <div class="author-info">
+                    <div class="author-name">Mentorship Trends Team</div>
+                    <div class="author-title">Career Development Experts</div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="article-meta">
+            <div class="reading-time">7 min read</div>
+            <div class="publish-date">April 15, 2025</div>
+        </div>
+        
+        <div class="article-content">
+            <p>Mentorship is a transformative relationship that can accelerate your personal and professional growth. Whether you're starting a new career, navigating a challenging role, or aiming for leadership, a mentor provides guidance, support, and insights to help you succeed.</p>
+            
+            <img src="https://images.unsplash.com/photo-1516321310764-8d8c9464b9a8?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Mentor guiding mentee" class="mentor-image">
+            
+            <p>This guide explores the value of mentorship, how to find the right mentor, and strategies to maximize the relationship for long-term success.</p>
+            
+            <div class="highlight-box">
+                <h3>Why Mentorship Matters</h3>
+                <p>Research shows that mentored employees are 5 times more likely to be promoted and report higher job satisfaction. Mentorship fosters skill development, confidence, and networking opportunities critical for career advancement.</p>
+            </div>
+            
+            <h2>Benefits of Mentorship</h2>
+            
+            <p>A mentor can shape your career in countless ways. Here are the key benefits:</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>Career Guidance</h4>
+                    <p>Mentors share insights from their experience to help you navigate career decisions and avoid common pitfalls.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Skill Development</h4>
+                    <p>Learn technical and soft skills directly from someone who’s mastered them, accelerating your growth.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Networking</h4>
+                    <p>Gain access to your mentor’s professional network, opening doors to new opportunities.</p>
+                </div>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Team collaboration" class="mentor-image">
+            
+            <h3>Finding the Right Mentor</h3>
+            
+            <p>Choosing a mentor is a critical step. Consider these factors:</p>
+            
+            <ul>
+                <li><strong>Expertise:</strong> Look for someone with experience in your field or desired role.</li>
+                <li><strong>Values:</strong> Ensure their values align with yours for a meaningful connection.</li>
+                <li><strong>Availability:</strong> A mentor should have time to engage regularly.</li>
+                <li><strong>Chemistry:</strong> A good rapport fosters open communication.</li>
+            </ul>
+            
+            <blockquote>
+                “A mentor is someone who sees more talent and ability within you than you see in yourself, and helps bring it out of you.”
+                <cite>- Bob Proctor, Author and Speaker</cite>
+            </blockquote>
+            
+            <h3>Building a Strong Mentorship Relationship</h3>
+            
+            <p>Maximize your mentorship with these strategies:</p>
+            
+            <div class="highlight-box">
+                <p><strong>Set Clear Goals:</strong> Define what you want to achieve, such as learning a new skill or preparing for a promotion.</p>
+                <p><strong>Be Proactive:</strong> Schedule meetings, ask questions, and seek feedback regularly.</p>
+                <p><strong>Show Gratitude:</strong> Acknowledge your mentor’s time and insights to strengthen the bond.</p>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1506784365847-bbadad4e01d9?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Mentor meeting" class="mentor-image">
+            
+            <h2>Mentorship in Different Fields</h2>
+            
+            <p>Mentorship varies by industry. Here’s how it applies to key sectors:</p>
+            
+            <h3>Technology</h3>
+            <p>Mentors guide you through coding challenges, project management, and staying updated with tools like JavaScript, Python, or cloud platforms.</p>
+            
+            <h3>Business</h3>
+            <p>Learn negotiation, leadership, and strategy from seasoned executives to climb the corporate ladder.</p>
+            
+            <h3>Creative Industries</h3>
+            <p>Mentors help refine your portfolio, navigate client expectations, and build a personal brand.</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>Virtual Mentorship</h4>
+                    <p>Online platforms make it easier to connect with mentors globally, offering flexibility and diverse perspectives.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Peer Mentorship</h4>
+                    <p>Learn from colleagues at similar career stages for mutual growth and support.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Group Mentorship</h4>
+                    <p>Join programs where one mentor guides multiple mentees, fostering collaboration.</p>
+                </div>
+            </div>
+            
+            <h2>Mentorship Trends for 2025</h2>
+            
+            <p>Stay ahead with these emerging trends:</p>
+            
+            <div class="section-cards">
+                <div class="tip-card">
+                    <h4>AI-Driven Matching</h4>
+                    <p>Platforms use AI to pair mentees with mentors based on skills, goals, and compatibility.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Hybrid Mentorship</h4>
+                    <p>Blend in-person and virtual sessions for flexibility and deeper engagement.</p>
+                </div>
+                
+                <div class="tip-card">
+                    <h4>Soft Skills Focus</h4>
+                    <p>Emphasis on emotional intelligence, communication, and adaptability to thrive in dynamic workplaces.</p>
+                </div>
+            </div>
+            
+            <img src="https://images.unsplash.com/photo-1521737604893-d14cc237f11d?ixlib=rb-4.0.3&auto=format&fit=crop&w=900&q=80" alt="Mentorship discussion" class="mentor-image">
+            
+            <div class="cta-box">
+                <h3>Ready to Find Your Mentor?</h3>
+                <p>Subscribe to our newsletter for expert mentorship advice, resources, and opportunities to connect with industry leaders.</p>
+                <a href="#subscribe-form" class="btn">Get Free Mentorship Tips</a>
+            </div>
+        </div>
+        
+        <div class="mini-form" id="subscribe-form">
+            <h3>Get More Mentorship Tips</h3>
+            <p>Sign up for our newsletter to receive expert advice, success stories, and mentorship opportunities.</p>
+            
+            <form id="newsletter-form">
+                <div class="form-group">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" placeholder="Your email address" required>
+                </div>
+                <button type="submit">Subscribe</button>
+            </form>
+            
+            <div class="success-message" id="success-message">
+                <p>Thanks for subscribing! Check your email for a welcome message and free mentorship guide.</p>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Mentorship Trends. All rights reserved. Updated April 15, 2025.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Newsletter form submission
+        document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            localStorage.setItem('subscribedEmail', email);
+            
+            document.getElementById('success-message').style.display = 'block';
+            this.reset();
+            
+            console.log('Subscription saved:', email);
+        });
+        
+        // Image animation on scroll
+        const images = document.querySelectorAll('.mentor-image');
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.1
+        });
+        
+        images.forEach(image => {
+            observer.observe(image);
+        });
+    </script>
+</body>
+</html>

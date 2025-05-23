@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career | HR Certification Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Color Scheme */
+        :root {
+            --primary: #1e3a8a; /* Deep Blue */
+            --secondary: #10b981; /* Emerald Green */
+            --accent: #f59e0b; /* Amber */
+            --light: #f1f5f9; /* Light Gray */
+            --dark: #0f172a; /* Dark Slate */
+            --success: #22c55e; /* Green */
+        }
+        
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f9f9f9;
+        }
+        
+        .container {
+            width: 85%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 2rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('hr-pattern.jpg') center/cover;
+            opacity: 0.2;
+            z-index: 1;
+        }
+        
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        .logo span {
+            color: var(--secondary);
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+        
+        .hero {
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            border: 2px solid var(--accent);
+        }
+        
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+        
+        /* Main Content Styles */
+        section {
+            padding: 4rem 0;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 2.2rem;
+            color: var(--primary);
+            display: inline-block;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            display: block;
+            width: 60px;
+            height: 4px;
+            background: var(--secondary);
+            margin: 0.5rem auto 0;
+        }
+        
+        /* Why Choose Us Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .feature-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+        
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+        
+        /* Course Offerings Section */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-button {
+            padding: 0.8rem 2rem;
+            background: none;
+            border: none;
+            border-bottom: 3px solid transparent;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--dark);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .tab-button.active {
+            color: var(--secondary);
+            border-bottom-color: var(--secondary);
+        }
+        
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .course-highlights {
+            margin-bottom: 2rem;
+        }
+        
+        .course-highlights h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .highlight-list {
+            list-style-type: none;
+        }
+        
+        .highlight-list li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .highlight-list li:before {
+            content: '✓';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .pricing {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1.5rem;
+        }
+        
+        .price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .price small {
+            font-size: 1rem;
+            font-weight: normal;
+            color: var(--dark);
+        }
+        
+        /* Syllabus Section */
+        .syllabus-accordion {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .accordion-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .accordion-header:hover {
+            background-color: var(--dark);
+        }
+        
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.1rem;
+        }
+        
+        .accordion-content {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .accordion-content-inner {
+            padding: 1.5rem;
+        }
+        
+        .module-list {
+            list-style-type: none;
+        }
+        
+        .module-list li {
+            padding: 0.8rem 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .module-duration {
+            color: var(--secondary);
+            font-weight: 500;
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .faq-question {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 1rem 1.5rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+        }
+        
+        .faq-question:hover {
+            background-color: #dfe6e9;
+        }
+        
+        .faq-answer {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+        
+        .faq-answer.active {
+            padding: 1.5rem;
+            max-height: 500px;
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .footer-links {
+            list-style-type: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+        
+        .footer-links a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+        }
+        
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s;
+        }
+        
+        .social-links a:hover {
+            background: var(--secondary);
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: #bdc3c7;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="container header-content">
+            <nav>
+                <div class="logo">HRE<span>dge</span></div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#syllabus">Syllabus</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+            
+            <div class="hero">
+                <h1>Become an HR Professional in the Modern Era</h1>
+                <p>Our comprehensive certification program equips you with modern HR strategies, tools, and real-world projects to excel in human resources management.</p>
+                <a href="#courses" class="cta-button">Explore Programs</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Why Choose Us Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our HR Program</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Modern HR Practices</h3>
+                    <p>Learn cutting-edge HR strategies, including talent acquisition, employee engagement, and data-driven HR analytics.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👩‍🏫</div>
+                    <h3>Industry Experts</h3>
+                    <p>Our instructors are senior HR professionals from top organizations, sharing real-world insights and best practices.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🛠️</div>
+                    <h3>Practical Projects</h3>
+                    <p>Build a portfolio with real-world HR projects, such as recruitment plans and employee wellness programs, to showcase your skills.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Comprehensive HR Focus</h3>
+                    <p>Master all aspects of HR, from recruitment and onboarding to compliance and performance management, for versatile career options.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Career Support</h3>
+                    <p>Get resume reviews, mock interviews, and access to our network of 5,000+ hiring partners worldwide.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Recognized Certification</h3>
+                    <p>Earn an HR Certification accredited by the Global HR Education Council, valued by employers globally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Offerings Section -->
+    <section id="courses" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our HR Programs</h2>
+            </div>
+            
+            <div class="course-tabs">
+                <button class="tab-button active" onclick="openTab(event, 'beginner')">HR Beginner</button>
+                <button class="tab-button" onclick="openTab(event, 'strategic')">Strategic HR</button>
+                <button class="tab-button" onclick="openTab(event, 'recruitment')">Recruitment Specialist</button>
+                <button class="tab-button" onclick="openTab(event, 'analytics')">HR Analytics</button>
+            </div>
+            
+            <div id="beginner" class="tab-content active">
+                <h3>HR Beginner Certification</h3>
+                <p>8-week program for beginners to learn the fundamentals of human resources and develop essential HR skills.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Introduction to HR management</li>
+                        <li>Recruitment and selection basics</li>
+                        <li>Employee onboarding processes</li>
+                        <li>Labor laws and compliance</li>
+                        <li>Performance management fundamentals</li>
+                        <li>HR tools and software</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="strategic" class="tab-content">
+                <h3>Strategic HR Masterclass</h3>
+                <p>12-week intensive program to become a strategic HR leader with modern HR frameworks.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Strategic HR planning</li>
+                        <li>Change management strategies</li>
+                        <li>Employee engagement frameworks</li>
+                        <li>Diversity, equity, and inclusion (DEI)</li>
+                        <li>Leadership development programs</li>
+                        <li>HR metrics and KPIs</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="recruitment" class="tab-content">
+                <h3>Recruitment Specialist Program</h3>
+                <p>10-week program focused on mastering talent acquisition and recruitment strategies.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Advanced sourcing techniques</li>
+                        <li>Candidate assessment and interviewing</li>
+                        <li>Employer branding strategies</li>
+                        <li>Recruitment analytics</li>
+                        <li>Negotiation and offer management</li>
+                        <li>Recruitment technology tools</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="analytics" class="tab-content">
+                <h3>HR Analytics Specialist Program</h3>
+                <p>10-week program for mastering data-driven HR decision-making and analytics.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>HR data collection and management</li>
+                        <li>Predictive analytics for HR</li>
+                        <li>Workforce planning with data</li>
+                        <li>Employee performance analytics</li>
+                        <li>Data visualization with Tableau</li>
+                        <li>Building HR dashboards</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Syllabus Section -->
+    <section id="syllabus">
+        <div class="container">
+            <div class="section-title">
+                <h2>Detailed Program Syllabus</h2>
+                <p>Below is the complete curriculum for our flagship HR Beginner Certification</p>
+            </div>
+            
+            <div class="syllabus-accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 1: HR Fundamentals</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to human resources <span class="module-duration">2 hours</span></li>
+                                <li>Role of HR in organizations <span class="module-duration">3 hours</span></li>
+                                <li>Basic HR policies and procedures <span class="module-duration">3 hours</span></li>
+                                <li>Case study: HR in a small business <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Draft an HR policy <span class="module-duration">4 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 2: Recruitment Basics</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Job analysis and descriptions <span class="module-duration">4 hours</span></li>
+                                <li>Sourcing and screening candidates <span class="module-duration">3 hours</span></li>
+                                <li>Interview techniques <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Recruitment process <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Create a job posting <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 3: Employee Onboarding</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Designing onboarding programs <span class="module-duration">3 hours</span></li>
+                                <li>Employee orientation strategies <span class="module-duration">3 hours</span></li>
+                                <li>Engagement during onboarding <span class="module-duration">4 hours</span></li>
+                                <li>Case study: Onboarding plan <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Develop an onboarding checklist <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 4: Compliance and Labor Laws</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Overview of labor laws <span class="module-duration">3 hours</span></li>
+                                <li>Workplace safety regulations <span class="module-duration">2 hours</span></li>
+                                <li>Equal employment opportunity <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Compliance audit <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Review compliance policies <span class="module-duration">4 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 5: Performance Management</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Setting performance goals <span class="module-duration">3 hours</span></li>
+                                <li>Conducting performance reviews <span class="module-duration">2 hours</span></li>
+                                <li>Employee development plans <span class="module-duration">3 hours</span></li>
+                                <li>Case study: Performance appraisal <span class="module-duration">3 hours</span></li>
+                                <li>Assignment: Design a performance review template <span class="module-duration">5 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Capstone Project</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Project planning and scoping <span class="module-duration">2 hours</span></li>
+                                <li>Developing an HR strategy <span class="module-duration">10 hours</span></li>
+                                <li>Testing and refining plans <span class="module-duration">5 hours</span></li>
+                                <li>Presentation preparation <span class="module-duration">3 hours</span></li>
+                                <li>Final presentation and feedback <span class="module-duration">3 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="bg-light">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Who is this program designed for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our HR Beginner program is designed for:</p>
+                        <ul>
+                            <li>Complete beginners with no HR experience</li>
+                            <li>Career changers entering HR</li>
+                            <li>Professionals adding HR skills</li>
+                            <li>Entrepreneurs managing their own teams</li>
+                            <li>Students preparing for HR careers</li>
+                        </ul>
+                        <p>No prior HR knowledge is required.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is the time commitment required?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The 8-week Beginner program requires approximately 8-10 hours per week:</p>
+                        <ul>
+                            <li>3-4 hours of live sessions (recordings available)</li>
+                            <li>2-3 hours of video tutorials and readings</li>
+                            <li>3-4 hours for projects and assignments</li>
+                        </ul>
+                        <p>Designed to fit around full-time work with proper planning.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What kind of certification will I receive?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Upon successful completion (80%+ overall score), you'll receive:</p>
+                        <ul>
+                            <li>HR Beginner Certification from GRP Career</li>
+                            <li>Verified digital badge for LinkedIn and portfolios</li>
+                            <li>PDF certificate with unique verification code</li>
+                            <li>Transcript of completed modules</li>
+                        </ul>
+                        <p>Recognized by employers worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the technical requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You'll need:</p>
+                        <ul>
+                            <li>Reliable internet (5Mbps+ recommended)</li>
+                            <li>Computer with 8GB RAM minimum</li>
+                            <li>Modern browser (Chrome, Firefox)</li>
+                            <li>Basic office software (e.g., MS Office, Google Suite)</li>
+                            <li>Zoom for live sessions</li>
+                        </ul>
+                        <p>All software used is free or widely available.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Is financial aid or payment plans available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer:</p>
+                        <ul>
+                            <li>Payment plans (3-6 monthly installments)</li>
+                            <li>Need-based scholarships (apply separately)</li>
+                            <li>Group discounts (10% off for 3+ enrollments)</li>
+                            <li>Alumni discounts for returning learners</li>
+                        </ul>
+                        <p>Contact admissions for details.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is your refund policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our refund policy:</p>
+                        <ul>
+                            <li>100% refund before program start</li>
+                            <li>75% refund within 7 days of start</li>
+                            <li>50% refund within 14 days of start</li>
+                            <li>No refunds after 14 days</li>
+                        </ul>
+                        <p>Submit requests in writing; special cases considered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ready to Start Your HR Journey?</h2>
+                <p>Have questions or need help choosing a program? Our team is here to guide you.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2rem;">
+                <a href="/cdn-cgi/l/email-protection#4d24232b220d2a3f3d2e2c3f28283f632e2220" class="cta-button">Email Us</a>
+                <a href="tel:+919643058418" class="cta-button" style="background: var(--primary); border-color: var(--primary); margin-left: 1rem;">Call Us</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GRP Career</h3>
+                    <p>Empowering aspiring HR professionals with modern human resources skills through hands-on training and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Programs</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">HR Beginner</a></li>
+                        <li><a href="#">Strategic HR</a></li>
+                        <li><a href="#">Recruitment Specialist</a></li>
+                        <li><a href="#">HR Analytics</a></li>
+                        <li><a href="#">Corporate Training</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">HR Blog</a></li>
+                        <li><a href="#">Case Studies</a></li>
+                        <li><a href="#">HR Webinars</a></li>
+                        <li><a href="#">Career Guides</a></li>
+                        <li><a href="#">Community Forum</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Instructors</a></li>
+                        <li><a href="#">Alumni Stories</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2025 GRP Career. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Accordion functionality for syllabus
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+            
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                const allContents = document.querySelectorAll('.accordion-content');
+                const allIcons = document.querySelectorAll('.accordion-icon');
+                allContents.forEach((c, i) => {
+                    c.style.maxHeight = null;
+                    allIcons[i].textContent = '+';
+                });
+                
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.textContent = '−';
+            }
+        }
+        
+        // FAQ toggle functionality
+        function toggleFaq(question) {
+            const item = question.parentElement;
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector('.faq-toggle');
+            
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                const allToggles = document.querySelectorAll('.faq-toggle');
+                allAnswers.forEach((a, i) => {
+                    a.classList.remove('active');
+                    allToggles[i].textContent = '+';
+                });
+                
+                answer.classList.add('active');
+                toggle.textContent = '−';
+            }
+        }
+    </script>
+</body>
+</html>

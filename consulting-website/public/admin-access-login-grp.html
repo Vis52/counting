@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{csrfToken}}">
+    <title>Admin Login | Secure Panel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2563eb;
+            --primary-hover: #1d4ed8;
+            --error-color: #dc2626;
+            --text-color: #1f2937;
+            --light-gray: #f3f4f6;
+            --border-color: #d1d5db;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: var(--light-gray);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+        
+        .login-container {
+            background-color: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            margin: 1rem;
+        }
+        
+        .logo {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .logo i {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+        }
+        
+        h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: var(--text-color);
+        }
+        
+        .form-group {
+            margin-bottom: 1.25rem;
+            position: relative;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 38px;
+            cursor: pointer;
+            color: var(--text-color);
+            opacity: 0.7;
+        }
+        
+        button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 0.5rem;
+        }
+        
+        button:hover {
+            background-color: var(--primary-hover);
+        }
+        
+        button:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        
+        .error {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.875rem;
+            color: #6b7280;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-shield-alt"></i>
+        </div>
+        <h2>Admin Portal</h2>
+        <form id="adminLoginForm">
+            <div class="form-group">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" required autocomplete="username">
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" required autocomplete="current-password">
+                <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                <div class="error" id="passwordError"></div>
+            </div>
+            <button type="submit" id="loginButton">
+                <span id="buttonText">Login</span>
+                <span id="buttonLoader" class="loading" style="display: none;"></span>
+            </button>
+            <div class="error" id="formError"></div>
+        </form>
+        <div class="footer">
+            <p>Secure Admin Panel v1.0</p>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const loginForm = document.getElementById('adminLoginForm');
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('password');
+            const loginButton = document.getElementById('loginButton');
+            const buttonText = document.getElementById('buttonText');
+            const buttonLoader = document.getElementById('buttonLoader');
+            const formError = document.getElementById('formError');
+            const passwordError = document.getElementById('passwordError');
+
+            // API Base URL
+            const API_BASE_URL = window.location.origin;
+
+            // Toggle password visibility
+            togglePassword.addEventListener('click', () => {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                togglePassword.classList.toggle('fa-eye');
+                togglePassword.classList.toggle('fa-eye-slash');
+            });
+
+            // Form submission
+            loginForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                
+                const username = document.getElementById('username').value.trim();
+                const password = document.getElementById('password').value.trim();
+                const csrfToken = document.querySelector('meta[name="csrf-token"]').content;
+
+                // Reset errors
+                formError.style.display = 'none';
+                passwordError.style.display = 'none';
+
+                // Validate inputs
+                if (!username || !password) {
+                    formError.textContent = 'Please enter both username and password';
+                    formError.style.display = 'block';
+                    return;
+                }
+
+                if (username.length > 50) {
+                    formError.textContent = 'Username must be less than 50 characters';
+                    formError.style.display = 'block';
+                    return;
+                }
+
+                // Show loading state
+                loginButton.disabled = true;
+                buttonText.textContent = 'Authenticating...';
+                buttonLoader.style.display = 'inline-block';
+
+                try {
+                    // Changed endpoint to match backend route
+                    const response = await fetch(`${API_BASE_URL}/admin-access/login`, {
+                        method: 'POST',
+                        credentials: 'include',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-Token': csrfToken
+                        },
+                        body: JSON.stringify({ username, password }),
+                    });
+
+                    let data;
+                    try {
+                        data = await response.json();
+                    } catch (err) {
+                        formError.textContent = 'Unexpected server response. Please contact support.';
+                        formError.style.display = 'block';
+                        return;
+                    }
+
+                    if (response.ok) {
+                        window.location.href = '/admin-dashboard.html';
+                    } else {
+                        formError.textContent = data.message || 'Login failed. Please try again.';
+                        formError.style.display = 'block';
+                    }
+                } catch (error) {
+                    console.error('Login error:', error);
+                    formError.textContent = 'Network error. Please try again later.';
+                    formError.style.display = 'block';
+                } finally {
+                    loginButton.disabled = false;
+                    buttonText.textContent = 'Login';
+                    buttonLoader.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

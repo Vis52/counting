@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - Blog</title>
+    <meta content="business analytics blog, data analytics insights, career tips, industry trends" name="keywords">
+    <meta content="Explore GRP Career's blog for the latest insights on business analytics, career tips, and industry trends." name="description">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#4338CA',
+                        accent: '#F59E0B',
+                        dark: '#111827',
+                        light: '#F9FAFB',
+                        success: '#10B981'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'float-logo': 'floatLogo 4s ease-in-out infinite',
+                        'scale-up': 'scaleUp 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'flowchart-pulse': 'flowchartPulse 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        floatLogo: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.05)' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        flowchartPulse: {
+                            '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(79, 70, 229, 0.4)' },
+                            '50%': { transform: 'scale(1.05)', boxShadow: '0 0 0 10px rgba(79, 70, 229, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- Font Awesome (required for blog script) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- jQuery (required for blog script) -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(67, 56, 202, 0.95) 100%); }
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .feature-icon { transition: all 0.3s ease; }
+        .benefit-card:hover .feature-icon { transform: rotateY(180deg) scale(1.1); }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #4F46E5 0%, #F59E0B 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .image-hover:hover { transform: scale(1.05); }
+        .sticky-testimonial { transition: all 0.3s ease; }
+        .sticky-testimonial.sticky { position: sticky; top: 100px; }
+        .table-comparison tbody tr:hover { background-color: #F9FAFB; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .faq-item { transition: all 0.3s ease; }
+        .faq-item:hover { background-color: #F9FAFB; }
+        .flowchart-node { transition: all 0.3s ease; }
+        .flowchart-node:hover { transform: scale(1.1); }
+        .pinned-image { opacity: 0; transition: opacity 0.5s ease; }
+        .pinned-image.active { opacity: 1; }
+        .section-content { display: flex; align-items: center; min-height: 100vh; }
+        .blog-img { height: 200px; overflow: hidden; }
+        .blog-img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s ease; }
+        .blog-item:hover .blog-img img { transform: scale(1.05); }
+        .blog-text { display: -webkit-box; -webkit-line-clamp: 4; -webkit-box-orient: vertical; overflow: hidden; text-overflow: ellipsis; }
+        @media (max-width: 768px) {
+            .parallax-bg { background-attachment: scroll; }
+            .flowchart-arrow { display: none; }
+            .pinned-image-column { position: static; width: 100%; }
+            .section-content { min-height: auto; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-400 h-10 rounded-lg bg-white flex items-center justify-center text-black">
+                        <i ><img src="img/logo.svg" alt="GRP Logo" class="w-[150px] h-auto"></i>
+                    </div>
+                    <!-- <span class="text-2xl font-bold text-dark">GRP <span class="gradient-text">Career</span></span> -->
+                </a>
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#home" class="nav-link text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#about" class="nav-link text-dark font-medium hover:text-primary transition">About Us</a>
+                    <a href="#courses" class="nav-link text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="#blog" class="nav-link text-dark font-medium hover:text-primary transition">Blog</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover flex items-center">
+                        <i class="ri-mail-send-line mr-2"></i> Contact Us
+                    </a>
+                </div>
+                <button aria-label="Toggle mobile menu" class="lg:hidden text-dark focus:outline-none" id="mobile-menu-button">
+                    <i class="ri-menu-line text-2xl"></i>
+                </button>
+            </div>
+            <div class="lg:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#about" class="text-dark font-medium hover:text-primary transition">About Us</a>
+                    <a href="#courses" class="text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="#blog" class="text-dark font-medium hover:text-primary transition">Blog</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="pt-32 pb-20 bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">GRP CAREER BLOG</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-serif">Insights on Business Analytics & Careers</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">Stay updated with the latest trends, tips, and insights in business analytics and career development from GRP Career.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="#blog-section" class="bg-primary text-white px-8 py-3.5 rounded-lg font-medium hover:bg-secondary transition btn-hover inline-flex items-center justify-center">
+                        <i class="ph-rocket-launch mr-2"></i> Explore Blogs
+                    </a>
+                    <a href="#contact" class="bg-white text-dark px-8 py-3.5 rounded-lg font-medium hover:bg-gray-100 transition btn-hover inline-flex items-center justify-center border border-gray-200">
+                        <i class="ph-info mr-2"></i> Contact Us
+                    </a>
+                </div>
+            </div>
+            <div class="mt-16 max-w-4xl mx-auto" data-aos="fade-up" data-aos-delay="200">
+                <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_news_re_6uub.svg" alt="Blog Insights" class="w-full h-auto rounded-lg shadow-xl">
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog-section" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">OUR BLOG</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Latest Articles & Insights</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Discover expert advice, industry trends, and practical tips to advance your career in business analytics.</p>
+            </div>
+            <div id="blog-container" class="grid grid-cols-1 md:grid-cols-2 gap-8" data-aos="fade-up"></div>
+            <nav class="mt-12 flex justify-center" data-aos="fade-up" data-aos-delay="100">
+                <ul id="pagination" class="flex space-x-2"></ul>
+            </nav>
+        </div>
+    </section>
+
+    <!-- Call to Action Section -->
+    <section id="cta" class="py-20 bg-primary text-white relative overflow-hidden parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold bg-white text-primary rounded-full mb-4">STAY INFORMED</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif">Want More Insights?</h2>
+                <p class="text-xl mb-8 text-gray-100">Subscribe to our newsletter for the latest blog updates and career tips.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="#newsletter" class="bg-accent text-white px-8 py-3.5 rounded-lg font-medium hover:bg-yellow-600 transition btn-hover flex items-center justify-center">
+                        <i class="ph-paper-plane-right mr-2"></i> Subscribe Now
+                    </a>
+                    <a href="#courses" class="bg-white text-dark px-8 py-3.5 rounded-lg font-medium hover:bg-gray-100 transition btn-hover flex items-center justify-center">
+                        <i class="ph-book-open-text mr-2"></i> Explore Courses
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-gray-300 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <a href="#" class="flex items-center space-x-3 mb-4">
+                        <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                            <i class="ri-briefcase-line text-xl"></i>
+                        </div>
+                        <span class="text-2xl font-bold text-white">GRP <span class="gradient-text">Career</span></span>
+                    </a>
+                    <p class="text-gray-400 mb-4">GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784) offers Business Analytics Crash Courses with 100% placement guarantee.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/share/16egu8TAQ3/" class="text-gray-400 hover:text-white transition" target="_blank"><i class="ri-facebook-fill"></i></a>
+                        <a href="https://twitter.com" class="text-gray-400 hover:text-white transition" target="_blank"><i class="ri-twitter-fill"></i></a>
+                        <a href="https://www.linkedin.com/in/grp-career-548736359/" class="text-gray-400 hover:text-white transition" target="_blank"><i class="ri-linkedin-fill"></i></a>
+                        <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA==" class="text-gray-400 hover:text-white transition" target="_blank"><i class="ri-instagram-fill"></i></a>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="#courses" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                        <li><a href="#blog" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="#faq" class="text-gray-400 hover:text-white transition">FAQs</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="ph-map-pin text-accent mr-3 mt-1"></i>
+                            <a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank" class="text-gray-400 hover:text-white transition">2nd Floor, A-55, Sec-02,<br>Noida G.B Nagar (U.P) - 201301</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ph-phone text-accent mr-3"></i>
+                            <a href="tel:+919643058418" class="text-gray-400 hover:text-white transition">+91 9643058418</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ph-phone text-accent mr-3"></i>
+                            <a href="tel:01204097776" class="text-gray-400 hover:text-white transition">01204097776</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ph-envelope text-accent mr-3"></i>
+                            <a href="mailto:info@grpcareer.com" class="text-gray-400 hover:text-white transition">info@grpcareer.com</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">Subscribe to get the latest career tips and updates.</p>
+                    <form id="newsletterForm" class="flex">
+                        <input type="email" placeholder="Your email" class="w-full p-3 rounded-l-lg border-none focus:outline-none focus:ring-2 focus:ring-accent text-dark" required>
+                        <button type="submit" class="bg-accent text-white px-4 rounded-r-lg hover:bg-yellow-600 transition">
+                            <i class="ph-paper-plane-right"></i>
+                        </button>
+                    </form>
+                    <div class="mt-4">
+                        <h4 class="font-medium text-white mb-2">Business Hours</h4>
+                        <p class="text-gray-400 text-sm">Monday - Friday: 9:00 AM - 6:00 PM<br>Saturday: 10:00 AM - 4:00 PM<br>Sunday: Closed</p>
+                    </div>
+                </div>
+            </div>
+            <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                <p class="text-gray-400">© 2025 GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784). All rights reserved.</p>
+                <div class="mt-2">
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Privacy Policy</a>
+                    <span class="text-gray-400">|</span>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Terms of Service</a>
+                    <span class="text-gray-400">|</span>
+                    <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Refund Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({ duration: 800, once: true });
+
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Smooth Scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({ 
+                    behavior: 'smooth' 
+                });
+                // Close mobile menu if open
+                if (!mobileMenu.classList.contains('hidden')) {
+                    mobileMenu.classList.add('hidden');
+                }
+            });
+        });
+
+        // GSAP Parallax Effect
+        gsap.to('.parallax-bg', {
+            scrollTrigger: {
+                trigger: '.parallax-bg',
+                scrub: true,
+            },
+            backgroundPosition: '50% 100%',
+        });
+
+        // Hover Effects for Cards
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                gsap.to(card, { scale: 1.02, duration: 0.3 });
+            });
+            card.addEventListener('mouseleave', () => {
+                gsap.to(card, { scale: 1, duration: 0.3 });
+            });
+        });
+
+        // Newsletter Form Handler
+        document.getElementById('newsletterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const email = this.querySelector('input[type="email"]').value;
+            console.log('Newsletter subscription:', email);
+            alert('Thank you for subscribing to our newsletter!');
+            this.reset();
+        });
+
+        // Add shadow to navbar on scroll
+        window.addEventListener('scroll', function() {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 10) {
+                nav.classList.add('shadow-md');
+            } else {
+                nav.classList.remove('shadow-md');
+            }
+        });
+
+        // Blog Fetching Script
+        $(document).ready(function() {
+            // Function to strip HTML tags from description
+            function stripHtml(html) {
+                const tmp = document.createElement("DIV");
+                tmp.innerHTML = html;
+                return tmp.textContent || tmp.innerText || "";
+            }
+
+            // Function to fetch and display blog data
+            function loadBlogs(page = 1) {
+                $.ajax({
+                    url: '/api/blogs?page=' + page,
+                    method: 'GET',
+                    dataType: 'json',
+                    success: function(data) {
+                        const blogContainer = $('#blog-container');
+                        blogContainer.empty(); // Clear existing blogs
+
+                        if (data.blogs && data.blogs.length > 0) {
+                            data.blogs.forEach(blog => {
+                                // Strip HTML from description to remove images and links
+                                const plainDescription = stripHtml(blog.description);
+                                const blogItem = `
+                                    <div class="card bg-white rounded-xl shadow-sm transition duration-300">
+                                        <div class="blog-item">
+                                            <div class="blog-img rounded-t-xl">
+                                                <img src="${blog.image || 'https://via.placeholder.com/400x200'}" alt="${blog.title}">
+                                            </div>
+                                            <div class="blog-content p-6">
+                                                <h2 class="blog-title text-xl font-semibold mb-3">${blog.title}</h2>
+                                                <div class="blog-meta flex items-center text-sm text-gray-500 mb-4">
+                                                    <i class="fa fa-list-alt mr-2"></i>
+                                                    <p class="mr-4">${blog.category}</p>
+                                                    <i class="fa fa-calendar-alt mr-2"></i>
+                                                    <p>${new Date(blog.date).toLocaleDateString('en-GB', {
+                                                        day: '2-digit',
+                                                        month: 'short',
+                                                        year: 'numeric'
+                                                    })}</p>
+                                                </div>
+                                                <div class="blog-text text-gray-600 mb-4">${plainDescription}</div>
+                                                <a class="btn bg-primary text-white px-4 py-2 rounded-lg font-medium hover:bg-secondary transition btn-hover inline-flex items-center" href="/blog/${blog.id}">
+                                                    <i class="ph-arrow-right mr-2"></i> Read More
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                                blogContainer.append(blogItem);
+                            });
+
+                            // Update pagination
+                            const pagination = $('#pagination');
+                            pagination.empty();
+                            const totalPages = data.totalPages || 1;
+                            const prevDisabled = page === 1 ? 'disabled' : '';
+                            const nextDisabled = page === totalPages ? 'disabled' : '';
+
+                            pagination.append(`
+                                <li class="page-item ${prevDisabled}">
+                                    <a class="page-link px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-primary hover:text-white transition" href="#" data-page="${page - 1}">Previous</a>
+                                </li>
+                            `);
+                            for (let i = 1; i <= totalPages; i++) {
+                                const active = i === page ? 'bg-primary text-white' : 'bg-white';
+                                pagination.append(`
+                                    <li class="page-item">
+                                        <a class="page-link px-4 py-2 ${active} border border-gray-300 rounded-lg hover:bg-primary hover:text-white transition" href="#" data-page="${i}">${i}</a>
+                                    </li>
+                                `);
+                            }
+                            pagination.append(`
+                                <li class="page-item ${nextDisabled}">
+                                    <a class="page-link px-4 py-2 bg-white border border-gray-300 rounded-lg hover:bg-primary hover:text-white transition" href="#" data-page="${page + 1}">Next</a>
+                                </li>
+                            `);
+                        } else {
+                            blogContainer.html('<p class="text-center text-gray-600">No blogs available at the moment.</p>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error('Error fetching blogs:', error);
+                        $('#blog-container').html('<p class="text-center text-gray-600">Failed to load blogs. Please try again later.</p>');
+                    }
+                });
+            }
+
+            // Initial load
+            loadBlogs();
+
+            // Handle pagination clicks
+            $('#pagination').on('click', '.page-link', function(e) {
+                e.preventDefault();
+                const page = $(this).data('page');
+                if (page && !$(this).parent().hasClass('disabled')) {
+                    loadBlogs(page);
+                    window.scrollTo({ top: document.getElementById('blog-section').offsetTop - 100, behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

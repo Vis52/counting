@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Job Listings</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    header {
+      background-color: white;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      padding: 1.5rem 0;
+    }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+    h1, h2, h3 {
+      margin: 0;
+    }
+    .job-card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .job-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+    }
+    .job-detail {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      padding: 2rem;
+    }
+    .tag {
+      display: inline-block;
+      background: #f1f1f1;
+      border-radius: 20px;
+      padding: 0.25rem 0.75rem;
+      font-size: 0.8rem;
+      margin-right: 0.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .btn {
+      display: inline-block;
+      padding: 0.5rem 1rem;
+      border-radius: 4px;
+      text-decoration: none;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    .btn-primary {
+      background-color: #2563eb;
+      color: white;
+      border: none;
+    }
+    .btn-primary:hover {
+      background-color: #1d4ed8;
+    }
+    .btn-outline {
+      background-color: transparent;
+      border: 1px solid #2563eb;
+      color: #2563eb;
+    }
+    .btn-outline:hover {
+      background-color: #f0f5ff;
+    }
+    .jobs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.5rem;
+    }
+    footer {
+      background-color: white;
+      border-top: 1px solid #e5e7eb;
+      padding: 1.5rem 0;
+      margin-top: 3rem;
+    }
+    .hidden {
+      display: none;
+    }
+    ul {
+      padding-left: 1.5rem;
+    }
+    li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Job Opportunities</h1>
+    </div>
+  </header>
+
+  <main class="container">
+    <div id="job-listings">
+      <h2>Available Positions</h2>
+      <div id="jobs-container" class="jobs-grid"></div>
+    </div>
+
+    <div id="job-detail" class="hidden">
+      <button id="back-btn" class="btn btn-outline">Back to all jobs</button>
+      <div id="job-detail-content" class="job-detail"></div>
+    </div>
+  </main>
+
+  <footer>
+    <div class="container text-center">
+      <p>&copy; <span id="current-year"></span> Job Listings. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Job data
+    const jobs = [
+      {
+        id: 1,
+        title: "Frontend Developer",
+        company: "TechCorp",
+        location: "San Francisco, CA",
+        type: "Full-time",
+        salary: "$90,000 - $120,000",
+        description: "We're looking for a skilled Frontend Developer to join our team. You'll be responsible for building user interfaces using modern web technologies.",
+        responsibilities: [
+          "Develop new user-facing features",
+          "Build reusable components and front-end libraries",
+          "Optimize applications for maximum speed and scalability",
+          "Collaborate with back-end developers and web designers"
+        ],
+        requirements: [
+          "3+ years of experience with JavaScript/TypeScript",
+          "Proficient in React",
+          "Experience with modern front-end build pipelines and tools",
+          "Familiarity with RESTful APIs"
+        ],
+        contactEmail: "careers@techcorp.com"
+      },
+      {
+        id: 2,
+        title: "UX Designer",
+        company: "DesignHub",
+        location: "Remote",
+        type: "Contract",
+        salary: "$70 - $90 per hour",
+        description: "Join our design team to create beautiful and intuitive user experiences for our products.",
+        responsibilities: [
+          "Create user flows, wireframes, and prototypes",
+          "Conduct user research and usability testing",
+          "Collaborate with product managers and engineers",
+          "Maintain design systems and style guides"
+        ],
+        requirements: [
+          "Portfolio demonstrating UI/UX design skills",
+          "Experience with Figma or Sketch",
+          "Understanding of user-centered design principles",
+          "Excellent communication skills"
+        ],
+        contactEmail: "hiring@designhub.com"
+      },
+      {
+        id: 3,
+        title: "Backend Engineer",
+        company: "DataSystems",
+        location: "New York, NY",
+        type: "Full-time",
+        salary: "$110,000 - $140,000",
+        description: "We're seeking a Backend Engineer to develop and maintain our server infrastructure.",
+        responsibilities: [
+          "Design and implement scalable backend services",
+          "Optimize database performance",
+          "Implement security and data protection measures",
+          "Collaborate with frontend developers to integrate user-facing elements"
+        ],
+        requirements: [
+          "5+ years of backend development experience",
+          "Proficient in Node.js and/or Python",
+          "Experience with database design and optimization",
+          "Knowledge of cloud services (AWS, GCP)"
+        ],
+        contactEmail: "jobs@datasystems.com"
+      }
+    ];
+
+    // DOM elements
+    const jobsContainer = document.getElementById('jobs-container');
+    const jobListings = document.getElementById('job-listings');
+    const jobDetail = document.getElementById('job-detail');
+    const jobDetailContent = document.getElementById('job-detail-content');
+    const backBtn = document.getElementById('back-btn');
+    const currentYear = document.getElementById('current-year');
+
+    // Set current year in footer
+    currentYear.textContent = new Date().getFullYear();
+
+    // Render job listings
+    function renderJobListings() {
+      jobsContainer.innerHTML = '';
+      jobs.forEach(job => {
+        const jobCard = document.createElement('div');
+        jobCard.className = 'job-card';
+        jobCard.innerHTML = `
+          <div style="padding: 1.5rem;">
+            <h3 style="margin-bottom: 0.5rem;">${job.title}</h3>
+            <div style="margin-bottom: 1rem;">
+              <span class="tag">${job.company}</span>
+              <span class="tag">${job.location}</span>
+            </div>
+            <p style="margin-bottom: 1.5rem; color: #666; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;">${job.description}</p>
+            <div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #eee; padding-top: 1rem;">
+              <span style="font-weight: 500;">${job.salary}</span>
+              <button class="btn btn-outline view-detail" data-id="${job.id}">View Details</button>
+            </div>
+          </div>
+        `;
+        jobsContainer.appendChild(jobCard);
+      });
+
+      // Add event listeners to view detail buttons
+      document.querySelectorAll('.view-detail').forEach(button => {
+        button.addEventListener('click', (e) => {
+          const jobId = parseInt(e.target.getAttribute('data-id'));
+          showJobDetail(jobId);
+        });
+      });
+    }
+
+    // Show job detail
+    function showJobDetail(jobId) {
+      const job = jobs.find(j => j.id === jobId);
+      if (!job) return;
+
+      jobDetailContent.innerHTML = `
+        <h2 style="margin-bottom: 1rem;">${job.title}</h2>
+        <div style="margin-bottom: 1.5rem;">
+          <span class="tag">${job.company}</span>
+          <span class="tag">${job.location}</span>
+          <span class="tag">${job.type}</span>
+          <span class="tag">${job.salary}</span>
+        </div>
+        
+        <div style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.75rem;">Job Description</h3>
+          <p>${job.description}</p>
+        </div>
+        
+        <div style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.75rem;">Responsibilities</h3>
+          <ul>
+            ${job.responsibilities.map(resp => `<li>${resp}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div style="margin-bottom: 2rem;">
+          <h3 style="margin-bottom: 0.75rem;">Requirements</h3>
+          <ul>
+            ${job.requirements.map(req => `<li>${req}</li>`).join('')}
+          </ul>
+        </div>
+        
+        <div style="text-align: right;">
+          <button class="btn btn-primary apply-btn" data-email="${job.contactEmail}">Apply Now</button>
+        </div>
+      `;
+
+      jobListings.classList.add('hidden');
+      jobDetail.classList.remove('hidden');
+
+      // Add event listener to apply button
+      document.querySelector('.apply-btn').addEventListener('click', (e) => {
+        const email = e.target.getAttribute('data-email');
+        window.location.href = `mailto:${email}?subject=Job Application&body=Please find my CV attached.`;
+      });
+    }
+
+    // Back button event listener
+    backBtn.addEventListener('click', () => {
+      jobListings.classList.remove('hidden');
+      jobDetail.classList.add('hidden');
+    });
+
+    // Initial render
+    renderJobListings();
+  </script>
+</body>
+</html>

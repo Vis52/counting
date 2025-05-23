@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - HR Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
+    <style>
+        body { background-color: #f8f9fa; padding-top: 20px; }
+        .dashboard-header { margin-bottom: 30px; }
+        .card { margin-bottom: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .nav-tabs .nav-link.active { font-weight: bold; }
+        .table-responsive { overflow-x: auto; }
+        .file-link { cursor: pointer; color: #0d6efd; }
+        .file-link:hover { text-decoration: underline; }
+        .stats-card { border-left: 4px solid; }
+        .stats-card.students { border-color: #4e73df; }
+        .stats-card.professionals { border-color: #1cc88a; }
+        .stats-card.companies { border-color: #f6c23e; }
+        .stat-value { font-size: 1.75rem; font-weight: 700; }
+        .stat-label { text-transform: uppercase; font-weight: 600; font-size: .7rem; }
+        .loading-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(255,255,255,0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="dashboard-header">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h1 class="display-4">GRP Career Portal</h1>
+                    <h2>HR Dashboard</h2>
+                </div>
+                <div>
+                    <button class="btn btn-primary me-2" onclick="refreshAllData()">
+                        <i class="bi bi-arrow-clockwise"></i> Refresh Data
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row mb-4">
+            <div class="col-md-4">
+                <div class="card stats-card students">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value text-primary" id="students-count">0</div>
+                                <div class="stat-label text-primary">Students</div>
+                            </div>
+                            <i class="bi bi-people-fill text-primary" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card professionals">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value text-success" id="professionals-count">0</div>
+                                <div class="stat-label text-success">Professionals</div>
+                            </div>
+                            <i class="bi bi-briefcase-fill text-success" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card stats-card companies">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between">
+                            <div>
+                                <div class="stat-value text-warning" id="companies-count">0</div>
+                                <div class="stat-label text-warning">Companies</div>
+                            </div>
+                            <i class="bi bi-building text-warning" style="font-size: 2rem;"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="students-tab" data-bs-toggle="tab" data-bs-target="#students" type="button" role="tab">
+                    <i class="bi bi-people-fill me-1"></i> Students
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="professionals-tab" data-bs-toggle="tab" data-bs-target="#professionals" type="button" role="tab">
+                    <i class="bi bi-briefcase-fill me-1"></i> Professionals
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="companies-tab" data-bs-toggle="tab" data-bs-target="#companies" type="button" role="tab">
+                    <i class="bi bi-building me-1"></i> Companies
+                </button>
+            </li>
+        </ul>
+
+        <div class="tab-content p-3 border border-top-0 rounded-bottom" id="dashboardTabsContent">
+            <div class="tab-pane fade show active" id="students" role="tabpanel">
+                <div class="table-responsive position-relative">
+                    <table id="studentsTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Requirements</th>
+                                <th>Expected CTC</th>
+                                <th>LinkedIn</th>
+                                <th>Resume</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="professionals" role="tabpanel">
+                <div class="table-responsive position-relative">
+                    <table id="professionalsTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Phone</th>
+                                <th>Current Salary</th>
+                                <th>Notice Period</th>
+                                <th>Requirements</th>
+                                <th>LinkedIn</th>
+                                <th>Resume</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="tab-pane fade" id="companies" role="tabpanel">
+                <div class="table-responsive position-relative">
+                    <table id="companiesTable" class="table table-striped" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>Contact Person</th>
+                                <th>Email</th>
+                                <th>Company</th>
+                                <th>Phone</th>
+                                <th>Job Roles</th>
+                                <th>Vacancies</th>
+                                <th>Location</th>
+                                <th>Document</th>
+                                <th>Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- View Details Modal -->
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="detailsModalTitle">Details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="detailsModalBody">
+                    Loading details...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        // Global variables for DataTables
+        let studentsTable, professionalsTable, companiesTable;
+        
+        $(document).ready(function() {
+            // Initialize DataTables
+            initializeTables();
+            
+            // Load initial data
+            refreshAllData();
+            
+            // Set up tab switching to adjust tables
+            $('button[data-bs-toggle="tab"]').on('shown.bs.tab', function() {
+                $.fn.dataTable.tables({ visible: true, api: true }).columns.adjust();
+            });
+        });
+
+        function initializeTables() {
+            studentsTable = $('#studentsTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50, 100],
+                columns: [
+                    { data: 'name' },
+                    { data: 'email' },
+                    { data: 'phone' },
+                    { data: 'requirements' },
+                    { data: 'expected_ctc' },
+                    { 
+                        data: 'linkedin_url',
+                        render: function(data) {
+                            return data ? `<a href="${data}" target="_blank"><i class="bi bi-linkedin"></i></a>` : '-';
+                        }
+                    },
+                    { 
+                        data: 'resume_path',
+                        render: function(data) {
+                            if (!data) return '-';
+                            const filename = data.split('/').pop(); // Extract clean file name
+                            return `<span class="file-link" onclick="downloadFile('', '${data}')">
+                                <i class="bi bi-file-earmark-pdf"></i> ${filename}
+                            </span>`;
+                        }
+                    },
+                    { 
+                        data: 'submission_date',
+                        render: function(data) {
+                            return new Date(data).toLocaleString();
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-sm btn-outline-primary" onclick="viewDetails('student', ${data})">
+                                <i class="bi bi-eye"></i> View
+                            </button>`;
+                        },
+                        orderable: false
+                    }
+                ]
+            });
+
+            professionalsTable = $('#professionalsTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50, 100],
+                columns: [
+                    { data: 'name' },
+                    { data: 'email' },
+                    { data: 'phone' },
+                    { data: 'current_salary' },
+                    { data: 'notice_period' },
+                    { data: 'requirements' },
+                    { 
+                        data: 'linkedin_url',
+                        render: function(data) {
+                            return data ? `<a href="${data}" target="_blank"><i class="bi bi-linkedin"></i></a>` : '-';
+                        }
+                    },
+                    { 
+                        data: 'resume_path',
+                        render: function(data) {
+                            if (!data) return '-';
+                            const filename = data.split('/').pop(); // Extract clean file name
+                            return `<span class="file-link" onclick="downloadFile('resume_professional', '${data}')">
+                                <i class="bi bi-file-earmark-pdf"></i> ${filename}
+                            </span>`;
+                        }
+                    },
+                    { 
+                        data: 'submission_date',
+                        render: function(data) {
+                            return new Date(data).toLocaleString();
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            return `<button class="btn btn-sm btn-outline-primary" onclick="viewDetails('professional', ${data})">
+                                <i class="bi bi-eye"></i> View
+                            </button>`;
+                        },
+                        orderable: false
+                    }
+                ]
+            });
+
+            companiesTable = $('#companiesTable').DataTable({
+                pageLength: 10,
+                lengthMenu: [5, 10, 25, 50, 100],
+                columns: [
+                    { data: 'contact_person' },
+                    { data: 'email' },
+                    { data: 'company_name' },
+                    { data: 'phone' },
+                    { data: 'job_roles' },
+                    { data: 'vacancies' },
+                    { data: 'location' },
+                    { 
+                        data: 'job_doc_path',
+                        render: function(data) {
+                            if (!data) return '-';
+                            const filename = data.split('/').pop(); // Extract clean file name
+                            return `<span class="file-link" onclick="downloadFile('job_doc', '${data}')">
+                                <i class="bi bi-file-earmark-pdf"></i> ${filename}
+                            </span>`;
+                        }
+                    },
+                    { 
+                        data: 'submission_date',
+                        render: function(data) {
+                            return new Date(data).toLocaleString();
+                        }
+                    },
+                    {
+                        data: 'id',
+                        render: function(data, type, row) {
+                            console.log('Company ID:', data); // Debugging log
+                            if (!data) {
+                                return '<span class="text-danger">No ID</span>'; // Handle missing ID gracefully
+                            }
+                            return `<button class="btn btn-sm btn-outline-primary" onclick="viewDetails('company', ${data})">
+                                <i class="bi bi-eye"></i> View
+                            </button>`;
+                        },
+                        orderable: false
+                    }
+                ]
+            });
+        }
+
+        function refreshAllData() {
+            showLoading(true);
+            fetchData('/hr-dashboard/students', studentsTable, 'students-count');
+            fetchData('/hr-dashboard/professionals', professionalsTable, 'professionals-count');
+            fetchData('/hr-dashboard/companies', companiesTable, 'companies-count');
+        }
+
+        function fetchData(endpoint, table, countElementId) {
+            $.ajax({
+                url: endpoint,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    if (response && response.data && Array.isArray(response.data)) {
+                        table.clear().rows.add(response.data).draw();
+                        $(`#${countElementId}`).text(response.data.length);
+                    } else {
+                        console.error('Unexpected response format from', endpoint, response);
+                        showError('Received invalid data format');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error('Error fetching data from', endpoint, error);
+                    showError('Error loading data. Please try again.');
+                },
+                complete: function() {
+                    showLoading(false);
+                }
+            });
+        }
+
+        function downloadFile(type, filename) {
+            // Simple validation
+            if (!filename.match(/^[a-zA-Z0-9_\-./]+$/)) {
+                alert('Invalid filename');
+                return;
+            }
+            const filePath = filename.startsWith('uploads/') ? filename : `uploads/${filename}`; // Ensure single 'uploads/' prefix
+            window.open(`/${filePath}`, '_blank');
+        }
+
+        function viewDetails(type, id) {
+            console.log(`Fetching details for ${type} with ID: ${id}`); // Debugging log
+            showLoading(true);
+            $.ajax({
+                url: `/${type}s/${id}`,
+                method: 'GET',
+                dataType: 'json',
+                success: function(response) {
+                    console.log('Details response:', response); // Debugging log
+                    if (response && response.data) {
+                        showDetailsModal(type, response.data);
+                    } else {
+                        console.error('Unexpected response format for details', response);
+                        showError('Error loading details. Please try again.');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error(`Error fetching details for ${type} with ID: ${id}`, error); // Debugging log
+                    showError('Error loading details. Please try again.');
+                },
+                complete: function() {
+                    showLoading(false);
+                }
+            });
+        }
+
+        function showDetailsModal(type, data) {
+            const modal = new bootstrap.Modal(document.getElementById('detailsModal'));
+            const title = document.getElementById('detailsModalTitle');
+            const body = document.getElementById('detailsModalBody');
+            
+            title.textContent = `${type.charAt(0).toUpperCase() + type.slice(1)} Details`;
+            
+            let html = '<div class="row">';
+            
+            if (type === 'student') {
+                html += `
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> ${escapeHtml(data.name) || '-'}</p>
+                        <p><strong>Email:</strong> ${escapeHtml(data.email) || '-'}</p>
+                        <p><strong>Phone:</strong> ${escapeHtml(data.phone) || '-'}</p>
+                        <p><strong>Requirements:</strong> ${escapeHtml(data.requirements) || '-'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Expected CTC:</strong> ${escapeHtml(data.expected_ctc) || '-'}</p>
+                        <p><strong>LinkedIn:</strong> ${data.linkedin_url ? `<a href="${escapeHtml(data.linkedin_url)}" target="_blank">View Profile</a>` : '-'}</p>
+                        <p><strong>Resume:</strong> ${data.resume_path ? `<a href="#" onclick="downloadFile('resume_student', '${escapeHtml(data.resume_path.split('/').pop())}')">Download</a>` : '-'}</p>
+                        <p><strong>Submission Date:</strong> ${new Date(data.submission_date).toLocaleString()}</p>
+                    </div>
+                `;
+            } else if (type === 'professional') {
+                html += `
+                    <div class="col-md-6">
+                        <p><strong>Name:</strong> ${escapeHtml(data.name) || '-'}</p>
+                        <p><strong>Email:</strong> ${escapeHtml(data.email) || '-'}</p>
+                        <p><strong>Phone:</strong> ${escapeHtml(data.phone) || '-'}</p>
+                        <p><strong>Current Salary:</strong> ${escapeHtml(data.current_salary) || '-'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Notice Period:</strong> ${escapeHtml(data.notice_period) || '-'}</p>
+                        <p><strong>Requirements:</strong> ${escapeHtml(data.requirements) || '-'}</p>
+                        <p><strong>LinkedIn:</strong> ${data.linkedin_url ? `<a href="${escapeHtml(data.linkedin_url)}" target="_blank">View Profile</a>` : '-'}</p>
+                        <p><strong>Resume:</strong> ${data.resume_path ? `<a href="#" onclick="downloadFile('resume_professional', '${escapeHtml(data.resume_path.split('/').pop())}')">Download</a>` : '-'}</p>
+                        <p><strong>Submission Date:</strong> ${new Date(data.submission_date).toLocaleString()}</p>
+                    </div>
+                `;
+            } else if (type === 'company') {
+                html += `
+                    <div class="col-md-6">
+                        <p><strong>Contact Person:</strong> ${escapeHtml(data.contact_person) || '-'}</p>
+                        <p><strong>Email:</strong> ${escapeHtml(data.email) || '-'}</p>
+                        <p><strong>Company Name:</strong> ${escapeHtml(data.company_name) || '-'}</p>
+                        <p><strong>Phone:</strong> ${escapeHtml(data.phone) || '-'}</p>
+                        <p><strong>Job Roles:</strong> ${escapeHtml(data.job_roles) || '-'}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>Vacancies:</strong> ${escapeHtml(data.vacancies) || '-'}</p>
+                        <p><strong>Location:</strong> ${escapeHtml(data.location) || '-'}</p>
+                        <p><strong>Website:</strong> ${data.website ? `<a href="${escapeHtml(data.website)}" target="_blank">${escapeHtml(data.website)}</a>` : '-'}</p>
+                        <p><strong>Document:</strong> ${data.job_doc_path ? `<a href="#" onclick="downloadFile('job_doc', '${escapeHtml(data.job_doc_path.split('/').pop())}')">Download</a>` : '-'}</p>
+                        <p><strong>Submission Date:</strong> ${new Date(data.submission_date).toLocaleString()}</p>
+                    </div>
+                    ${data.job_description ? `<div class="col-12 mt-3"><h5>Job Description</h5><p>${escapeHtml(data.job_description)}</p></div>` : ''}
+                    ${data.qualifications ? `<div class="col-12 mt-3"><h5>Qualifications</h5><p>${escapeHtml(data.qualifications)}</p></div>` : ''}
+                    ${data.experience ? `<div class="col-12 mt-3"><h5>Experience</h5><p>${escapeHtml(data.experience)}</p></div>` : ''}
+                    ${data.additional_notes ? `<div class="col-12 mt-3"><h5>Additional Notes</h5><p>${escapeHtml(data.additional_notes)}</p></div>` : ''}
+                `;
+            }
+            
+            html += '</div>';
+            body.innerHTML = html;
+            modal.show();
+        }
+
+        function showLoading(show) {
+            if (show) {
+                $('.table-responsive').each(function() {
+                    if (!$(this).find('.loading-overlay').length) {
+                        $(this).append('<div class="loading-overlay"><div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div></div>');
+                    }
+                });
+            } else {
+                $('.loading-overlay').remove();
+            }
+        }
+
+        function showError(message) {
+            alert(message); // In a real app, you might want a prettier error display
+        }
+
+        function escapeHtml(unsafe) {
+            if (!unsafe) return unsafe;
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+    </script>
+</body>
+</html>

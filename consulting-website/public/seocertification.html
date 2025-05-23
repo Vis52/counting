@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career | SEO Certification Program</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* New Color Scheme */
+        :root {
+            --primary: #2c5282; /* Deep Blue */
+            --secondary: #ed8936; /* Warm Orange */
+            --accent: #48bb78; /* Emerald Green */
+            --light: #edf2f7; /* Soft Gray */
+            --dark: #1a202c; /* Rich Black */
+            --success: #9f7aea; /* Purple */
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            line-height: 1.7;
+            color: var(--dark);
+            background-color: var(--light);
+        }
+
+        .container {
+            width: 90%;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        /* Header Styles */
+        header {
+            background: linear-gradient(120deg, var(--primary) 30%, var(--dark));
+            color: white;
+            padding: 4rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('seo-pattern.jpg') center/cover;
+            opacity: 0.15;
+            z-index: 1;
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            position: sticky;
+            top: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 100;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 800;
+        }
+
+        .logo span {
+            color: var(--secondary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--secondary);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.3;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 2px solid var(--accent);
+        }
+
+        .cta-button:hover {
+            background-color: transparent;
+            color: var(--accent);
+        }
+
+        /* Main Content Styles */
+        section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 5px;
+            background: var(--secondary);
+            margin: 0.8rem auto 0;
+        }
+
+        /* Why Choose Us Section */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            color: var(--secondary);
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 1rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* Course Offerings Section */
+        .course-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 1rem 2rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-button:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            background: white;
+            padding: 2.5rem;
+            border-radius: 12px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .course-highlights {
+            margin-bottom: 2.5rem;
+        }
+
+        .course-highlights h3 {
+            color: var(--primary);
+            margin-bottom: 1.2rem;
+            font-size: 1.8rem;
+        }
+
+        .highlight-list {
+            list-style-type: none;
+        }
+
+        .highlight-list li {
+            padding: 0.6rem 0;
+            position: relative;
+            padding-left: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .highlight-list li:before {
+            content: '✔';
+            color: var(--success);
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .pricing {
+            background: var(--light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .price {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .price small {
+            font-size: 1.2rem;
+            font-weight: normal;
+            color: var(--dark);
+        }
+
+        /* Syllabus Section */
+        .syllabus-accordion {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .accordion-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .accordion-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .accordion-header:hover {
+            background-color: var(--dark);
+        }
+
+        .accordion-header h3 {
+            margin: 0;
+            font-size: 1.3rem;
+        }
+
+        .accordion-content {
+            background-color: white;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+
+        .accordion-content-inner {
+            padding: 2rem;
+        }
+
+        .module-list {
+            list-style-type: none;
+        }
+
+        .module-list li {
+            padding: 1rem 0;
+            border-bottom: 1px solid var(--light);
+            display: flex;
+            justify-content: space-between;
+            font-size: 1.1rem;
+        }
+
+        .module-list li:last-child {
+            border-bottom: none;
+        }
+
+        .module-duration {
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* FAQ Section */
+        .faq-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+        }
+
+        .faq-question {
+            background-color: var(--light);
+            color: var(--dark);
+            padding: 1.5rem 2rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: #e2e8f0;
+        }
+
+        .faq-answer {
+            background-color: white;
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out, padding 0.3s ease;
+        }
+
+        .faq-answer.active {
+            padding: 2rem;
+            max-height: 600px;
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-column h3 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-links li {
+            margin-bottom: 0;
+        }
+
+        .footer-links a {
+            color: #a0aec0;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            background: rgba(255,255,255,0.15);
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: var(--secondary);
+        }
+
+        .copyright {
+            color: #a0aec0;
+            font-size: 0.95rem;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 80px;
+                left: 0;
+                width: 100%;
+                background: var(--dark);
+                padding: 1rem;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .hamburger {
+                display: block;
+                font-size: 1.8rem;
+                cursor: pointer;
+                color: white;
+            }
+
+            .section-title h2 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header>
+        <div class="header-bg"></div>
+        <div class="container header-content">
+            <nav>
+                <div class="logo">SEO<span>Edge</span></div>
+                <div class="hamburger" onclick="toggleMenu()">☰</div>
+                <div class="nav-links">
+                    <a href="#about">About</a>
+                    <a href="#courses">Courses</a>
+                    <a href="#syllabus">Syllabus</a>
+                    <a href="#faq">FAQ</a>
+                    <a href="#contact">Contact</a>
+                </div>
+            </nav>
+            
+            <div class="hero">
+                <h1>Master SEO in the Digital Age</h1>
+                <p>Our intensive certification program equips you with cutting-edge SEO strategies, tools, and real-world projects to boost online visibility and drive results.</p>
+                <a href="#courses" class="cta-button">Explore Programs</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Why Choose Us Section -->
+    <section id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>Why Choose Our SEO Program</h2>
+            </div>
+            
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Modern SEO Strategies</h3>
+                    <p>Learn advanced SEO techniques, including on-page, off-page, and technical SEO, to rank higher on search engines.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">👨‍💼</div>
+                    <h3>Industry Experts</h3>
+                    <p>Our instructors are seasoned SEO professionals from top agencies, sharing practical insights and proven strategies.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Hands-On Projects</h3>
+                    <p>Build a portfolio with real-world SEO projects, such as keyword research and site audits, to showcase your expertise.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🌐</div>
+                    <h3>Holistic SEO Focus</h3>
+                    <p>Master all aspects of SEO, from content optimization to analytics, for versatile career opportunities.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h3>Career Support</h3>
+                    <p>Get resume reviews, mock interviews, and access to our network of 5,000+ hiring partners worldwide.</p>
+                </div>
+                
+                <div class="feature-card">
+                    <div class="feature-icon">📜</div>
+                    <h3>Recognized Certification</h3>
+                    <p>Earn an SEO Certification accredited by the Global Digital Marketing Council, valued by employers globally.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Course Offerings Section -->
+    <section id="courses">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our SEO Programs</h2>
+            </div>
+            
+            <div class="course-tabs">
+                <button class="tab-button active" onclick="openTab(event, 'beginner')">SEO Beginner</button>
+                <button class="tab-button" onclick="openTab(event, 'advanced')">Advanced SEO</button>
+                <button class="tab-button" onclick="openTab(event, 'technical')">Technical SEO Specialist</button>
+                <button class="tab-button" onclick="openTab(event, 'content')">Content SEO Specialist</button>
+            </div>
+            
+            <div id="beginner" class="tab-content active">
+                <h3>SEO Beginner Certification</h3>
+                <p>15-day intensive program for beginners to learn the fundamentals of SEO and optimize websites for search engines.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Introduction to SEO</li>
+                        <li>Keyword research basics</li>
+                        <li>On-page SEO techniques</li>
+                        <li>Link building fundamentals</li>
+                        <li>SEO tools (e.g., Google Analytics)</li>
+                        <li>Basic SEO reporting</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="advanced" class="tab-content">
+                <h3>Advanced SEO Masterclass</h3>
+                <p>15-day intensive program to become a proficient SEO expert with advanced strategies.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Advanced keyword research</li>
+                        <li>Competitor analysis</li>
+                        <li>Advanced link building strategies</li>
+                        <li>Local SEO optimization</li>
+                        <li>SEO for e-commerce</li>
+                        <li>Advanced analytics with Google Search Console</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="technical" class="tab-content">
+                <h3>Technical SEO Specialist Program</h3>
+                <p>15-day program focused on mastering technical SEO for website performance.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Site architecture optimization</li>
+                        <li>Page speed optimization</li>
+                        <li>Mobile SEO best practices</li>
+                        <li>Structured data and schema markup</li>
+                        <li>Crawlability and indexing</li>
+                        <li>Technical SEO audits</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+            
+            <div id="content" class="tab-content">
+                <h3>Content SEO Specialist Program</h3>
+                <p>15-day program for mastering content optimization for search engines.</p>
+                
+                <div class="course-highlights">
+                    <h4>What You'll Learn:</h4>
+                    <ul class="highlight-list">
+                        <li>Content strategy for SEO</li>
+                        <li>Optimizing content for keywords</li>
+                        <li>Blog and article optimization</li>
+                        <li>Content gap analysis</li>
+                        <li>Voice search optimization</li>
+                        <li>Content performance tracking</li>
+                    </ul>
+                </div>
+                
+                <div class="pricing">
+                    <div class="price">₹4999 <small></small></div>
+                    <p>Next cohort: Will Start Soon.</p>
+                    <a href="#" class="cta-button">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Syllabus Section -->
+    <section id="syllabus">
+        <div class="container">
+            <div class="section-title">
+                <h2>Detailed Program Syllabus</h2>
+                <p>Below is the complete curriculum for our flagship SEO Beginner Certification</p>
+            </div>
+            
+            <div class="syllabus-accordion">
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 1: SEO Fundamentals</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Introduction to SEO <span class="module-duration">2 hours</span></li>
+                                <li>How search engines work <span class="module-duration">2 hours</span></li>
+                                <li>SEO vs. SEM vs. PPC <span class="module-duration">2 hours</span></li>
+                                <li>Case study: SEO for a small business <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Identify SEO opportunities <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 2: Keyword Research</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Keyword research tools <span class="module-duration">2 hours</span></li>
+                                <li>Long-tail vs. short-tail keywords <span class="module-duration">2 hours</span></li>
+                                <li>Keyword intent analysis <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Keyword strategy for a blog <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Create a keyword list <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 3: On-Page SEO</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Optimizing title tags and meta descriptions <span class="module-duration">2 hours</span></li>
+                                <li>Header tags and content structure <span class="module-duration">2 hours</span></li>
+                                <li>Image optimization <span class="module-duration">2 hours</span></li>
+                                <li>Case study: On-page SEO audit <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Optimize a webpage <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 4: Off-Page SEO</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Link building strategies <span class="module-duration">2 hours</span></li>
+                                <li>Guest posting and outreach <span class="module-duration">2 hours</span></li>
+                                <li>Social media for SEO <span class="module-duration">2 hours</span></li>
+                                <li>Case study: Building backlinks <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Develop a link-building plan <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Module 5: SEO Tools and Analytics</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Using Google Analytics <span class="module-duration">2 hours</span></li>
+                                <li>Google Search Console basics <span class="module-duration">2 hours</span></li>
+                                <li>Other SEO tools (e.g., SEMrush, Ahrefs) <span class="module-duration">2 hours</span></li>
+                                <li>Case study: SEO performance report <span class="module-duration">2 hours</span></li>
+                                <li>Assignment: Create an SEO report <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion-item">
+                    <div class="accordion-header" onclick="toggleAccordion(this)">
+                        <h3>Capstone Project</h3>
+                        <span class="accordion-icon">+</span>
+                    </div>
+                    <div class="accordion-content">
+                        <div class="accordion-content-inner">
+                            <ul class="module-list">
+                                <li>Planning an SEO strategy <span class="module-duration">2 hours</span></li>
+                                <li>Conducting a website SEO audit <span class="module-duration">4 hours</span></li>
+                                <li>Implementing SEO improvements <span class="module-duration">3 hours</span></li>
+                                <li>Presentation preparation <span class="module-duration">2 hours</span></li>
+                                <li>Final presentation and feedback <span class="module-duration">2 hours</span></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq">
+        <div class="container">
+            <div class="section-title">
+                <h2>Frequently Asked Questions</h2>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Who is this program designed for?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our SEO Beginner program is designed for:</p>
+                        <ul>
+                            <li>Complete beginners with no SEO experience</li>
+                            <li>Career changers entering digital marketing</li>
+                            <li>Professionals adding SEO skills</li>
+                            <li>Entrepreneurs optimizing their own websites</li>
+                            <li>Students preparing for marketing careers</li>
+                        </ul>
+                        <p>No prior SEO knowledge is required.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is the time commitment required?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>The 15-day Beginner program requires approximately 4-5 hours per day:</p>
+                        <ul>
+                            <li>2 hours of live sessions (recordings available)</li>
+                            <li>1-2 hours of video tutorials and readings</li>
+                            <li>1-2 hours for projects and assignments</li>
+                        </ul>
+                        <p>Designed for intensive learning over a short period.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What kind of certification will I receive?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Upon successful completion (80%+ overall score), you'll receive:</p>
+                        <ul>
+                            <li>SEO Beginner Certification from GRP Career</li>
+                            <li>Verified digital badge for LinkedIn and portfolios</li>
+                            <li>PDF certificate with unique verification code</li>
+                            <li>Transcript of completed modules</li>
+                        </ul>
+                        <p>Recognized by employers worldwide.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What are the technical requirements?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You'll need:</p>
+                        <ul>
+                            <li>Reliable internet (5Mbps+ recommended)</li>
+                            <li>Computer with 8GB RAM minimum</li>
+                            <li>Modern browser (Chrome, Firefox)</li>
+                            <li>Basic office software (e.g., Google Docs, Excel)</li>
+                            <li>Zoom for live sessions</li>
+                        </ul>
+                        <p>All software used is free or widely available.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>Is financial aid or payment plans available?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer:</p>
+                        <ul>
+                            <li>Payment plans (3-6 monthly installments)</li>
+                            <li>Need-based scholarships (apply separately)</li>
+                            <li>Group discounts (10% off for 3+ enrollments)</li>
+                            <li>Alumni discounts for returning learners</li>
+                        </ul>
+                        <p>Contact admissions for details.</p>
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question" onclick="toggleFaq(this)">
+                        <h3>What is your refund policy?</h3>
+                        <span class="faq-toggle">+</span>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Our refund policy:</p>
+                        <ul>
+                            <li>100% refund before program start</li>
+                            <li>75% refund within 3 days of start</li>
+                            <li>50% refund within 5 days of start</li>
+                            <li>No refunds after 5 days</li>
+                        </ul>
+                        <p>Submit requests in writing; special cases considered.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Ready to Start Your SEO Journey?</h2>
+                <p>Have questions or need help choosing a program? Our team is here to guide you.</p>
+            </div>
+            
+            <div style="text-align: center; margin-top: 2.5rem;">
+                <a href="/cdn-cgi/l/email-protection#4d24232b220d2a3f3d2e2c3f28283f632e2220" class="cta-button">Email Us</a>
+                <a href="tel:+919643058418" class="cta-button" style="background: var(--primary); border-color: var(--primary); margin-left: 1.5rem;">Call Us</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-column">
+                    <h3>GRP Career</h3>
+                    <p>Empowering aspiring SEO professionals with modern optimization skills through hands-on training and real-world projects.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-github"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                <div class="footer-column">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#courses">Programs</a></li>
+                        <li><a href="#syllabus">Syllabus</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>© 2025 GRP Career. All rights reserved. | <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+            </div>
+        </div>
+    </footer>
+    
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Tab functionality
+        function openTab(evt, tabName) {
+            const tabContents = document.getElementsByClassName("tab-content");
+            for (let i = 0; i < tabContents.length; i++) {
+                tabContents[i].classList.remove("active");
+            }
+            
+            const tabButtons = document.getElementsByClassName("tab-button");
+            for (let i = 0; i < tabButtons.length; i++) {
+                tabButtons[i].classList.remove("active");
+            }
+            
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+        
+        // Accordion functionality for syllabus
+        function toggleAccordion(header) {
+            const item = header.parentElement;
+            const content = header.nextElementSibling;
+            const icon = header.querySelector('.accordion-icon');
+
+            if (!icon) return; // Prevent errors if .accordion-icon is missing
+
+            if (content.style.maxHeight) {
+                content.style.maxHeight = null;
+                icon.textContent = '+';
+            } else {
+                const allContents = document.querySelectorAll('.accordion-content');
+                const allIcons = document.querySelectorAll('.accordion-icon');
+                allContents.forEach((c, i) => {
+                    c.style.maxHeight = null;
+                    if (allIcons[i]) allIcons[i].textContent = '+';
+                });
+
+                content.style.maxHeight = content.scrollHeight + 'px';
+                icon.textContent = '−';
+            }
+        }
+        
+        // FAQ toggle functionality
+        function toggleFaq(question) {
+            const answer = question.nextElementSibling;
+            const toggle = question.querySelector('.faq-toggle');
+
+            if (!toggle) return; // Prevent errors if .faq-toggle is missing
+
+            if (answer.classList.contains('active')) {
+                answer.classList.remove('active');
+                toggle.textContent = '+';
+            } else {
+                const allAnswers = document.querySelectorAll('.faq-answer');
+                const allToggles = document.querySelectorAll('.faq-toggle');
+                allAnswers.forEach((a, i) => {
+                    a.classList.remove('active');
+                    if (allToggles[i]) allToggles[i].textContent = '+';
+                });
+
+                answer.classList.add('active');
+                toggle.textContent = '−';
+            }
+        }
+
+        // Hamburger menu toggle
+        function toggleMenu() {
+            const navLinks = document.querySelector('.nav-links');
+            if (navLinks) {
+                const isExpanded = navLinks.classList.toggle('active');
+                const hamburger = document.querySelector('.hamburger');
+                if (hamburger) hamburger.setAttribute('aria-expanded', isExpanded);
+            }
+        }
+    </script>
+</body>
+</html>

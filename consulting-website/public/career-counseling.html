@@ -1,0 +1,929 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>GRP Career Pvt Ltd.</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="consultancy" name="keywords">
+        <meta content="consultancy" name="description">
+
+        <!-- Favicon -->
+        <link href="img/favicon.ico" rel="icon">
+
+        <!-- Google Font -->
+        <link href="https://fonts.googleapis.com/css2?family=Lato&family=Oswald:wght@200;300;400&display=swap" rel="stylesheet">
+        
+        <!-- CSS Libraries -->
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+        <link href="lib/animate/animate.min.css" rel="stylesheet">
+        <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+
+        <!-- Template Stylesheet -->
+        <link href="css/style.css" rel="stylesheet">
+    </head>
+
+    <body>
+        <!-- Top Bar Start -->
+        <div class="top-bar d-none d-md-block">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="top-bar-left">
+                            <div class="text">
+                                <i class="far fa-clock"></i>
+                                <h2>10:00 - 7:00</h2>
+                                <p>Mon - Sat</p>
+                            </div>
+                            <div class="text">
+                                <i class="fa fa-phone-alt"></i>
+                                <h2>+91 9643058418</h2>
+                                <p>For Appointment</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="top-bar-right">
+                            <div class="social">
+                                <a href=""><i class="fab fa-twitter"></i></a>
+                                <a href=""><i class="fab fa-facebook-f"></i></a>
+                                <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                <a href=""><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Top Bar End -->
+
+        <!-- Nav Bar Start -->
+        <div class="navbar navbar-expand-lg bg-dark navbar-dark">
+          <div class="container-fluid">
+              <a href="index.html" class="navbar-brand">
+                  <img src="img/logo.png" alt="GRP Career Pvt Ltd.">
+              </a>
+              <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
+                  <span class="navbar-toggler-icon"></span>
+              </button>
+
+              <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                  <div class="navbar-nav ml-auto">
+                    <a href="/service.html" class="nav-item nav-link">COURSES</a>
+                    <a href="/feature.html" class="nav-item nav-link">WHY CHOOSE US!</a>
+                    <a href="/review.html" class="nav-item nav-link">Success Stories</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Check us out!</a>
+                        <div class="dropdown-menu">
+                            <a href="blog.html" class="dropdown-item">Blogs</a>
+                            
+                            <a href="job.html" class="dropdown-item">Careers at GRP</a>
+                            <a href="about.html" class="dropdown-item">About us</a>
+                            <a href="advisor.html" class="dropdown-item">Advisor</a>
+
+                        </div>
+                    </div>
+                    <a href="/company_reg.html" class="nav-button">Contact Us</a>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Nav Bar End -->
+        <!-- Nav Bar End -->
+
+        <button id="chatbot-toggle" style="position: fixed; bottom: 20px; right: 20px; padding: 10px 20px; background: #75c8dd; border: none; border-radius: 5px; cursor: pointer; z-index: 999; color: white; font-weight: bold;">Chat with Us</button>
+
+        <!-- Chatbot Container -->
+        <div id="chatbot-container" class="chatbot-popup">
+          <div id="chatbot-header">
+            <h4>GRP Assistant</h4>
+            <button id="chatbot-close">X</button>
+          </div>
+          <div id="chatbot-messages"></div>
+          <div id="chatbot-input">
+            <input type="text" id="user-input" placeholder="Type your message...">
+            <button id="send-message">Send</button>
+          </div>
+        </div>
+        
+        <!-- Chatbot CSS -->
+        <style>
+          .chatbot-popup {
+            position: fixed;
+            bottom: -400px;
+            right: 20px;
+            width: 300px;
+            background: rgba(255, 255, 255, 0.95);
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            transition: bottom 0.5s ease-in-out;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            max-height: 400px;
+          }
+        
+          .chatbot-popup.active {
+            bottom: 20px;
+          }
+        
+          #chatbot-header {
+            background: #75c8dd;
+            padding: 10px;
+            border-radius: 10px 10px 0 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+          }
+        
+          #chatbot-header h4 {
+            margin: 0;
+            color: white;
+          }
+        
+          #chatbot-close {
+            background: none;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            color: white;
+          }
+        
+          #chatbot-messages {
+            height: 300px;
+            overflow-y: auto;
+            padding: 10px;
+            background: #f9f9f9;
+            flex-grow: 1;
+          }
+        
+          .message {
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+            word-wrap: break-word;
+          }
+        
+          .user-message {
+            background: #75c8dd;
+            color: white;
+            margin-left: auto;
+            text-align: right;
+          }
+        
+          .bot-message {
+            background: #e0e0e0;
+            margin-right: auto;
+          }
+        
+          #chatbot-input {
+            display: flex;
+            padding: 10px;
+            background: #fff;
+            border-top: 1px solid #ccc;
+            border-radius: 0 0 10px 10px;
+          }
+        
+          #user-input {
+            flex: 1;
+            padding: 8px;
+            border: 1px solid #75c8dd;
+            border-radius: 5px;
+            margin-right: 10px;
+          }
+        
+          #send-message {
+            padding: 8px 15px;
+            background: #75c8dd;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+          }
+        
+          #send-message:hover {
+            background: #5ab7d0;
+          }
+        
+          .typing-indicator {
+            display: inline-block;
+            padding: 8px;
+            background: #e0e0e0;
+            border-radius: 5px;
+          }
+        
+          .typing-indicator span {
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #666;
+            border-radius: 50%;
+            margin: 0 2px;
+            animation: bounce 1.4s infinite ease-in-out;
+          }
+        
+          .typing-indicator span:nth-child(2) {
+            animation-delay: 0.2s;
+          }
+        
+          .typing-indicator span:nth-child(3) {
+            animation-delay: 0.4s;
+          }
+        
+          @keyframes bounce {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+          }
+        </style>
+        
+        <!-- Chatbot JavaScript -->
+        <script>
+          document.addEventListener('DOMContentLoaded', function() {
+            // Chatbot data storage
+            const userData = {
+              name: "",
+              email: "",
+              phone: "",
+              interests: [],
+              conversation: []
+            };
+        
+            // Chatbot responses
+            const botResponses = {
+              greeting: ["Hi there! I'm GRP Career Assistant. May I know your name?", "Hello! Welcome to GRP Consultancy. What's your name?"],
+              nameRequest: ["Great! Could you share your email address too?", "Thanks! What's your email address?"],
+              emailRequest: ["Perfect! Lastly, could you share your phone number?", "Almost done! What's your phone number?"],
+              farewell: ["Thank you! We'll contact you shortly.", "Your information has been saved. We'll reach out soon!"],
+              default: ["How can I assist you with your career goals?", "What career services are you interested in?"],
+              error: ["I didn't understand that. Could you please rephrase?", "Sorry, I'm not sure what you mean."]
+            };
+        
+            // DOM elements
+            const chatbotContainer = document.getElementById('chatbot-container');
+            const chatbotMessages = document.getElementById('chatbot-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-message');
+            const toggleButton = document.getElementById('chatbot-toggle');
+            const closeButton = document.getElementById('chatbot-close');
+            
+            let conversationStage = 0; // 0=name, 1=email, 2=phone, 3=free chat
+            let isWaitingForResponse = false;
+        
+            // Toggle chatbot visibility
+            toggleButton.addEventListener('click', () => {
+              chatbotContainer.classList.toggle('active');
+              if (chatbotContainer.classList.contains('active') && conversationStage === 0) {
+                setTimeout(() => {
+                  addMessage('bot', getRandomResponse(botResponses.greeting));
+                }, 500);
+              }
+            });
+        
+            closeButton.addEventListener('click', () => {
+              chatbotContainer.classList.remove('active');
+            });
+        
+            // Input sanitization
+            function sanitizeInput(input) {
+              const div = document.createElement('div');
+              div.textContent = input;
+              return div.innerHTML;
+            }
+        
+            // Validation functions
+            function validateEmail(email) {
+              return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+            }
+        
+            function validatePhone(phone) {
+              // Simple phone validation - adjust as needed
+              return /^[\d\s\-()+]{10,}$/.test(phone);
+            }
+        
+            // Add message to chat
+            function addMessage(sender, text) {
+              if (isWaitingForResponse) return;
+              
+              const messageDiv = document.createElement('div');
+              messageDiv.classList.add('message', `${sender}-message`);
+              messageDiv.innerHTML = text;
+              chatbotMessages.appendChild(messageDiv);
+              chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        
+            // Show typing indicator
+            function showTypingIndicator() {
+              if (isWaitingForResponse) return;
+              
+              isWaitingForResponse = true;
+              const typingDiv = document.createElement('div');
+              typingDiv.classList.add('typing-indicator');
+              typingDiv.id = 'typing-indicator';
+              typingDiv.innerHTML = '<span></span><span></span><span></span>';
+              chatbotMessages.appendChild(typingDiv);
+              chatbotMessages.scrollTop = chatbotMessages.scrollHeight;
+            }
+        
+            // Hide typing indicator
+            function hideTypingIndicator() {
+              const typingDiv = document.getElementById('typing-indicator');
+              if (typingDiv) {
+                typingDiv.remove();
+              }
+              isWaitingForResponse = false;
+            }
+        
+            // Get random response
+            function getRandomResponse(array) {
+              return array[Math.floor(Math.random() * array.length)];
+            }
+        
+            // Process user messages with delay for natural flow
+            function processMessage(message) {
+              showTypingIndicator();
+              
+              setTimeout(() => {
+                hideTypingIndicator();
+                let response;
+                
+                switch(conversationStage) {
+                  case 0: // Name collection
+                    userData.name = message;
+                    userData.conversation.push({sender: 'user', message: message});
+                    response = getRandomResponse(botResponses.nameRequest);
+                    conversationStage = 1;
+                    break;
+                    
+                  case 1: // Email collection
+                    if (validateEmail(message)) {
+                      userData.email = message;
+                      userData.conversation.push({sender: 'user', message: message});
+                      response = getRandomResponse(botResponses.emailRequest);
+                      conversationStage = 2;
+                    } else {
+                      response = "Please enter a valid email address (e.g., example@domain.com)";
+                    }
+                    break;
+                    
+                  case 2: // Phone collection
+                    if (validatePhone(message)) {
+                      userData.phone = message;
+                      userData.conversation.push({sender: 'user', message: message});
+                      response = getRandomResponse(botResponses.farewell);
+                      conversationStage = 3;
+                      saveConversation();
+                    } else {
+                      response = "Please enter a valid phone number (at least 10 digits)";
+                    }
+                    break;
+                    
+                  case 3: // Free conversation
+                    userData.conversation.push({sender: 'user', message: message});
+                    const msg = message.toLowerCase();
+                    
+                    if (msg.includes('course') || msg.includes('program')) {
+                      response = 'We offer Resume Masterclass, Interview Bootcamp, and Career Roadmap programs. Which interests you?';
+                      userData.interests.push('asked about courses');
+                    } else if (msg.includes('contact') || msg.includes('reach')) {
+                      response = 'Our team will contact you at ' + userData.email + ' within 24 hours';
+                    } else if (msg.includes('start over') || msg.includes('reset')) {
+                      response = 'Okay, let\'s start over. What\'s your name?';
+                      conversationStage = 0;
+                      userData.name = "";
+                      userData.email = "";
+                      userData.phone = "";
+                    } else {
+                      response = getRandomResponse(botResponses.default);
+                    }
+                    break;
+                    
+                  default:
+                    response = getRandomResponse(botResponses.error);
+                }
+                
+                addMessage('bot', response);
+                if (conversationStage !== 1 && conversationStage !== 2) { // Don't save validation errors
+                  userData.conversation.push({sender: 'bot', message: response});
+                }
+              }, 1000 + Math.random() * 1000); // Random delay between 1-2 seconds
+            }
+        
+            // Save conversation to database
+            function saveConversation() {
+              const conversationData = {
+                name: userData.name,
+                email: userData.email,
+                phone: userData.phone,
+                interests: userData.interests.join(', '),
+                conversation: JSON.stringify(userData.conversation),
+                created_at: new Date().toISOString()
+              };
+        
+              // Show saving indicator
+              const savingDiv = document.createElement('div');
+              savingDiv.classList.add('message', 'bot-message');
+              savingDiv.textContent = "Saving your information...";
+              chatbotMessages.appendChild(savingDiv);
+              
+              fetch('/save-chat', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(conversationData)
+              })
+              .then(response => {
+                if (!response.ok) throw new Error('Network response was not ok');
+                return response.json();
+              })
+              .then(data => {
+                savingDiv.textContent = "Your information has been saved successfully!";
+              })
+              .catch(error => {
+                console.error('Error:', error);
+                savingDiv.textContent = "We couldn't save your information. Please try again later.";
+              });
+            }
+        
+            // Send message function
+            function sendMessage() {
+              const message = sanitizeInput(userInput.value.trim());
+              if (!message) {
+                userInput.focus();
+                return;
+              }
+        
+              addMessage('user', message);
+              processMessage(message);
+              userInput.value = '';
+              userInput.focus();
+            }
+        
+            // Event listeners
+            sendButton.addEventListener('click', sendMessage);
+            userInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') sendMessage();
+            });
+        
+            // Initialize with greeting when opened
+            chatbotContainer.addEventListener('click', (e) => {
+              if (e.target === chatbotContainer && conversationStage === 0) {
+                setTimeout(() => {
+                  addMessage('bot', getRandomResponse(botResponses.greeting));
+                }, 500);
+              }
+            });
+          });
+        </script>
+        <!-- Single Page Start -->
+        <div class="single mt-125">
+          <div class="container">
+              <div class="section-header text-center">
+                  <p>Professional Development</p>
+                  <h2>Interview Preparation Program</h2>
+                  <div class="icon-header mb-4">
+                      <img src="svg/prepration.svg" alt="Interview Icon" style="width: 80px;">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-12">
+                      <div class="program-overview bg-light p-4 rounded mb-5">
+                          <div class="row">
+                              <div class="col-md-4 text-center">
+                                  <img src="svg/program.svg" alt="Duration" style="width: 50px;" class="mb-2">
+                                  <h5>15-Day Program</h5>
+                                  <p>Structured daily sessions</p>
+                              </div>
+                              <div class="col-md-4 text-center">
+                                  <img src="svg/coaching.svg" alt="Sessions" style="width: 50px;" class="mb-2">
+                                  <h5>10 Total Sessions</h5>
+                                  <p>6 Coaching + 4 Mock Interviews</p>
+                              </div>
+                              <div class="col-md-4 text-center">
+                                  <img src="svg/investment.svg" alt="Price" style="width: 50px;" class="mb-2">
+                                  <h5>INR 4,999</h5>
+                                  <p>One-time investment</p>
+                              </div>
+                          </div>
+                      </div>
+      
+                      <h2 class="section-title"><img src="https://cdn-icons-png.flaticon.com/512/2232/" alt="Why Icon" style="width: 30px;" class="mr-2"> Why Interview Preparation Matters</h2>
+                      <div class="benefits-grid mb-5">
+                          <div class="row">
+                              <div class="col-md-4">
+                                  <div class="benefit-item p-3">
+                                      <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="Confidence" style="width: 40px;" class="mb-2">
+                                      <h5>Build Confidence</h5>
+                                      <p>Overcome interview anxiety with practice and preparation</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="benefit-item p-3">
+                                      <img src="https://cdn-icons-png.flaticon.com/512/2933/2933243.png" alt="Skills" style="width: 40px;" class="mb-2">
+                                      <h5>Develop Skills</h5>
+                                      <p>Master communication and body language techniques</p>
+                                  </div>
+                              </div>
+                              <div class="col-md-4">
+                                  <div class="benefit-item p-3">
+                                      <img src="https://cdn-icons-png.flaticon.com/512/3132/3132694.png" alt="Success" style="width: 40px;" class="mb-2">
+                                      <h5>Increase Success</h5>
+                                      <p>3x more likely to receive job offers</p>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+      
+                      <h2 class="section-title"><img src="https://cdn-icons-png.flaticon.com/512/1570/1570887.png" alt="Program Icon" style="width: 30px;" class="mr-2"> Program Structure</h2>
+                      <div class="timeline mb-5">
+                          <div class="timeline-item">
+                              <div class="timeline-icon">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/1570/1570887.png" alt="Phase 1" style="width: 24px;">
+                              </div>
+                              <div class="timeline-content">
+                                  <h5>Days 1-3: Foundation Building</h5>
+                                  <ul>
+                                      <li>Self-assessment</li>
+                                      <li>Resume optimization</li>
+                                      <li>LinkedIn profile review</li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="timeline-item">
+                              <div class="timeline-icon">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/2933/2933245.png" alt="Phase 2" style="width: 24px;">
+                              </div>
+                              <div class="timeline-content">
+                                  <h5>Days 4-7: Core Preparation</h5>
+                                  <ul>
+                                      <li>Common interview questions</li>
+                                      <li>Behavioral techniques</li>
+                                      <li>Industry-specific preparation</li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="timeline-item">
+                              <div class="timeline-icon">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/3281/3281289.png" alt="Phase 3" style="width: 24px;">
+                              </div>
+                              <div class="timeline-content">
+                                  <h5>Days 8-11: Mock Interviews</h5>
+                                  <ul>
+                                      <li>4 simulated interviews</li>
+                                      <li>Detailed feedback</li>
+                                      <li>Video recordings</li>
+                                  </ul>
+                              </div>
+                          </div>
+                          <div class="timeline-item">
+                              <div class="timeline-icon">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/3132/3132694.png" alt="Phase 4" style="width: 24px;">
+                              </div>
+                              <div class="timeline-content">
+                                  <h5>Days 12-15: Final Preparation</h5>
+                                  <ul>
+                                      <li>Salary negotiation</li>
+                                      <li>Follow-up strategies</li>
+                                      <li>Confidence boost</li>
+                                  </ul>
+                              </div>
+                          </div>
+                      </div>
+      
+                      <h2 class="section-title"><img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" alt="Details Icon" style="width: 30px;" class="mr-2"> Program Details</h2>
+                      <div class="program-details mb-5">
+                          <div class="row">
+                              <div class="col-md-6">
+                                  <div class="detail-item p-3">
+                                      <h5><img src="https://cdn-icons-png.flaticon.com/512/3652/3652191.png" alt="Sessions" style="width: 24px;" class="mr-2"> Included Sessions</h5>
+                                      <ul>
+                                          <li>6 One-on-One Coaching</li>
+                                          <li>4 Mock Interviews</li>
+                                          <li>Unlimited Email Support</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                              <div class="col-md-6">
+                                  <div class="detail-item p-3">
+                                      <h5><img src="https://cdn-icons-png.flaticon.com/512/2936/2936886.png" alt="Features" style="width: 24px;" class="mr-2"> Key Features</h5>
+                                      <ul>
+                                          <li>Resume & LinkedIn Review</li>
+                                          <li>Body Language Training</li>
+                                          <li>Salary Negotiation Guide</li>
+                                      </ul>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+      
+                      <h2 class="section-title"><img src="https://cdn-icons-png.flaticon.com/512/2830/2830205.png" alt="FAQ Icon" style="width: 30px;" class="mr-2"> Frequently Asked Questions</h2>
+                      <div class="faq-section">
+                          <div class="faq-item mb-3">
+                              <div class="faq-question p-3 bg-light rounded" data-toggle="collapse" data-target="#faq1">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" alt="Q" style="width: 20px;" class="mr-2">
+                                  <span>How is the 15-day program structured?</span>
+                                  <i class="fas fa-chevron-down float-right"></i>
+                              </div>
+                              <div id="faq1" class="faq-answer collapse p-3">
+                                  Our program is divided into 4 phases: Foundation (Days 1-3), Core Preparation (Days 4-7), Mock Interviews (Days 8-11), and Final Preparation (Days 12-15). Each phase builds on the previous one for comprehensive development.
+                              </div>
+                          </div>
+                          <div class="faq-item mb-3">
+                              <div class="faq-question p-3 bg-light rounded" data-toggle="collapse" data-target="#faq2">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" alt="Q" style="width: 20px;" class="mr-2">
+                                  <span>Do you offer industry-specific preparation?</span>
+                                  <i class="fas fa-chevron-down float-right"></i>
+                              </div>
+                              <div id="faq2" class="faq-answer collapse p-3">
+                                  Yes, we customize preparation for IT, Finance, Healthcare, Engineering and other industries with relevant technical questions and scenarios.
+                              </div>
+                          </div>
+                          <div class="faq-item mb-3">
+                              <div class="faq-question p-3 bg-light rounded" data-toggle="collapse" data-target="#faq3">
+                                  <img src="https://cdn-icons-png.flaticon.com/512/3524/3524636.png" alt="Q" style="width: 20px;" class="mr-2">
+                                  <span>Can I extend the program if needed?</span>
+                                  <i class="fas fa-chevron-down float-right"></i>
+                              </div>
+                              <div id="faq3" class="faq-answer collapse p-3">
+                                  Absolutely! We offer flexible extension packages with additional sessions at discounted rates.
+                              </div>
+                          </div>
+                      </div>
+      
+                      <div class="cta-section text-center mt-5 p-4 bg-primary text-white rounded">
+                        <h2 class="section-title">  Ready to Ace the Interview</h2>
+                          <p>Limited spots available - Enroll today!</p>
+                          <button class="btn btn-light btn-lg">Enroll Now for INR 4,999</button>
+                          <p class="small mt-2"><img src="https://cdn-icons-png.flaticon.com/512/1828/1828884.png" alt="Guarantee" style="width: 20px;" class="mr-1"> Satisfaction Guarantee</p>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      
+      <!-- JavaScript -->
+      <script>
+      document.addEventListener('DOMContentLoaded', function() {
+          // FAQ toggle functionality
+          const faqQuestions = document.querySelectorAll('.faq-question');
+          faqQuestions.forEach(question => {
+              question.addEventListener('click', function() {
+                  const icon = this.querySelector('.fa-chevron-down');
+                  icon.classList.toggle('fa-rotate-180');
+              });
+          });
+      });
+      </script>
+      
+      <!-- CSS -->
+      <style>
+          .section-title {
+              border-bottom: 2px solid #007bff;
+              padding-bottom: 10px;
+              margin-bottom: 20px;
+          }
+          .benefit-item, .detail-item {
+              border: 1px solid #eee;
+              border-radius: 8px;
+              height: 100%;
+              transition: all 0.3s;
+          }
+          .benefit-item:hover, .detail-item:hover {
+              transform: translateY(-5px);
+              box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          }
+          .timeline {
+              position: relative;
+              padding-left: 50px;
+          }
+          .timeline-item {
+              position: relative;
+              margin-bottom: 30px;
+          }
+          .timeline-icon {
+              position: absolute;
+              left: -50px;
+              top: 0;
+              width: 40px;
+              height: 40px;
+              background: #007bff;
+              color: white;
+              border-radius: 50%;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+          }
+          .timeline-content {
+              padding: 20px;
+              background: #f8f9fa;
+              border-radius: 8px;
+          }
+          .faq-question {
+              cursor: pointer;
+              transition: all 0.3s;
+          }
+          .faq-question:hover {
+              background: #e9ecef !important;
+          }
+          .faq-answer {
+              background: #f8f9fa;
+              border-radius: 0 0 8px 8px;
+              margin-top: -8px;
+          }
+          .cta-section {
+              box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+          }
+      </style>
+        <!-- Single Page End -->
+
+
+        <!-- Footer Start -->
+        <div class="footer">
+          <div class="container">
+              <div class="row">
+                  <div class="col-lg-7">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <div class="footer-contact">
+                                  <h2>Our Head Office</h2>
+                                  <p><a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank">Corp. Off: 2nd Floor ,A-55, Sec-02,Noida G.B Nagar(U.P) - 201301</a></p>
+                                  <p><i class="fa fa-phone-alt"></i>+91 9643058418</p>
+                                  <p><a href="mailto:info@grpcareer.com"><i class="fa fa-envelope"></i> info@grpcareer.com</a></p>
+                                  <div class="footer-social">
+                                      <a href=""><i class="fab fa-twitter"></i></a>
+                                      <a href=""><i class="fab fa-facebook-f"></i></a>
+                                      <a href=""><i class="fab fa-youtube"></i></a>
+                                      <a href=""><i class="fab fa-instagram"></i></a>
+                                      <a href=""><i class="fab fa-linkedin-in"></i></a>
+                                  </div>
+                              </div>
+                          </div>
+                          <div class="col-md-6">
+                              <div class="footer-link">
+                                  <h2>Quick Links</h2>
+                                  <a href="">Terms of use</a>
+                                  <a href="">Privacy policy</a>
+                                  <a href="">Cookies</a>
+                                  <a href="">Help</a>
+                                  <a href="">FQAs</a>
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-5">
+                      <div class="footer-newsletter">
+                        <h2>Newsletter</h2>
+                        <p>
+                          Welcome to the latest edition of GRP Pvt Ltd, your go-to newsletter for job updates, career tips, and industry insights. Whether you're actively job hunting or just exploring new opportunities, we’re here to support you every step of the way. Stay tuned for curated job openings, expert advice, and success stories to keep you motivated and informed!
+                        </p>
+                    
+                        <!-- Newsletter Form -->
+                        <form id="newsletterForm">
+                          <div class="form">
+                            <input class="form-control" type="email" name="email" placeholder="Email goes here" required>
+                            <button class="btn" type="submit">Submit</button>
+                          </div>
+                          <div id="newsletterMessage" style="margin-top: 10px; display: none;"></div>
+                        </form>
+                      </div>
+                    </div>
+                    
+                    <!-- JS script -->
+                     <script>
+                    document.addEventListener("DOMContentLoaded", function() {
+                      const newsletterForm = document.getElementById('newsletterForm');
+                      const messageEl = document.getElementById('newsletterMessage');
+                      
+                      if (newsletterForm) {
+                        newsletterForm.addEventListener('submit', function(e) {
+                          e.preventDefault();
+                          
+                          const email = this.querySelector('input[name="email"]').value.trim();
+                          
+                          // Show loading state
+                          const submitBtn = this.querySelector('button[type="submit"]');
+                          const originalBtnText = submitBtn.textContent;
+                          submitBtn.textContent = 'Submitting...';
+                          submitBtn.disabled = true;
+                          
+                          // Clear previous messages
+                          messageEl.style.display = 'none';
+                          
+                          if (!email) {
+                            showMessage('Please enter your email address', 'error');
+                            resetButton();
+                            return;
+                          }
+                          
+                          if (!validateEmail(email)) {
+                            showMessage('Please enter a valid email address', 'error');
+                            resetButton();
+                            return;
+                          }
+                          
+                          // Send the request
+                          fetch('/subscribe-newsletter', {
+                            method: 'POST',
+                            headers: {
+                              'Content-Type': 'application/json',
+                            },
+                            body: JSON.stringify({ email: email })
+                          })
+                          .then(response => {
+                            if (!response.ok) {
+                              throw new Error('Server error: ' + response.status);
+                            }
+                            return response.json();
+                          })
+                          .then(data => {
+                            if (data.success) {
+                              showMessage(data.message || 'Thank you for subscribing!', 'success');
+                              newsletterForm.reset();
+                            } else {
+                              showMessage(data.error || 'Subscription failed. Please try again.', 'error');
+                            }
+                          })
+                          .catch(error => {
+                            console.error('Error:', error);
+                            showMessage('Network error. Please try again later.', 'error');
+                          })
+                          .finally(() => {
+                            resetButton();
+                          });
+                          
+                          function resetButton() {
+                            submitBtn.textContent = originalBtnText;
+                            submitBtn.disabled = false;
+                          }
+                          
+                          function showMessage(message, type) {
+                            messageEl.textContent = message;
+                            messageEl.style.display = 'block';
+                            messageEl.style.color = type === 'success' ? 'green' : 'red';
+                            
+                            // Scroll to message if it's not visible
+                            if (!isElementInViewport(messageEl)) {
+                              messageEl.scrollIntoView({ behavior: 'smooth' });
+                            }
+                            
+                            // Hide message after delay
+                            setTimeout(() => {
+                              messageEl.style.display = 'none';
+                            }, 5000);
+                          }
+                          
+                          function validateEmail(email) {
+                            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                            return re.test(email);
+                          }
+                          
+                          function isElementInViewport(el) {
+                            const rect = el.getBoundingClientRect();
+                            return (
+                              rect.top >= 0 &&
+                              rect.left >= 0 &&
+                              rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                              rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+                            );
+                          }
+                        });
+                      }
+                    });
+                  </script>
+                    
+          </div>
+          <div class="container copyright">
+              <div class="row">
+                  <div class="col-md-6">
+                      <p>&copy; <a href="#">GRP Career Pvt Ltd.</a>, All Right Reserved.</p>
+                  </div>
+                  <div class="col-md-6">
+                      <p>Designed By <a href="">GRP Career Pvt Ltd.</a></p>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <!-- Footer End -->
+
+      <a href="#" class="back-to-top"><i class="fa fa-chevron-up"></i></a>
+
+      <!-- JavaScript Libraries -->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
+      <script src="lib/easing/easing.min.js"></script>
+      <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+      <script src="lib/waypoints/waypoints.min.js"></script>
+      <script src="lib/counterup/counterup.min.js"></script>
+      
+      <!-- Contact Javascript File -->
+      <script src="mail/jqBootstrapValidation.min.js"></script>
+      <script src="mail/contact.js"></script>
+
+      <!-- Template Javascript -->
+      <script src="js/main.js"></script>
+  </body>
+</html>

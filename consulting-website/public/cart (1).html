@@ -1,0 +1,583 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - Course Enrollment</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f8f9fa;
+        }
+        .header-logo {
+            max-height: 60px;
+            margin-right: 10px;
+        }
+        .course-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        .course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+        }
+        .course-img {
+            height: 150px;
+            object-fit: cover;
+        }
+        .selected {
+            border: 3px solid #0d6efd;
+            background-color: #f0f7ff;
+        }
+        .receipt-container {
+            display: none;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            margin-top: 30px;
+        }
+        .contact-info {
+            background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .category-filter {
+            margin-bottom: 20px;
+        }
+        .loading-spinner {
+            display: none;
+        }
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            min-width: 300px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container py-5">
+        <header class="d-flex align-items-center mb-4">
+            <img src="https://via.placeholder.com/150x60.png?text=GRP+Career" class="header-logo" alt="GRP Career Logo">
+            <h1 class="h3 mb-0">GRP Career Academy</h1>
+        </header>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="contact-info">
+                    <h2><i class="bi bi-envelope"></i> Contact Us</h2>
+                    <p><i class="bi bi-telephone"></i> +91 9643058418</p>
+                    <p><i class="bi bi-envelope"></i> <a href="mailto:support@grpcareer.com">support@grpcareer.com</a></p>
+                    <p><i class="bi bi-geo-alt"></i> Corp. Off: 2nd Floor, A-55, Sec-02, Noida G.B Nagar(U.P) - 201301</p>
+                    <p><i class="bi bi-clock"></i> Mon-Fri: 9:00 AM - 6:00 PM</p>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h3 class="card-title">Get in Touch</h3>
+                        <form id="contactForm">
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="name" placeholder="Your Name" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="email" class="form-control" id="email" placeholder="Your Email" required>
+                            </div>
+                            <div class="mb-3">
+                                <input type="tel" class="form-control" id="phone" placeholder="Your Phone" pattern="[0-9]{10}">
+                            </div>
+                            <div class="mb-3">
+                                <textarea class="form-control" id="message" rows="3" placeholder="Your Message" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-filter">
+            <select id="categoryFilter" class="form-select">
+                <option value="all">All Categories</option>
+                <option value="business">Business</option>
+                <option value="technology">Technology</option>
+                <option value="marketing">Marketing</option>
+                <option value="personal">Personal Development</option>
+            </select>
+        </div>
+
+        <h2 class="text-center my-5">Our Courses (₹4,999 each)</h2>
+        
+        <div class="row" id="coursesContainer">
+            <!-- Courses will be loaded here -->
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Selected Courses</h4>
+                        <ul id="selectedCoursesList" class="list-group mb-3">
+                            <!-- Selected courses will appear here -->
+                        </ul>
+                        <div class="mb-3">
+                            <label for="paymentMethod" class="form-label">Payment Method</label>
+                            <select id="paymentMethod" class="form-select">
+                                <option value="online">Online Payment</option>
+                                <option value="card">Credit/Debit Card</option>
+                                <option value="upi">UPI</option>
+                            </select>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5>Total: ₹<span id="totalAmount">0</span></h5>
+                            <button id="checkoutBtn" class="btn btn-success position-relative" disabled>
+                                Proceed to Checkout
+                                <span class="loading-spinner position-absolute top-50 start-50 translate-middle">
+                                    <span class="spinner-border spinner-border-sm" role="status"></span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-body">
+                        <h4>Terms & Conditions</h4>
+                        <div style="max-height: 200px; overflow-y: auto;">
+                            <ol>
+                                <li>All courses are priced at ₹4,999 each.</li>
+                                <li>Payment must be completed to access course materials.</li>
+                                <li>Once payment is made, it is non-refundable.</li>
+                                <li>Course access will be provided within 24 hours of payment confirmation.</li>
+                                <li>We reserve the right to modify course content without prior notice.</li>
+                                <li>All intellectual property rights belong to GRP Career Academy.</li>
+                                <li>By enrolling, you agree to receive communication regarding your courses.</li>
+                            </ol>
+                        </div>
+                        <div class="form-check mt-3">
+                            <input class="form-check-input" type="checkbox" id="agreeTerms">
+                            <label class="form-check-label" for="agreeTerms">
+                                I agree to the terms and conditions
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="receiptContainer" class="receipt-container">
+            <div class="text-center mb-4">
+                <img src="https://via.placeholder.com/150x60.png?text=GRP+Career" class="mb-3" alt="GRP Career Logo">
+                <h2>GRP Career Academy</h2>
+                <p>Corp. Off: 2nd Floor, A-55, Sec-02, Noida G.B Nagar(U.P) - 201301</p>
+                <p>Invoice #<span id="invoiceNumber"></span></p>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <h5>Bill To:</h5>
+                    <p id="receiptName"></p>
+                    <p id="receiptEmail"></p>
+                    <p id="receiptPhone"></p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <p><strong>Date:</strong> <span id="receiptDate"></span></p>
+                    <p><strong>Payment Method:</strong> <span id="paymentMethodDisplay"></span></p>
+                </div>
+            </div>
+            
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Course</th>
+                        <th class="text-end">Price</th>
+                    </tr>
+                </thead>
+                <tbody id="receiptCourses">
+                    <!-- Courses will be added here -->
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        <th class="text-end">₹<span id="receiptTotal"></span></th>
+                    </tr>
+                </tfoot>
+            </table>
+            
+            <div class="mt-4">
+                <p>Thank you for your enrollment! Course access details will be sent to your email within 24 hours.</p>
+                <div class="d-flex justify-content-between mt-4">
+                    <button id="printReceiptBtn" class="btn btn-primary">Print Receipt</button>
+                    <button id="downloadPdfBtn" class="btn btn-success">Download PDF</button>
+                    <button id="newEnrollmentBtn" class="btn btn-outline-secondary">New Enrollment</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script>
+        // Course data with categories
+        const courses = [
+            { id: 1, name: "Business Strategy", image: "https://source.unsplash.com/random/300x200/?business,strategy", category: "business" },
+            { id: 2, name: "Project Management", image: "https://source.unsplash.com/random/300x200/?project,management", category: "business" },
+            { id: 3, name: "Market Research", image: "https://source.unsplash.com/random/300x200/?market,research", category: "marketing" },
+            { id: 4, name: "Human Resource", image: "https://source.unsplash.com/random/300x200/?hr,management", category: "business" },
+            { id: 5, name: "Online Business", image: "https://source.unsplash.com/random/300x200/?online,business", category: "business" },
+            { id: 6, name: "Captain Management", image: "https://source.unsplash.com/random/300x200/?captain,management", category: "business" },
+            { id: 7, name: "Business Insurance", image: "https://source.unsplash.com/random/300x200/?insurance,business", category: "business" },
+            { id: 8, name: "Online Marketing", image: "https://source.unsplash.com/random/300x200/?online,marketing", category: "marketing" },
+            { id: 9, name: "Personality Development", image: "https://source.unsplash.com/random/300x200/?personality,development", category: "personal" },
+            { id: 10, name: "MS Office Suite", image: "https://source.unsplash.com/random/300x200/?office,software", category: "technology" },
+            { id: 11, name: "Communication Skills", image: "https://source.unsplash.com/random/300x200/?communication,skills", category: "personal" },
+            { id: 12, name: "Payment Streaming", image: "https://source.unsplash.com/random/300x200/?payment,processing", category: "technology" },
+            { id: 13, name: "Web Development", image: "https://source.unsplash.com/random/300x200/?web,development", category: "technology" },
+            { id: 14, name: "AI and ChatGPT", image: "https://source.unsplash.com/random/300x200/?ai,chatbot", category: "technology" },
+            { id: 15, name: "Digital Marketing", image: "https://source.unsplash.com/random/300x200/?digital,marketing", category: "marketing" },
+            { id: 16, name: "E-Commerce", image: "https://source.unsplash.com/random/300x200/?ecommerce,shopping", category: "business" },
+            { id: 17, name: "SEO and Search Ads", image: "https://source.unsplash.com/random/300x200/?seo,ads", category: "marketing" },
+            { id: 18, name: "Data Analytics", image: "https://source.unsplash.com/random/300x200/?data,analytics", category: "technology" }
+        ];
+
+        const coursePrice = 4999;
+        let selectedCourses = JSON.parse(localStorage.getItem('selectedCourses')) || [];
+        let currentCategory = 'all';
+
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCourses();
+            
+            // Contact form submission
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                if (this.checkValidity()) {
+                    showNotification('Thank you for your message! We will get back to you soon.', 'success');
+                    this.reset();
+                } else {
+                    showNotification('Please fill all required fields correctly.', 'danger');
+                }
+                this.classList.add('was-validated');
+            });
+
+            // Category filter
+            document.getElementById('categoryFilter').addEventListener('change', function(e) {
+                currentCategory = e.target.value;
+                renderCourses();
+            });
+            
+            // Checkout button click
+            document.getElementById('checkoutBtn').addEventListener('click', async function() {
+                if (!document.getElementById('agreeTerms').checked) {
+                    showNotification('Please agree to the terms and conditions.', 'danger');
+                    return;
+                }
+                
+                const button = this;
+                button.disabled = true;
+                button.querySelector('.loading-spinner').style.display = 'inline-block';
+                
+                try {
+                    await processPayment();
+                } catch (error) {
+                    showNotification('Payment processing failed. Please try again.', 'danger');
+                } finally {
+                    button.disabled = false;
+                    button.querySelector('.loading-spinner').style.display = 'none';
+                }
+            });
+            
+            // Print receipt button
+            document.getElementById('printReceiptBtn').addEventListener('click', function() {
+                window.print();
+            });
+            
+            // Download PDF button
+            document.getElementById('downloadPdfBtn').addEventListener('click', function() {
+                generatePDF();
+            });
+            
+            // New enrollment button
+            document.getElementById('newEnrollmentBtn').addEventListener('click', function() {
+                resetEnrollment();
+            });
+        });
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} notification alert-dismissible fade show`;
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            document.body.appendChild(notification);
+            setTimeout(() => notification.remove(), 5000);
+        }
+
+        // Render all courses
+        function renderCourses() {
+            const container = document.getElementById('coursesContainer');
+            container.innerHTML = '';
+            
+            const filteredCourses = currentCategory === 'all' 
+                ? courses 
+                : courses.filter(course => course.category === currentCategory);
+
+            if (filteredCourses.length === 0) {
+                container.innerHTML = '<p class="text-center">No courses found in this category.</p>';
+                return;
+            }
+
+            filteredCourses.forEach(course => {
+                const isSelected = selectedCourses.some(c => c.id === course.id);
+                
+                const card = document.createElement('div');
+                card.className = `col-md-4 col-lg-3 course-card ${isSelected ? 'selected' : ''}`;
+                card.innerHTML = `
+                    <div class="card h-100" data-id="${course.id}">
+                        <img src="${course.image}" class="card-img-top course-img" alt="${course.name}">
+                        <div class="card-body">
+                            <h5 class="card-title">${course.name}</h5>
+                            <p class="card-text text-muted">${course.category.charAt(0).toUpperCase() + course.category.slice(1)}</p>
+                            <p class="card-text">₹${coursePrice.toLocaleString()}</p>
+                            <button class="btn ${isSelected ? 'btn-danger' : 'btn-primary'} select-btn">
+                                ${isSelected ? 'Remove' : 'Add to Cart'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+                
+                container.appendChild(card);
+                
+                card.querySelector('.select-btn').addEventListener('click', function() {
+                    toggleCourseSelection(course.id);
+                });
+            });
+            
+            updateSelectedCoursesList();
+        }
+
+        // Toggle course selection
+        function toggleCourseSelection(courseId) {
+            const index = selectedCourses.findIndex(c => c.id === courseId);
+            
+            if (index === -1) {
+                const course = courses.find(c => c.id === courseId);
+                selectedCourses.push({ id: course.id, name: course.name, price: coursePrice, category: course.category });
+                showNotification(`${course.name} added to cart`, 'success');
+            } else {
+                const courseName = selectedCourses[index].name;
+                selectedCourses.splice(index, 1);
+                showNotification(`${courseName} removed from cart`, 'info');
+            }
+            
+            localStorage.setItem('selectedCourses', JSON.stringify(selectedCourses));
+            renderCourses();
+            updateCheckoutButton();
+        }
+
+        // Update the selected courses list
+        function updateSelectedCoursesList() {
+            const list = document.getElementById('selected_coursesList');
+            list.innerHTML = '';
+            
+            if (selectedCourses.length === 0) {
+                list.innerHTML = '<li class="list-group-item">No courses selected</li>';
+                document.getElementById('totalAmount').textContent = '0';
+                return;
+            }
+            
+            selectedCourses.forEach(course => {
+                const item = document.createElement('li');
+                item.className = 'list-group-item d-flex justify-content-between align-items-center';
+                item.innerHTML = `
+                    ${course.name} (${course.category.charAt(0).toUpperCase() + course.category.slice(1)})
+                    <span class="badge bg-primary rounded-pill">₹${course.price.toLocaleString()}</span>
+                `;
+                list.appendChild(item);
+            });
+            
+            const total = selectedCourses.reduce((sum, course) => sum + course.price, 0);
+            document.getElementById('totalAmount').textContent = total.toLocaleString();
+        }
+
+        // Update checkout button state
+        function updateCheckoutButton() {
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            checkoutBtn.disabled = selectedCourses.length === 0;
+        }
+
+        // Process payment (simulated)
+        async function processPayment() {
+            const name = document.getElementById('name').value || 'Customer';
+            const email = document.getElementById('email').value || 'No email provided';
+            const phone = document.getElementById('phone').value || 'No phone provided';
+            const paymentMethod = document.getElementById('paymentMethod').value;
+
+            // Validate email
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+                showNotification('Please enter a valid email address', 'danger');
+                throw new Error('Invalid email');
+            }
+
+            // Simulate payment processing
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            // Generate receipt
+            generateReceipt(name, email, phone, paymentMethod);
+
+            // Show receipt
+            document.getElementById('receiptContainer').style.display = 'block';
+            document.getElementById('receiptContainer').scrollIntoView({ behavior: 'smooth' });
+
+            // Prepare enrollment data
+            const enrollmentData = {
+                name,
+                email,
+                phone,
+                paymentMethod,
+                courses: selectedCourses,
+                total: selectedCourses.reduce((sum, course) => sum + course.price, 0),
+                date: new Date().toISOString()
+            };
+
+            // Simulate sending data to server
+            try {
+                const response = await fetch('/api/enroll', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(enrollmentData)
+                });
+                
+                if (!response.ok) throw new Error('Server error');
+                showNotification('Enrollment successful!', 'success');
+            } catch (error) {
+                showNotification('Failed to save enrollment data', 'danger');
+                console.error('Error:', error);
+            }
+        }
+
+        // Generate receipt
+        function generateReceipt(name, email, phone, paymentMethod) {
+            document.getElementById('receiptName').textContent = name;
+            document.getElementById('receiptEmail').textContent = email;
+            document.getElementById('receiptPhone').textContent = phone;
+            
+            const now = new Date();
+            document.getElementById('receiptDate').textContent = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+            document.getElementById('invoiceNumber').textContent = 'INV-' + now.getFullYear() + (now.getMonth() + 1).toString().padStart(2, '0') + now.getDate().toString().padStart(2, '0') + '-' + Math.floor(1000 + Math.random() * 9000);
+            document.getElementById('paymentMethodDisplay').textContent = paymentMethod.charAt(0).toUpperCase() + paymentMethod.slice(1);
+
+            const receiptCourses = document.getElementById('receiptCourses');
+            receiptCourses.innerHTML = '';
+            
+            selectedCourses.forEach(course => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${course.name}</td>
+                    <td class="text-end">₹${course.price.toLocaleString()}</td>
+                `;
+                receiptCourses.appendChild(row);
+            });
+            
+            const total = selectedCourses.reduce((sum, course) => sum + course.price, 0);
+            document.getElementById('receiptTotal').textContent = total.toLocaleString();
+        }
+
+        // Generate PDF
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const receiptElement = document.getElementById('receiptContainer');
+            
+            html2canvas(receiptElement, { scale: 2 }).then(canvas => {
+                const imgData = canvas.toDataURL('image/png');
+                const pdf = new jsPDF('p', 'mm', 'a4');
+                const imgWidth = 210;
+                const pageHeight = 295;
+                const imgHeight = canvas.height * imgWidth / canvas.width;
+                let heightLeft = imgHeight;
+                let position = 0;
+                
+                pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                heightLeft -= pageHeight;
+                
+                while (heightLeft >= 0) {
+                    position = heightLeft - imgHeight;
+                    pdf.addPage();
+                    pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+                    heightLeft -= pageHeight;
+                }
+                
+                pdf.save('GRP_Career_Enrollment_Receipt.pdf');
+            });
+        }
+
+        // Reset enrollment
+        function resetEnrollment() {
+            selectedCourses = [];
+            localStorage.removeItem('selectedCourses');
+            document.getElementById('agreeTerms').checked = false;
+            document.getElementById('receiptContainer').style.display = 'none';
+            renderCourses();
+            updateCheckoutButton();
+            showNotification('Started new enrollment', 'info');
+        }
+    </script>
+</body>
+</html>

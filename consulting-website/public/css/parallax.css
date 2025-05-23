@@ -1,0 +1,65 @@
+/* Parallax Base Styles */
+.parallax-container {
+    perspective: 1px;
+    height: 100vh;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+}
+
+.parallax-background {
+    transform: translateZ(-1px) scale(2);
+    z-index: -1;
+}
+
+.parallax-content {
+    transform: translateZ(0);
+    z-index: 1;
+}
+
+/* Hero Section */
+.hero-section {
+    position: relative;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+.hero-background {
+    background-image: url('/img/carousel-4.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: brightness(0.7);
+}
+
+/* Floating Elements */
+.float-element {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    pointer-events: none;
+}
+
+/* 3D Effects */
+.depth-1 { transform: translateZ(50px); }
+.depth-2 { transform: translateZ(100px); }
+.depth-3 { transform: translateZ(150px); }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+}
+
+.floating {
+    animation: float 6s ease-in-out infinite;
+}

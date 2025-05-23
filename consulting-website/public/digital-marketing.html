@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GRP Career - Digital Marketing Crash Course</title>
+    <meta content="digital marketing course, skill india, 100% placement, crash course, 2026 trends" name="keywords">
+    <meta content="Join GRP Career’s Skill India-affiliated Digital Marketing Crash Course with 100% placement. Enroll in our 15-day (₹4,999) or 45-day (₹15,000) course!" name="description">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#4338CA',
+                        accent: '#F59E0B',
+                        dark: '#111827',
+                        light: '#F9FAFB',
+                        success: '#10B981'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'float-logo': 'floatLogo 4s ease-in-out infinite',
+                        'scale-up': 'scaleUp 0.5s ease-out',
+                        'bounce-in': 'bounceIn 0.8s ease-out',
+                        'flowchart-pulse': 'flowchartPulse 2s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        floatLogo: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scaleUp: {
+                            '0%': { transform: 'scale(1)' },
+                            '100%': { transform: 'scale(1.05)' },
+                        },
+                        bounceIn: {
+                            '0%': { transform: 'scale(0.3)', opacity: '0' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                            '70%': { transform: 'scale(0.9)' },
+                            '100%': { transform: 'scale(1)' },
+                        },
+                        flowchartPulse: {
+                            '0%, 100%': { transform: 'scale(1)', boxShadow: '0 0 0 0 rgba(79, 70, 229, 0.4)' },
+                            '50%': { transform: 'scale(1.05)', boxShadow: '0 0 0 10px rgba(79, 70, 229, 0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Phosphor Icons -->
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.0.3/src/regular/style.css">
+
+    <!-- Remix Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Swiper JS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css"/>
+
+    <!-- GSAP and ScrollTrigger -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        .hero-gradient { background: linear-gradient(135deg, rgba(79, 70, 229, 0.95) 0%, rgba(67, 56, 202, 0.95) 100%); }
+        .parallax-bg { background-attachment: fixed; background-position: center; background-repeat: no-repeat; background-size: cover; }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .feature-icon { transition: all 0.3s ease; }
+        .benefit-card:hover .feature-icon { transform: rotateY(180deg) scale(1.1); }
+        .btn-hover:hover { transform: translateY(-2px); box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); }
+        .gradient-text { background: linear-gradient(90deg, #4F46E5 0%, #F59E0B 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+        .image-hover:hover { transform: scale(1.05); }
+        .sticky-testimonial { transition: all 0.3s ease; }
+        .sticky-testimonial.sticky { position: sticky; top: 100px; }
+        .table-comparison tbody tr:hover { background-color: #F9FAFB; }
+        .pricing-card:hover { transform: translateY(-10px); box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15); }
+        .faq-item { transition: all 0.3s ease; }
+        .faq-item:hover { background-color: #F9FAFB; }
+        .flowchart-node { transition: all 0.3s ease; }
+        .flowchart-node:hover { transform: scale(1.1); }
+        @media (max-width: 768px) {
+            .parallax-bg { background-attachment: scroll; }
+            .flowchart-arrow { display: none; }
+        }
+    </style>
+</head>
+<body class="font-sans text-gray-800 bg-white antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white/90 backdrop-blur-md shadow-sm z-50">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <a href="#" class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-lg bg-primary flex items-center justify-center text-white">
+                        <i class="ri-briefcase-line text-xl"></i>
+                    </div>
+                    <span class="text-2xl font-bold text-dark">GRP <span class="gradient-text">Career</span></span>
+                </a>
+                <div class="hidden lg:flex items-center space-x-10">
+                    <a href="#home" class="nav-link text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#about" class="nav-link text-dark font-medium hover:text-primary transition">About Us</a>
+                    <a href="#courses" class="nav-link text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="#testimonials" class="nav-link text-dark font-medium hover:text-primary transition">Success Stories</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover flex items-center">
+                        <i class="ri-mail-send-line mr-2"></i> Contact Us
+                    </a>
+                </div>
+                <button aria-label="Toggle mobile menu" class="lg:hidden text-dark focus:outline-none" id="mobile-menu-button">
+                    <i class="ri-menu-line text-2xl"></i>
+                </button>
+            </div>
+            <div class="lg:hidden hidden mt-4 pb-4" id="mobile-menu">
+                <div class="flex flex-col space-y-4">
+                    <a href="#home" class="text-dark font-medium hover:text-primary transition">Home</a>
+                    <a href="#about" class="text-dark font-medium hover:text-primary transition">About Us</a>
+                    <a href="#courses" class="text-dark font-medium hover:text-primary transition">Courses</a>
+                    <a href="#testimonials" class="text-dark font-medium hover:text-primary transition">Success Stories</a>
+                    <a href="#contact" class="bg-primary text-white px-6 py-2.5 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="hero" class="py-32 bg-gray-50 relative overflow-hidden">
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="text-center" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">DIGITAL MARKETING CRASH COURSE</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-serif">Launch Your Career in Digital Marketing</h1>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto mb-8">Join GRP Career’s Skill India-affiliated Digital Marketing Crash Course with 100% placement guarantee. Choose our 15-day (₹4,999) or 45-day (₹15,000) course to master digital marketing in 2026!</p>
+                <a href="#courses" class="bg-primary text-white px-8 py-3.5 rounded-lg font-medium hover:bg-secondary transition btn-hover inline-flex items-center">
+                    <i class="ph-rocket-launch mr-2"></i> Enroll Now
+                </a>
+            </div>
+            <div class="absolute inset-0 opacity-10" style="background-image: url('https://images.undraw.co/uploads/illustrations/premium/undraw_marketing_re_7f1g.svg'); background-size: cover; background-position: center;"></div>
+        </div>
+    </section>
+
+    <!-- Stats Section with Animated Counters -->
+    <section id="stats" class="py-20 bg-primary text-white parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1551288049-b1bd52206f34?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 text-center">
+                <div data-aos="fade-up">
+                    <h3 class="text-4xl font-bold mb-2" data-count="10000">10,000+</h3>
+                    <p class="text-gray-200">Professionals Trained</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-4xl font-bold mb-2" data-count="50">50+</h3>
+                    <p class="text-gray-200">Expert Trainers</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-4xl font-bold mb-2" data-count="100">100%</h3>
+                    <p class="text-gray-200">Placement Success</p>
+                </div>
+                <div data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-4xl font-bold mb-2" data-count="100">100%</h3>
+                    <p class="text-gray-200">Client Satisfaction</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Future of Digital Marketing Section -->
+    <section id="future" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">DIGITAL MARKETING IN 2026</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Why Digital Marketing is the Future</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Digital marketing is evolving rapidly, and 2026 will be a pivotal year for professionals. Here’s why you should master it now.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card bg-white p-6 rounded-xl shadow-sm transition duration-300" data-aos="fade-up">
+                    <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_artificial_intelligence_re_enpp.svg" alt="AI-Driven Marketing" class="w-full h-48 object-contain mb-4 image-hover transition duration-300">
+                    <h3 class="text-xl font-semibold mb-2">AI-Driven Marketing</h3>
+                    <p class="text-gray-600">In 2026, AI will dominate ad targeting, content creation, and analytics, enabling hyper-personalized campaigns. Learn to leverage tools like Google AI and ChatGPT for maximum impact.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-xl shadow-sm transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_video_files_re_v0c6.svg" alt="Video Content Surge" class="w-full h-48 object-contain mb-4 image-hover transition duration-300">
+                    <h3 class="text-xl font-semibold mb-2">Video Content Surge</h3>
+                    <p class="text-gray-600">Short-form videos on platforms like YouTube Shorts and Instagram Reels will drive engagement. Master video marketing to capture audiences in 2026.</p>
+                </div>
+                <div class="card bg-white p-6 rounded-xl shadow-sm transition duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_security_on_re_e491.svg" alt="Data Privacy Focus" class="w-full h-48 object-contain mb-4 image-hover transition duration-300">
+                    <h3 class="text-xl font-semibold mb-2">Data Privacy Focus</h3>
+                    <p class="text-gray-600">With stricter regulations like GDPR, marketers must prioritize ethical data use. Learn compliant strategies to build trust and drive conversions.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Pricing Section -->
+    <section id="courses" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">OUR COURSES</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Digital Marketing Crash Courses</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Choose between our 15-day or 45-day Skill India-affiliated courses, both with 100% placement guarantee.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="pricing-card bg-white p-8 rounded-xl shadow-sm transition duration-300" data-aos="fade-up">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">15-Day Crash Course</h3>
+                    <p class="text-gray-600 text-center mb-4">Learn the essentials of digital marketing in just 15 days.</p>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-primary">₹4,999</span>
+                        <span class="text-gray-500">/course</span>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> Core Digital Marketing Skills</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> 100% Placement Support</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> Skill India Certification</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> 15 Hours of Live Training</li>
+                    </ul>
+                    <a href="#register" class="block bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Enroll Now</a>
+                </div>
+                <div class="pricing-card bg-white p-8 rounded-xl shadow-sm transition duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-2xl font-semibold mb-4 text-center">45-Day Advanced Course</h3>
+                    <p class="text-gray-600 text-center mb-4">Master digital marketing with in-depth training and projects.</p>
+                    <div class="text-center mb-6">
+                        <span class="text-4xl font-bold text-primary">₹15,000</span>
+                        <span class="text-gray-500">/course</span>
+                    </div>
+                    <ul class="space-y-3 mb-6">
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> Comprehensive Digital Marketing</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> 100% Placement Guarantee</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> Skill India Certification</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> 45 Hours of Live Training</li>
+                        <li class="flex items-center"><i class="ph-check-circle text-success mr-2"></i> Real-World Projects</li>
+                    </ul>
+                    <a href="#register" class="block bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition btn-hover text-center">Enroll Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Course Modules Section -->
+    <section id="modules" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">COURSE MODULES</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">What You’ll Learn</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our courses cover everything from basics to advanced strategies, ensuring you’re job-ready.</p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div data-aos="fade-right">
+                    <h3 class="text-2xl font-semibold mb-4">15-Day Crash Course Modules</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Introduction to Digital Marketing</strong>
+                                <p class="text-gray-600">Overview of digital marketing channels and strategies.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>SEO Basics</strong>
+                                <p class="text-gray-600">Learn on-page and off-page SEO techniques.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Social Media Marketing</strong>
+                                <p class="text-gray-600">Create engaging content for Instagram, Facebook, and LinkedIn.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Google Ads</strong>
+                                <p class="text-gray-600">Set up and optimize PPC campaigns.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Analytics</strong>
+                                <p class="text-gray-600">Track performance with Google Analytics.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                <div data-aos="fade-left">
+                    <h3 class="text-2xl font-semibold mb-4">45-Day Advanced Course Modules</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>All 15-Day Modules</strong>
+                                <p class="text-gray-600">Includes all topics from the 15-day course.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Advanced SEO</strong>
+                                <p class="text-gray-600">Master technical SEO and keyword research.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Content Marketing</strong>
+                                <p class="text-gray-600">Develop content strategies and blogs.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Email Marketing</strong>
+                                <p class="text-gray-600">Design and automate email campaigns.</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="ph-check-circle text-success mr-2 mt-1"></i>
+                            <div>
+                                <strong>Capstone Project</strong>
+                                <p class="text-gray-600">Build a real-world marketing campaign.</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Animated Flowchart Section -->
+<section id="flowchart" class="py-20 bg-gray-50">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16" data-aos="fade-up">
+            <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">DIGITAL MARKETING PROCESS</span>
+            <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif text-gray-800">How Digital Marketing Works</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto">Follow our proven process to create impactful digital marketing campaigns.</p>
+        </div>
+        <div class="relative flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-8" data-aos="fade-up">
+            <div class="flowchart-node bg-white p-6 rounded-xl shadow-sm text-center flowchart-pulse">
+                <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_ideas_re_7dyj.svg" alt="Strategy" class="w-24 h-24 mx-auto mb-4 image-hover transition duration-300">
+                <h3 class="text-lg font-semibold text-gray-800">Strategy</h3>
+                <p class="text-gray-600">Define goals and target audience.</p>
+            </div>
+            <div class="flowchart-arrow hidden md:block absolute top-1/2 left-1/3 transform -translate-y-1/2">
+                <i class="ri-arrow-right-line text-3xl text-primary"></i>
+            </div>
+            <div class="flowchart-node bg-white p-6 rounded-xl shadow-sm text-center flowchart-pulse">
+                <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_content_team_re_6rlg.svg" alt="Content Creation" class="w-24 h-24 mx-auto mb-4 image-hover transition duration-300">
+                <h3 class="text-lg font-semibold text-gray-800">Content Creation</h3>
+                <p class="text-gray-600">Develop engaging visuals and copy.</p>
+            </div>
+            <div class="flowchart-arrow hidden md:block absolute top-1/2 left-2/3 transform -translate-y-1/2">
+                <i class="ri-arrow-right-line text-3xl text-primary"></i>
+            </div>
+            <div class="flowchart-node bg-white p-6 rounded-xl shadow-sm text-center flowchart-pulse">
+                <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_analytics_re_dkf8.svg" alt="Analytics" class="w-24 h-24 mx-auto mb-4 image-hover transition duration-300">
+                <h3 class="text-lg font-semibold text-gray-800">Analytics</h3>
+                <p class="text-gray-600">Track and optimize performance.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Skill India Affiliation Section -->
+    <section id="skill-india" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="bg-gray-50 p-8 rounded-xl shadow-sm flex flex-col md:flex-row items-center" data-aos="fade-up">
+                <img src="https://skillindia.gov.in/assets/images/logo.png" alt="Skill India Logo" class="w-32 h-32 mb-4 md:mb-0 md:mr-6">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Proud Skill India Partner</h3>
+                    <p class="text-gray-600">As a registered partner of the Skill India Portal, GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784) delivers certified digital marketing training that aligns with India’s mission to upskill its workforce.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section id="faq" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">FREQUENTLY ASKED QUESTIONS</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Got Questions? We’ve Got Answers</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Find answers to common questions about our Digital Marketing Crash Courses.</p>
+            </div>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <div class="faq-item bg-white p-6 rounded-xl shadow-sm" data-aos="fade-up">
+                    <h3 class="text-lg font-semibold mb-2">What is the difference between the 15-day and 45-day courses?</h3>
+                    <p class="text-gray-600">The 15-day course covers essential digital marketing skills, while the 45-day course includes advanced topics like technical SEO, content marketing, and a capstone project for hands-on experience.</p>
+                </div>
+                <div class="faq-item bg-white p-6 rounded-xl shadow-sm" data-aos="fade-up" data-aos-delay="100">
+                    <h3 class="text-lg font-semibold mb-2">Is the placement guarantee real?</h3>
+                    <p class="text-gray-600">Yes! Our 100% placement guarantee is backed by partnerships with top MNCs like Google and Infosys, ensuring every candidate secures a job within 90 days.</p>
+                </div>
+                <div class="faq-item bg-white p-6 rounded-xl shadow-sm" data-aos="fade-up" data-aos-delay="200">
+                    <h3 class="text-lg font-semibold mb-2">Who can enroll in these courses?</h3>
+                    <p class="text-gray-600">Anyone with a passion for digital marketing can enroll, from beginners to professionals looking to upskill. No prior experience is required.</p>
+                </div>
+                <div class="faq-item bg-white p-6 rounded-xl shadow-sm" data-aos="fade-up" data-aos-delay="300">
+                    <h3 class="text-lg font-semibold mb-2">What certification will I receive?</h3>
+                    <p class="text-gray-600">You’ll receive a Skill India-certified digital marketing certificate, recognized by top employers nationwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Registration Form Section -->
+    <section id="register" class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">ENROLL TODAY</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Register for the Crash Course</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Fill out the form to start your digital marketing journey with GRP Career.</p>
+            </div>
+            <div class="max-w-lg mx-auto bg-gray-50 p-8 rounded-xl shadow-sm" data-aos="fade-up">
+                <form id="courseRegistrationForm" class="space-y-4">
+                    <div>
+                        <label for="name" class="block text-sm font-medium text-gray-700">Full Name</label>
+                        <input type="text" id="name" name="name" required class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="email" class="block text-sm font-medium text-gray-700">Email Address</label>
+                        <input type="email" id="email" name="email" required class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                    </div>
+                    <div>
+                        <label for="course" class="block text-sm font-medium text-gray-700">Select Course</label>
+                        <select id="course" name="course" required class="w-full p-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option value="15-day">15-Day Crash Course (₹4,999)</option>
+                            <option value="45-day">45-Day Advanced Course (₹15,000)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="w-full bg-primary text-white px-6 py-3 rounded-lg font-medium hover:bg-secondary transition btn-hover flex items-center justify-center">
+                        <i class="ph-paper-plane-right mr-2"></i> Register Now
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Carousel Section -->
+    <section id="testimonials" class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">SUCCESS STORIES</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Hear From Our Graduates</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto">Our students have secured top roles with our Digital Marketing Crash Course.</p>
+            </div>
+            <div class="swiper testimonialSwiper mb-16" data-aos="fade-up">
+                <div class="swiper-wrapper pb-12">
+                    <div class="swiper-slide">
+                        <div class="card bg-white p-8 rounded-xl shadow-sm transition duration-300">
+                            <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_successful_purchase_re_mpig.svg" alt="Success Story" class="w-full h-48 object-contain rounded-t-xl mb-4 image-hover transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="flex space-x-1 text-yellow-400 mr-4">
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                </div>
+                                <span class="text-sm text-gray-500">2 months ago</span>
+                            </div>
+                            <p class="text-gray-700 mb-6 italic">"The 45-day course transformed my career! I’m now a digital marketing manager at TechCorp, thanks to GRP Career’s placement support."</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/women/43.jpg" alt="Chehak Kapoor" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                                <div>
+                                    <h4 class="font-semibold">Chehak Kapoor</h4>
+                                    <p class="text-gray-600 text-sm">Digital Marketing Manager at TechCorp</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card bg-white p-8 rounded-xl shadow-sm transition duration-300">
+                            <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_career_progress_re_t5a7.svg" alt="Success Story" class="w-full h-48 object-contain rounded-t-xl mb-4 image-hover transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="flex space-x-1 text-yellow-400 mr-4">
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                </div>
+                                <span class="text-sm text-gray-500">1 month ago</span>
+                            </div>
+                            <p class="text-gray-700 mb-6 italic">"The 15-day course gave me the skills to land a social media strategist role at FinTech. Highly recommend GRP Career!"</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Aashish Kumar" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                                <div>
+                                    <h4 class="font-semibold">Aashish Kumar</h4>
+                                    <p class="text-gray-600 text-sm">Social Media Strategist at FinTech</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="swiper-slide">
+                        <div class="card bg-white p-8 rounded-xl shadow-sm transition duration-300">
+                            <img src="https://images.undraw.co/uploads/illustrations/premium/undraw_winners_re_cjif.svg" alt="Success Story" class="w-full h-48 object-contain rounded-t-xl mb-4 image-hover transition duration-300">
+                            <div class="flex items-center mb-4">
+                                <div class="flex space-x-1 text-yellow-400 mr-4">
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-fill"></i>
+                                    <i class="ph-star-half-fill"></i>
+                                </div>
+                                <span class="text-sm text-gray-500">3 weeks ago</span>
+                            </div>
+                            <p class="text-gray-700 mb-6 italic">"GRP Career’s placement team helped me secure a content marketing role at HealthInnovate. The training was exceptional!"</p>
+                            <div class="flex items-center">
+                                <img src="https://randomuser.me/api/portraits/men/65.jpg" alt="Lalit Kumar" class="w-12 h-12 rounded-full mr-4" loading="lazy">
+                                <div>
+                                    <h4 class="font-semibold">Lalit Kumar</h4>
+                                    <p class="text-gray-600 text-sm">Content Marketer at HealthInnovate</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-pagination"></div>
+            </div>
+        </section>
+
+        <!-- Feature Comparison Table -->
+        <section id="comparison" class="py-20 bg-white">
+            <div class="container mx-auto px-6">
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="inline-block px-3 py-1 text-sm font-semibold text-primary bg-primary/10 rounded-full mb-4">WHY CHOOSE US</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 font-serif">Why GRP Career Excels</h2>
+                    <p class="text-gray-600 max-w-2xl mx-auto">Compare our courses to see why we’re the best choice for digital marketing training.</p>
+                </div>
+                <div class="overflow-x-auto" data-aos="fade-up">
+                    <table class="table-comparison w-full text-left border-collapse bg-white rounded-xl shadow-sm">
+                        <thead>
+                            <tr class="bg-primary text-white">
+                                <th class="p-4 font-semibold">Feature</th>
+                                <th class="p-4 font-semibold">GRP Career</th>
+                                <th class="p-4 font-semibold">Others</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="p-4 border-b">100% Placement Guarantee</td>
+                                <td class="p-4 border-b"><i class="ph-check-circle text-success"></i> Yes</td>
+                                <td class="p-4 border-b"><i class="ph-x-circle text-red-500"></i> No</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border-b">Skill India Certification</td>
+                                <td class="p-4 border-b"><i class="ph-check-circle text-success"></i> Yes</td>
+                                <td class="p-4 border-b"><i class="ph-x-circle text-red-500"></i> No</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border-b">Live Training</td>
+                                <td class="p-4 border-b"><i class="ph-check-circle text-success"></i> Expert-Led</td>
+                                <td class="p-4 border-b"><i class="ph-x-circle text-red-500"></i> Recorded</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4 border-b">Industry Partnerships</td>
+                                <td class="p-4 border-b"><i class="ph-check-circle text-success"></i> Top MNCs</td>
+                                <td class="p-4 border-b"><i class="ph-x-circle text-red-500"></i> Limited</td>
+                            </tr>
+                            <tr>
+                                <td class="p-4">Real-World Projects</td>
+                                <td class="p-4"><i class="ph-check-circle text-success"></i> Included</td>
+                                <td class="p-4"><i class="ph-x-circle text-red-500"></i> Optional</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Call to Action Section -->
+        <section id="cta" class="py-20 bg-primary text-white relative overflow-hidden parallax-bg" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')">
+            <div class="container mx-auto px-6 relative z-10">
+                <div class="max-w-4xl mx-auto text-center" data-aos="fade-up">
+                    <span class="inline-block px-3 py-1 text-sm font-semibold bg-white text-primary rounded-full mb-4">START YOUR JOURNEY</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 font-serif">Kickstart Your Digital Marketing Career</h2>
+                    <p class="text-xl mb-8 text-gray-100">Enroll in GRP Career’s Skill India-affiliated Digital Marketing Crash Course and secure your future with our 100% placement guarantee.</p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="#register" class="bg-accent text-white px-8 py-3.5 rounded-lg font-medium hover:bg-yellow-600 transition btn-hover flex items-center justify-center">
+                            <i class="ph-rocket-launch mr-2"></i> Enroll Now
+                        </a>
+                        <a href="mailto:info@grpcareer.com?subject=Course%20Inquiry" class="bg-white text-dark px-8 py-3.5 rounded-lg font-medium hover:bg-gray-100 transition btn-hover flex items-center justify-center">
+                            <i class="ph-envelope mr-2"></i> Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-dark text-gray-300 py-12">
+            <div class="container mx-auto px-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">GRP Career</h3>
+                        <p class="text-gray-400 mb-4">GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784) is a Skill India-affiliated firm offering Digital Marketing Crash Courses with 100% placement.</p>
+                        <div class="flex space-x-4">
+                            <a href="https://www.facebook.com/share/16egu8TAQ3/" class="text-gray-400 hover:text-white transition"><i class="ri-facebook-fill"></i></a>
+                            <a href="https://www.twitter.com" class="text-gray-400 hover:text-white transition"><i class="ri-twitter-fill"></i></a>
+                            <a href="https://www.linkedin.com/in/grp-career-548736359/" class="text-gray-400 hover:text-white transition"><i class="ri-linkedin-fill"></i></a>
+                            <a href="https://www.instagram.com/grp_career_pvt_ltd?igsh=MWc0cjRuN2NrZHZncA==" class="text-gray-400 hover:text-white transition"><i class="ri-instagram-fill"></i></a>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">Quick Links</h3>
+                        <ul class="space-y-2">
+                            <li><a href="#home" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="#about" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                            <li><a href="#courses" class="text-gray-400 hover:text-white transition">Courses</a></li>
+                            <li><a href="#testimonials" class="text-gray-400 hover:text-white transition">Success Stories</a></li>
+                            <li><a href="#contact" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">Contact Info</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="ph-map-pin text-accent mr-3 mt-1"></i>
+                                <a href="https://maps.app.goo.gl/iVcYTCgxSNzcV5WW9" target="_blank" class="text-gray-400 hover:text-white transition">2nd Floor, A-55, Sec-02, Noida G.B Nagar (U.P) - 201301</a>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="ph-phone text-accent mr-3"></i>
+                                <span class="text-gray-400">+91 9643058418, 01204097776</span>
+                            </li>
+                            <li class="flex items-center">
+                                <i class="ph-envelope text-accent mr-3"></i>
+                                <a href="mailto:info@grpcareer.com" class="text-gray-400 hover:text-white transition">info@grpcareer.com</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-4">Newsletter</h3>
+                        <p class="text-gray-400 mb-4">Subscribe to get the latest career tips and updates.</p>
+                        <form id="newsletterForm" class="flex">
+                            <input type="email" placeholder="Your email" class="w-full p-3 rounded-l-lg border-none focus:outline-none focus:ring-2 focus:ring-accent text-dark">
+                            <button type="submit" class="bg-accent text-white px-4 rounded-r-lg hover:bg-yellow-600 transition">
+                                <i class="ph-paper-plane-right"></i>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+                <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+                    <p class="text-gray-400">© 2025 GRP Career Pvt. Ltd. (CIN: U70200DL2025PTC445784). All rights reserved.</p>
+                    <div class="mt-2">
+                        <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Privacy Policy</a>
+                        <span class="text-gray-400">|</span>
+                        <a href="#" class="text-gray-400 hover:text-white mx-2 transition">Terms of Service</a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+        <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+        <script>
+            // Initialize AOS
+            AOS.init({ duration: 800, once: true });
+
+            // Initialize Swiper
+            const testimonialSwiper = new Swiper('.testimonialSwiper', {
+                slidesPerView: 1,
+                spaceBetween: 30,
+                pagination: { el: '.swiper-pagination', clickable: true },
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 3 }
+                }
+            });
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+
+            // Smooth Scroll
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector(this.getAttribute('href')).scrollIntoView({ behavior: 'smooth' });
+                });
+            });
+
+            // Animated Counters
+            function animateCounter(element) {
+                const target = parseInt(element.getAttribute('data-count'));
+                const duration = 2000;
+                const increment = target / (duration / 16);
+                let current = 0;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        element.textContent = target + (element.textContent.includes('+') ? '+' : '');
+                        clearInterval(timer);
+                    } else {
+                        element.textContent = Math.floor(current) + (element.textContent.includes('+') ? '+' : '');
+                    }
+                }, 16);
+            }
+
+            const counterElements = document.querySelectorAll('[data-count]');
+            const observer = new IntersectionObserver(entries => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateCounter(entry.target);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+            counterElements.forEach(counter => observer.observe(counter));
+
+            // GSAP ScrollTrigger for Sticky Testimonials
+            gsap.utils.toArray('.sticky-testimonial').forEach((testimonial, index) => {
+                gsap.from(testimonial, {
+                    scrollTrigger: {
+                        trigger: testimonial,
+                        start: 'top 80%',
+                        toggleActions: 'play none none reverse',
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: index * 0.2,
+                });
+            });
+
+            // GSAP Parallax Effect
+            gsap.to('.parallax-bg', {
+                scrollTrigger: {
+                    trigger: '.parallax-bg',
+                    scrub: true,
+                },
+                backgroundPosition: '50% 100%',
+            });
+
+            // Hover Effects for Cards
+            document.querySelectorAll('.card, .pricing-card').forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, { scale: 1.05, duration: 0.3 });
+                });
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, { scale: 1, duration: 0.3 });
+                });
+            });
+
+            // Scroll-Triggered Animations for Flowchart
+            gsap.from('.flowchart-node', {
+                scrollTrigger: {
+                    trigger: '#flowchart',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                },
+                opacity: 0,
+                scale: 0.5,
+                stagger: 0.2,
+                duration: 0.8,
+            });
+
+            // Scroll-Triggered Animations for Comparison Table
+            gsap.from('.table-comparison tbody tr', {
+                scrollTrigger: {
+                    trigger: '.table-comparison',
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse',
+                },
+                opacity: 0,
+                y: 20,
+                stagger: 0.2,
+                duration: 0.5,
+            });
+
+            // Form Submission Handler (Placeholder)
+            document.getElementById('courseRegistrationForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Thank you for registering! Our team will contact you soon.');
+                this.reset();
+            });
+        </script>
+    </body>
+</html>
